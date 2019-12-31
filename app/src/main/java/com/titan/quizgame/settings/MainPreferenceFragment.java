@@ -63,34 +63,10 @@ public class MainPreferenceFragment extends PreferenceFragmentCompat {
                 int index = listPreference.findIndexOfValue(stringValue);
 
                 // Set the summary to reflect the new value.
-                preference.setSummary(
-                        index >= 0
-                                ? listPreference.getEntries()[index]
-                                : null);
+                preference.setSummary(index >= 0 ? listPreference.getEntries()[index] : null);
 
-            } /*else if (preference instanceof RingtonePreference) {
-                // For ringtone preferences, look up the correct display value
-                // using RingtoneManager.
-                if (TextUtils.isEmpty(stringValue)) {
-                    // Empty values correspond to 'silent' (no ringtone).
-                    preference.setSummary(R.string.pref_ringtone_silent);
-
-                } else {
-                    Ringtone ringtone = RingtoneManager.getRingtone(
-                            preference.getContext(), Uri.parse(stringValue));
-
-                    if (ringtone == null) {
-                        // Clear the summary if there was a lookup error.
-                        preference.setSummary(R.string.summary_choose_ringtone);
-                    } else {
-                        // Set the summary to reflect the new ringtone display
-                        // name.
-                        String name = ringtone.getTitle(preference.getContext());
-                        preference.setSummary(name);
-                    }
-                }
-
-            } */else if (preference instanceof EditTextPreference) {
+            }
+            else if (preference instanceof EditTextPreference) {
                 if (preference.getKey().equals("key_gallery_name")) {
                     // update the changed gallery name to summary filed
                     preference.setSummary(stringValue);
