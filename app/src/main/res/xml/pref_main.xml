@@ -24,6 +24,7 @@
 
     </PreferenceCategory>
 
+    <!--
     <PreferenceCategory android:title="@string/pref_title_notifications">
 
         <SwitchPreference
@@ -45,7 +46,7 @@
             android:summary="@string/summary_vibrate"
             android:title="@string/title_vibrate" />
     </PreferenceCategory>
-
+-->
     <PreferenceCategory android:title="@string/pref_header_about">
 
         <Preference
@@ -62,6 +63,7 @@
             android:title="@string/title_send_feedback" />
 
         <!-- preference opens url in browser -->
+
         <Preference
             android:summary="@string/summary_faq"
             android:title="@string/title_faq">
@@ -81,5 +83,8 @@
                 android:action="android.intent.action.VIEW"
                 android:data="@string/url_terms" />
         </Preference>
+
     </PreferenceCategory>
+
+
 </PreferenceScreen>

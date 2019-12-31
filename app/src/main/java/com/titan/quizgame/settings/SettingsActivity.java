@@ -13,6 +13,11 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        // load settings fragment
+        getSupportFragmentManager().beginTransaction().replace(android.R.id.content, new MainPreferenceFragment()).commit();
+
     }
 }
