@@ -34,4 +34,7 @@ dependencies {
     implementation "com.android.support:design:$design_version"
 
     implementation 'com.google.android.material:material:1.0.0'
+
+    // Dexter runtime permissions
+    implementation 'com.karumi:dexter:4.2.0'
 }
