@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -23,6 +22,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:padding="16dp"
         tools:context="info.androidhive.settings.MainActivity"
         tools:showIn="@layout/activity_main">
 
@@ -36,17 +36,29 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Settings Preferences"
-                android:textSize="30dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="42dp"
+                android:text="The Awesome Quiz"
+                android:textSize="35sp"
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/text_view_highscore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Click on overflow icon to launch settings!"
-                android:textColor="#b1b1b1" />
+                android:layout_above="@id/button_start_quiz"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="132dp"
+                android:text="Highscore: 0"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/button_start_quiz"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Start Quiz" />
         </LinearLayout>
     </RelativeLayout>
 

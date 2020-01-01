@@ -17,6 +17,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    android {
+        compileOptions {
+            targetCompatibility = "8"
+            sourceCompatibility = "8"
+        }
+    }
 }
 
 dependencies {
@@ -34,6 +41,9 @@ dependencies {
     implementation "com.android.support:design:$design_version"
 
     implementation 'com.google.android.material:material:1.0.0'
+
+    implementation 'com.jakewharton:butterknife:10.2.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
 
     // Dexter runtime permissions
     implementation 'com.karumi:dexter:4.2.0'
