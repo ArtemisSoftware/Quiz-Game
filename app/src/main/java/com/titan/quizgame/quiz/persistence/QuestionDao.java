@@ -18,7 +18,7 @@ import io.reactivex.Single;
 public interface QuestionDao {
 
     @Query("SELECT * from questions")
-    public Flowable<Question> getQuestions(int id);
+    public Flowable<Question> getQuestions();
 
     // Emits the number of users added to the database.
     @Insert
