@@ -4,12 +4,19 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import androidx.annotation.NonNull;
+import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.titan.quizgame.quiz.models.Question;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import io.reactivex.functions.Consumer;
+
+@Database(entities = {Question.class}, version = 1)
 public abstract class QuestionDatabase extends RoomDatabase {
 
     private static QuestionDatabase instance;
@@ -44,11 +51,28 @@ public abstract class QuestionDatabase extends RoomDatabase {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            questionDao.insertQuestions(new Question("A is correct", "A", "B", "C", 1));
-            questionDao.insertQuestions(new Question("B is correct", "A", "B", "C", 2));
-            questionDao.insertQuestions(new Question("C is correct", "A", "B", "C", 3));
-            questionDao.insertQuestions(new Question("AA is correct", "A", "B", "C", 1));
-            questionDao.insertQuestions(new Question("BB is correct", "A", "B", "C", 2));
+
+            List<Question> questions = new ArrayList<>();
+            questions.add(new Question("A is correct", "A", "B", "C", 1));
+            questions.add(new Question("C is correct", "A", "B", "C", 3));
+
+            //inserting records
+            questionDao.insertQuestions(questions).subscribe(
+                    new Consumer<long[]>() {
+
+                        @Override
+                        public void accept(long[] longs) throws Exception {
+
+                        }
+                    }
+                    ,
+                    new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Exception {
+
+                        }
+                    });
+
             return null;
         }
     }
