@@ -18,11 +18,11 @@ import io.reactivex.Single;
 public interface QuestionDao {
 
     @Query("SELECT * from questions")
-    public Flowable<Question> getQuestions();
+    public Flowable<List<Question>> getQuestions();
 
     // Emits the number of users added to the database.
     @Insert
-    public Maybe<Integer> insertQuestions(List<Question> questions);
+    public Maybe<long[]> insertQuestions(List<Question> questions);
 
     // Makes sure that the operation finishes successfully.
     @Insert
