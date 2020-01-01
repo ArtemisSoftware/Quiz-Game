@@ -64,8 +64,7 @@ public abstract class QuestionDatabase extends RoomDatabase {
                         public void accept(long[] longs) throws Exception {
 
                         }
-                    }
-                    ,
+                    },
                     new Consumer<Throwable>() {
                         @Override
                         public void accept(Throwable throwable) throws Exception {
