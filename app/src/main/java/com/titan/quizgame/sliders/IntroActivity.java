@@ -12,12 +12,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.titan.quizgame.R;
+import com.titan.quizgame.sliders.models.Slider;
 
 public class IntroActivity extends AppCompatActivity {
 
     LinearLayout Layout_bars;
     TextView[] bottomBars;
-    int[] screens;
+    private Slider[] screens;
     Button Skip, Next;
     ViewPager vp;
     IntroViewPagerAdapter introViewPagerAdapter;
@@ -27,12 +28,6 @@ public class IntroActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro);
-
-        screens = new int[]{
-                R.layout.intro_screen,
-                R.layout.intro_screen,
-                R.layout.intro_screen
-        };
 
         vp = (ViewPager) findViewById(R.id.view_pager);
         Layout_bars = (LinearLayout) findViewById(R.id.layoutBars);
@@ -55,6 +50,38 @@ public class IntroActivity extends AppCompatActivity {
             finish();
         }
         */
+
+
+
+
+        Skip.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                skip(v);
+            }
+        });
+
+        Next.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+
+                next(v);
+
+            }
+        });
+
+        int[] colorsInactive = getResources().getIntArray(R.array.dot_on_page_not_active);
+        int[] colorsActive = getResources().getIntArray(R.array.dot_on_page_active);
+
+        screens = new Slider[]{
+
+                new Slider("Screen 0", colorsActive[0], colorsInactive[0],  R.layout.intro_screen, R.color.screen1),
+                new Slider("Screen 1", colorsActive[1], colorsInactive[1],  R.layout.intro_screen, R.color.screen2),
+                new Slider("Screen 2", colorsActive[2], colorsInactive[2],  R.layout.intro_screen, R.color.screen3)
+        };
 
         introViewPagerAdapter = new IntroViewPagerAdapter(this, screens);
         vp.setAdapter(introViewPagerAdapter);
@@ -105,6 +132,9 @@ public class IntroActivity extends AppCompatActivity {
         //startActivity(new Intent(MainScreen.this, MainActivity.class));
         finish();
     }
+
+
+
 
 
     ViewPager.OnPageChangeListener viewPagerPageChangeListener = new ViewPager.OnPageChangeListener() {
