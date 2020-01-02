@@ -22,6 +22,7 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.PermissionRequestErrorListener;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.titan.quizgame.settings.SettingsActivity;
+import com.titan.quizgame.util.Constants;
 
 import java.util.List;
 
@@ -41,14 +42,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void requestPermission() {
 
-        String appPermissions [] = new String[]{
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.ACCESS_FINE_LOCATION
-        };
-
         Dexter.withActivity(this)
-                .withPermissions(appPermissions)
+                .withPermissions(Constants.APP_PERMISSIONS)
                 .withListener(new MultiplePermissionsListener() {
                     @Override
                     public void onPermissionsChecked(MultiplePermissionsReport report) {
@@ -66,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "All permissions are not granted..", Toast.LENGTH_SHORT).show();
 
                         }
-
                     }
 
 
