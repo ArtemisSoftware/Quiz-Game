@@ -23,6 +23,7 @@ import com.karumi.dexter.listener.PermissionRequestErrorListener;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.titan.quizgame.settings.SettingsActivity;
 import com.titan.quizgame.util.Constants;
+import com.titan.quizgame.util.Permissions;
 
 import java.util.List;
 
@@ -35,7 +36,9 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        requestPermission();
+        //requestPermission();
+
+        Permissions.requestCameraPermission(this);
     }
 
 
