@@ -21,6 +21,7 @@ import com.karumi.dexter.listener.DexterError;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.PermissionRequestErrorListener;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+import com.titan.quizgame.player.PlayerActivity;
 import com.titan.quizgame.settings.SettingsActivity;
 import com.titan.quizgame.sliders.IntroActivity;
 import com.titan.quizgame.util.Constants;
@@ -44,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void initIntro(){
-        Intent intent = new Intent(getApplicationContext(), IntroActivity.class);
+        Intent intent = new Intent(getApplicationContext(), /*IntroActivity*/PlayerActivity.class);
         startActivityForResult(intent, 201);
     }
 
