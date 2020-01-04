@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
@@ -21,11 +22,14 @@ import com.titan.quizgame.quiz.persistence.QuestionDatabase;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 public class QuizActivity extends AppCompatActivity {
 
@@ -59,6 +63,7 @@ public class QuizActivity extends AppCompatActivity {
     private QuestionDao questionDao;
 
     private ColorStateList textColorDefaultRb;
+    private ColorStateList textColorDefaultCd;
 
     private List<Question> questionList;
     private int questionCounter;
@@ -68,6 +73,9 @@ public class QuizActivity extends AppCompatActivity {
     private int score;
     private boolean answered;
     private long backPressedTime;
+    private static final long COUNTDOWN_IN_MILLIS = 30000;
+    private CountDownTimer countDownTimer;
+    private long timeLeftInMillis;
 
 
     @Override
@@ -80,7 +88,7 @@ public class QuizActivity extends AppCompatActivity {
         questionDao = QuestionDatabase.getInstance(this).questionDao();
 
         textColorDefaultRb = rb1.getTextColors();
-
+        textColorDefaultCd = textViewCountDown.getTextColors();
 
         getQuestions();
     }
@@ -103,8 +111,47 @@ public class QuizActivity extends AppCompatActivity {
             textViewQuestionCount.setText("Question: " + questionCounter + "/" + questionCountTotal);
             answered = false;
             buttonConfirmNext.setText("Confirm");
+
+            timeLeftInMillis = COUNTDOWN_IN_MILLIS;
+            startCountDown();
+
         } else {
             finishQuiz();
+        }
+    }
+
+
+    private void startCountDown() {
+        countDownTimer = new CountDownTimer(timeLeftInMillis + 100, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                timeLeftInMillis = millisUntilFinished;
+                updateCountDownText();
+            }
+
+            @Override
+            public void onFinish() {
+                timeLeftInMillis = 0;
+                updateCountDownText();
+                checkAnswer();
+            }
+        }.start();
+    }
+
+
+
+    private void updateCountDownText() {
+        int minutes = (int) (timeLeftInMillis / 1000) / 60;
+        int seconds = (int) (timeLeftInMillis / 1000) % 60;
+
+        String timeFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
+
+        textViewCountDown.setText(timeFormatted);
+
+        if (timeLeftInMillis < 10000) {
+            textViewCountDown.setTextColor(Color.RED);
+        } else {
+            textViewCountDown.setTextColor(textColorDefaultCd);
         }
     }
 
@@ -163,7 +210,10 @@ public class QuizActivity extends AppCompatActivity {
     private void getQuestions(){
 
         //getting flowable to subscribe consumer that will access the data from Room database.
-        questionDao.getQuestions().subscribe(
+        questionDao.getQuestions()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
                 new Consumer<List<Question>>() {
                     @Override
                     public void accept(List<Question> questions) throws Exception {
@@ -180,7 +230,8 @@ public class QuizActivity extends AppCompatActivity {
 
                     }
                 }
-        );
+        )
+        ;
 
     }
 
@@ -207,5 +258,13 @@ public class QuizActivity extends AppCompatActivity {
         }
 
         backPressedTime = System.currentTimeMillis();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+        }
     }
 }
