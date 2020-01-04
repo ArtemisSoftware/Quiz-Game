@@ -1,12 +1,16 @@
 package com.titan.quizgame.quiz.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "questions")
-public class Question {
+public class Question implements Parcelable {
 
     @PrimaryKey(autoGenerate = true)
     public int id;
@@ -39,6 +43,28 @@ public class Question {
         this.answerNr = answerNr;
     }
 
+    @Ignore
+    protected Question(Parcel in) {
+        id = in.readInt();
+        question = in.readString();
+        option1 = in.readString();
+        option2 = in.readString();
+        option3 = in.readString();
+        answerNr = in.readInt();
+    }
+
+    public static final Creator<Question> CREATOR = new Creator<Question>() {
+        @Override
+        public Question createFromParcel(Parcel in) {
+            return new Question(in);
+        }
+
+        @Override
+        public Question[] newArray(int size) {
+            return new Question[size];
+        }
+    };
+
     public String getQuestion() {
         return question;
     }
@@ -57,5 +83,20 @@ public class Question {
 
     public int getAnswerNr() {
         return answerNr;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(question);
+        dest.writeString(option1);
+        dest.writeString(option2);
+        dest.writeString(option3);
+        dest.writeInt(answerNr);
     }
 }
