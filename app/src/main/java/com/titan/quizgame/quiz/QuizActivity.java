@@ -1,5 +1,6 @@
 package com.titan.quizgame.quiz;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -7,6 +8,7 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.PersistableBundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
@@ -20,6 +22,7 @@ import com.titan.quizgame.quiz.persistence.QuestionDao;
 import com.titan.quizgame.quiz.persistence.QuestionDatabase;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -65,17 +68,33 @@ public class QuizActivity extends AppCompatActivity {
     private ColorStateList textColorDefaultRb;
     private ColorStateList textColorDefaultCd;
 
-    private List<Question> questionList;
-    private int questionCounter;
+
+
     private int questionCountTotal;
     private Question currentQuestion;
 
-    private int score;
-    private boolean answered;
     private long backPressedTime;
     private static final long COUNTDOWN_IN_MILLIS = 30000;
     private CountDownTimer countDownTimer;
+
+
+    private ArrayList<Question> questionList;
+    private static final String KEY_QUESTION_LIST = "keyQuestionList";
+
+
+    private int score;
+    private static final String KEY_SCORE = "keyScore";
+
+    private int questionCounter;
+    private static final String KEY_QUESTION_COUNT = "keyQuestionCount";
+
     private long timeLeftInMillis;
+    private static final String KEY_MILLIS_LEFT = "keyMillisLeft";
+
+    private boolean answered;
+    private static final String KEY_ANSWERED = "keyAnswered";
+
+
 
 
     @Override
@@ -90,7 +109,26 @@ public class QuizActivity extends AppCompatActivity {
         textColorDefaultRb = rb1.getTextColors();
         textColorDefaultCd = textViewCountDown.getTextColors();
 
-        getQuestions();
+        if(savedInstanceState == null) {
+            getQuestions();
+        }
+        else{
+            questionList = savedInstanceState.getParcelableArrayList(KEY_QUESTION_LIST);
+            questionCountTotal = questionList.size();
+            questionCounter = savedInstanceState.getInt(KEY_QUESTION_COUNT);
+            currentQuestion = questionList.get(questionCounter - 1);
+
+            score = savedInstanceState.getInt(KEY_SCORE);
+            timeLeftInMillis = savedInstanceState.getLong(KEY_MILLIS_LEFT);
+            answered = savedInstanceState.getBoolean(KEY_ANSWERED);
+
+            if (!answered) {
+                startCountDown();
+            } else {
+                updateCountDownText();
+                showSolution();
+            }
+        }
     }
 
     private void showNextQuestion() {
@@ -218,7 +256,7 @@ public class QuizActivity extends AppCompatActivity {
                     @Override
                     public void accept(List<Question> questions) throws Exception {
 
-                        questionList = questions;
+                        questionList = (ArrayList<Question>)questions;
                         questionCountTotal = questionList.size();
                         Collections.shuffle(questionList);
                         showNextQuestion();
@@ -259,6 +297,19 @@ public class QuizActivity extends AppCompatActivity {
 
         backPressedTime = System.currentTimeMillis();
     }
+
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(KEY_SCORE, score);
+        outState.putInt(KEY_QUESTION_COUNT, questionCounter);
+        outState.putLong(KEY_MILLIS_LEFT, timeLeftInMillis);
+        outState.putBoolean(KEY_ANSWERED, answered);
+        outState.putParcelableArrayList(KEY_QUESTION_LIST, questionList);
+    }
+
+
 
     @Override
     protected void onDestroy() {
