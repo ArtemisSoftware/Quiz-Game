@@ -18,8 +18,11 @@ import io.reactivex.Single;
 @Dao
 public interface QuestionDao {
 
-    @Query("SELECT * from questions")
-    public Flowable<List<Question>> getQuestions();
+    @Query("SELECT * from questions ")
+    Flowable<List<Question>> getQuestions();
+
+    @Query("SELECT * from questions WHERE difficulty  = :difficulty")
+    Flowable<List<Question>> getQuestions(String difficulty);
 
     // Emits the number of users added to the database.
     @Insert

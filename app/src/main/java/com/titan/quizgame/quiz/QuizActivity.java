@@ -74,7 +74,6 @@ public class QuizActivity extends AppCompatActivity {
     private Question currentQuestion;
 
     private long backPressedTime;
-    private static final long COUNTDOWN_IN_MILLIS = 30000;
     private CountDownTimer countDownTimer;
 
 
@@ -150,7 +149,7 @@ public class QuizActivity extends AppCompatActivity {
             answered = false;
             buttonConfirmNext.setText("Confirm");
 
-            timeLeftInMillis = COUNTDOWN_IN_MILLIS;
+            timeLeftInMillis = GameConstants.COUNTDOWN_IN_MILLIS;
             startCountDown();
 
         } else {
@@ -248,7 +247,7 @@ public class QuizActivity extends AppCompatActivity {
     private void getQuestions(){
 
         //getting flowable to subscribe consumer that will access the data from Room database.
-        questionDao.getQuestions()
+        questionDao.getQuestions(GameConstants.DIFFICULTY_HARD)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -268,8 +267,7 @@ public class QuizActivity extends AppCompatActivity {
 
                     }
                 }
-        )
-        ;
+        );
 
     }
 
