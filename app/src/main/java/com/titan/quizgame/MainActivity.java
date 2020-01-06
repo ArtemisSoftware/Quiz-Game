@@ -10,10 +10,13 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.titan.quizgame.quiz.ActivityCode;
+import com.titan.quizgame.quiz.GameConstants;
 import com.titan.quizgame.quiz.QuizActivity;
 import com.titan.quizgame.settings.SettingsActivity;
 
@@ -30,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.text_view_highscore)
     TextView textViewHighscore;
 
+    @BindView(R.id.spinner_difficulty)
+    Spinner spinnerDifficulty;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +46,14 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
+        String[] difficultyLevels = GameConstants.getAllDifficultyLevels();
+
+        ArrayAdapter<String> adapterDifficulty = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, difficultyLevels);
+        adapterDifficulty.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerDifficulty.setAdapter(adapterDifficulty);
+
+
         loadHighscore();
 
     }
@@ -48,7 +62,9 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void startQuiz() {
+
         Intent intent = new Intent(this, QuizActivity.class);
+        intent.putExtra(ActivityCode.EXTRA_DIFFICULTY, spinnerDifficulty.getSelectedItem().toString());
         startActivityForResult(intent, ActivityCode.REQUEST_CODE_QUIZ);
     }
 
