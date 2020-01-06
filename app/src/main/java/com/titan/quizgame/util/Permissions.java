@@ -20,6 +20,7 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.PermissionRequestErrorListener;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.karumi.dexter.listener.single.PermissionListener;
+import com.titan.quizgame.player.ImageListener;
 
 import java.util.List;
 
@@ -65,6 +66,32 @@ public class Permissions {
                 .onSameThread()
                 .check();
     }
+
+
+
+    public static void requestCaptureImagePermission(final Activity context, final ImageListener imageListener) {
+
+        Dexter.withActivity(context)
+                .withPermissions(Constants.CAPTURE_IMAGE_PERMISSIONS)
+                .withListener(new MultiplePermissionsListener() {
+                    @Override
+                    public void onPermissionsChecked(MultiplePermissionsReport report) {
+                        if (report.areAllPermissionsGranted()) {
+                            imageListener.imageAction();
+                        }
+
+                        if (report.isAnyPermissionPermanentlyDenied()) {
+                            showSettingsDialog(context);
+                        }
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+                        token.continuePermissionRequest();
+                    }
+                }).check();
+    }
+
 
 
     /**

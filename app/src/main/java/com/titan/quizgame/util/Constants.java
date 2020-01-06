@@ -10,4 +10,9 @@ public class Constants {
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.ACCESS_FINE_LOCATION
     };
+
+
+    public static String[] CAPTURE_IMAGE_PERMISSIONS = new String[]{
+            Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
 }
