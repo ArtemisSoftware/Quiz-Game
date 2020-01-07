@@ -18,11 +18,22 @@ import android.widget.TextView;
 import com.titan.quizgame.quiz.ActivityCode;
 import com.titan.quizgame.quiz.GameConstants;
 import com.titan.quizgame.quiz.QuizActivity;
+import com.titan.quizgame.quiz.models.Category;
+import com.titan.quizgame.quiz.models.Question;
+import com.titan.quizgame.quiz.persistence.CategoryDao;
+import com.titan.quizgame.quiz.persistence.QuizDatabase;
 import com.titan.quizgame.settings.SettingsActivity;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,11 +41,16 @@ public class MainActivity extends AppCompatActivity {
     public static final String KEY_HIGHSCORE = "keyHighscore";
     private int highscore;
 
+    private CategoryDao categoryDao;
+
     @BindView(R.id.text_view_highscore)
     TextView textViewHighscore;
 
     @BindView(R.id.spinner_difficulty)
     Spinner spinnerDifficulty;
+
+    @BindView(R.id.spinner_category)
+    Spinner spinnerCategory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,14 +62,11 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
-        String[] difficultyLevels = GameConstants.getAllDifficultyLevels();
-
-        ArrayAdapter<String> adapterDifficulty = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, difficultyLevels);
-        adapterDifficulty.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerDifficulty.setAdapter(adapterDifficulty);
+        categoryDao = QuizDatabase.getInstance(this).categoryDao();
 
 
+        loadCategories();
+        loadDifficultyLevels();
         loadHighscore();
 
     }
@@ -63,9 +76,47 @@ public class MainActivity extends AppCompatActivity {
 
     private void startQuiz() {
 
+        Category selectedCategory = (Category) spinnerCategory.getSelectedItem();
+
         Intent intent = new Intent(this, QuizActivity.class);
         intent.putExtra(ActivityCode.EXTRA_DIFFICULTY, spinnerDifficulty.getSelectedItem().toString());
+        intent.putExtra(ActivityCode.EXTRA_CATEGORY_ID, selectedCategory.getId());
+        intent.putExtra(ActivityCode.EXTRA_CATEGORY_NAME, selectedCategory.getName());
         startActivityForResult(intent, ActivityCode.REQUEST_CODE_QUIZ);
+    }
+
+
+    private void loadCategories() {
+
+        categoryDao.getCategories()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        new Consumer<List<Category>>() {
+                            @Override
+                            public void accept(List<Category> categories) throws Exception {
+
+                                ArrayAdapter<Category> adapterCategories = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, categories);
+                                adapterCategories.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                spinnerCategory.setAdapter(adapterCategories);
+                            }
+                        },
+                        new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) throws Exception {
+
+                            }
+                        }
+                );
+
+    }
+
+    private void loadDifficultyLevels() {
+        String[] difficultyLevels = GameConstants.getAllDifficultyLevels();
+
+        ArrayAdapter<String> adapterDifficulty = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, difficultyLevels);
+        adapterDifficulty.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerDifficulty.setAdapter(adapterDifficulty);
     }
 
     private void loadHighscore() {

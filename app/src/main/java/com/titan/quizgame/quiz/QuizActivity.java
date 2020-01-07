@@ -46,7 +46,10 @@ public class QuizActivity extends AppCompatActivity {
     TextView textViewCountDown;
 
     @BindView(R.id.text_view_difficulty)
-    TextView textViewDifficulty ;
+    TextView textViewDifficulty;
+
+    @BindView(R.id.text_view_category)
+    TextView textViewCategory;
 
     @BindView(R.id.radio_group)
     RadioGroup rbGroup;
@@ -111,12 +114,16 @@ public class QuizActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String difficulty = intent.getStringExtra(ActivityCode.EXTRA_DIFFICULTY);
+        int categoryID = intent.getIntExtra(ActivityCode.EXTRA_CATEGORY_ID, 0);
+        String categoryName = intent.getStringExtra(ActivityCode.EXTRA_CATEGORY_NAME);
+
 
         textViewDifficulty.setText("Difficulty: " + difficulty);
+        textViewCategory.setText("Category: " + categoryName);
 
 
         if(savedInstanceState == null) {
-            getQuestions(difficulty);
+            getQuestions(categoryID, difficulty);
         }
         else{
             questionList = savedInstanceState.getParcelableArrayList(KEY_QUESTION_LIST);
@@ -251,10 +258,10 @@ public class QuizActivity extends AppCompatActivity {
 
 
 
-    private void getQuestions(String difficulty){
+    private void getQuestions(int categoryID, String difficulty){
 
         //getting flowable to subscribe consumer that will access the data from Room database.
-        questionDao.getQuestions(difficulty)
+        questionDao.getQuestions(difficulty, categoryID)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
