@@ -20,5 +20,5 @@ public interface CategoryDao {
     Maybe<long[]> insertCategories(List<Category> categories);
 
     @Query("SELECT * from categories ")
-    Flowable<List<Question>> getCategories();
+    Flowable<List<Category>> getCategories();
 }
