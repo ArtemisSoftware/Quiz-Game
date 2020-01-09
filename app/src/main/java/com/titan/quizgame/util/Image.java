@@ -27,6 +27,12 @@ public class Image {
         }
         */
         context.startActivityForResult(intent, activityCode);
+    }
+
+    public static void openGallery(Activity context){
+
+        Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        context.startActivityForResult(pickPhoto, ActivityRequestCode.REQUEST_GALLERY_IMAGE);
 
     }
 

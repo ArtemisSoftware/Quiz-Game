@@ -91,25 +91,8 @@ public class ImagePickerActivity extends AppCompatActivity {
     }
 
     private void chooseImageFromGallery() {
-  /*
-        Dexter.withActivity(this)
-                .withPermissions(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                .withListener(new MultiplePermissionsListener() {
-                    @Override
-                    public void onPermissionsChecked(MultiplePermissionsReport report) {
-                        if (report.areAllPermissionsGranted()) {
-                            Intent pickPhoto = new Intent(Intent.ACTION_PICK,
-                                    android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                            startActivityForResult(pickPhoto, REQUEST_GALLERY_IMAGE);
-                        }
-                    }
 
-                    @Override
-                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
-                        token.continuePermissionRequest();
-                    }
-                }).check();
-*/
+        Image.openGallery(this);
     }
 
     @Override
@@ -127,7 +110,7 @@ public class ImagePickerActivity extends AppCompatActivity {
             case ActivityRequestCode.REQUEST_GALLERY_IMAGE:
                 if (resultCode == RESULT_OK) {
                     Uri imageUri = data.getData();
-                    //cropImage(imageUri);
+                    cropImage(imageUri);
                 } else {
                     setResultCancelled();
                 }
@@ -190,16 +173,9 @@ public class ImagePickerActivity extends AppCompatActivity {
         finish();
     }
 
-    private Uri getCacheImagePath(String fileName) {
-        File path = new File(getExternalCacheDir(), "camera");
-        if (!path.exists()) path.mkdirs();
-        File image = new File(path, fileName);
-        return null;//getUriForFile(ImagePickerActivity.this, getPackageName() + ".provider", image);
-    }
 
     private static String queryName(ContentResolver resolver, Uri uri) {
-        Cursor returnCursor =
-                resolver.query(uri, null, null, null, null);
+        Cursor returnCursor = resolver.query(uri, null, null, null, null);
         assert returnCursor != null;
         int nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
         returnCursor.moveToFirst();

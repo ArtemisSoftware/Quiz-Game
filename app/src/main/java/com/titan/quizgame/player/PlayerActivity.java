@@ -34,7 +34,7 @@ public class PlayerActivity extends AppCompatActivity implements ImageListener{
 
             @Override
             public void onChooseGallerySelected() {
-                //launchGalleryIntent();
+                launchGalleryIntent();
             }
         });
     }
@@ -59,6 +59,16 @@ public class PlayerActivity extends AppCompatActivity implements ImageListener{
     }
 
 
+    private void launchGalleryIntent() {
+        Intent intent = new Intent(this, ImagePickerActivity.class);
+        intent.putExtra(ImageCropConstants.INTENT_IMAGE_PICKER_OPTION, ActivityRequestCode.REQUEST_GALLERY_IMAGE);
+
+        // setting aspect ratio
+        intent.putExtra(ImageCropConstants.INTENT_LOCK_ASPECT_RATIO, true);
+        intent.putExtra(ImageCropConstants.INTENT_ASPECT_RATIO_X, 1); // 16x9, 1x1, 3:4, 3:2
+        intent.putExtra(ImageCropConstants.INTENT_ASPECT_RATIO_Y, 1);
+        startActivityForResult(intent, ActivityRequestCode.REQUEST_IMAGE);
+    }
 
 
     CircularImageView.OnClickListener btn_notificacao_OnClickListener = new View.OnClickListener() {
