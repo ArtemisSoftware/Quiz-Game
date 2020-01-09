@@ -2,7 +2,10 @@ package com.titan.quizgame.util;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.ImageDecoder;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.MediaStore;
 
 import androidx.core.content.FileProvider;
@@ -35,6 +38,31 @@ public class Image {
         context.startActivityForResult(pickPhoto, ActivityRequestCode.REQUEST_GALLERY_IMAGE);
 
     }
+
+
+    public static Bitmap getBitmap(Activity context, Uri uri){
+
+        Bitmap bitmap = null;
+
+        try {
+
+                if(Build.VERSION.SDK_INT < 28) {
+                    bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), uri);
+
+                }
+                else {
+                    ImageDecoder.Source source = ImageDecoder.createSource(context.getContentResolver(), uri);
+                    bitmap = ImageDecoder.decodeBitmap(source);
+
+                }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return bitmap;
+    }
+
 
 
     private static Uri getCacheImagePath(Activity context, String fileName) {

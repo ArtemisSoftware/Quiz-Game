@@ -1,16 +1,23 @@
 package com.titan.quizgame.player;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.titan.quizgame.R;
 import com.titan.quizgame.util.ActivityRequestCode;
+import com.titan.quizgame.util.Image;
 import com.titan.quizgame.util.ImageCropConstants;
 import com.titan.quizgame.util.Permissions;
+
+import java.io.IOException;
 
 public class PlayerActivity extends AppCompatActivity implements ImageListener{
 
@@ -83,5 +90,27 @@ public class PlayerActivity extends AppCompatActivity implements ImageListener{
     void onProfileImageClick() {
         Permissions.requestImagePermission(this, this);
     }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == ActivityRequestCode.REQUEST_IMAGE) {
+
+            if (resultCode == RESULT_OK) {
+
+                Uri uri = data.getParcelableExtra("path");
+
+                // You can update this bitmap to your server
+                Bitmap bitmap = Image.getBitmap(this, uri);
+
+                // loading profile image from local cache
+                //loadProfile(uri.toString());
+
+            }
+        }
+    }
+
 
 }
