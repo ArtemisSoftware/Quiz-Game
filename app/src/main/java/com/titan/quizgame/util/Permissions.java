@@ -6,7 +6,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
-import android.provider.MediaStore;
 import android.provider.Settings;
 import android.widget.Toast;
 
@@ -69,10 +68,10 @@ public class Permissions {
 
 
 
-    public static void requestCaptureImagePermission(final Activity context, final ImageListener imageListener) {
+    public static void requestImagePermission(final Activity context, final ImageListener imageListener) {
 
         Dexter.withActivity(context)
-                .withPermissions(Constants.CAPTURE_IMAGE_PERMISSIONS)
+                .withPermissions(Constants.IMAGE_PERMISSIONS)
                 .withListener(new MultiplePermissionsListener() {
                     @Override
                     public void onPermissionsChecked(MultiplePermissionsReport report) {
@@ -108,7 +107,7 @@ public class Permissions {
                     @Override
                     public void onPermissionGranted(PermissionGrantedResponse response) {
                         // permission is granted
-                        openCamera(context);
+                        //openCamera(context);
                     }
 
                     @Override
@@ -166,8 +165,5 @@ public class Permissions {
         context.startActivityForResult(intent, 101);
     }
 
-    private static void openCamera(Activity context) {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        context.startActivityForResult(intent, 100);
-    }
+
 }

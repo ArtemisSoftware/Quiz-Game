@@ -12,7 +12,7 @@ public class Constants {
     };
 
 
-    public static String[] CAPTURE_IMAGE_PERMISSIONS = new String[]{
+    public static String[] IMAGE_PERMISSIONS = new String[]{
             Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
 }

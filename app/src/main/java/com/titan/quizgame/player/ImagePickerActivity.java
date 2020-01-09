@@ -17,16 +17,14 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.titan.quizgame.R;
+import com.titan.quizgame.util.ActivityRequestCode;
+import com.titan.quizgame.util.Image;
 import com.titan.quizgame.util.ImageCropConstants;
 import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
 
 public class ImagePickerActivity extends AppCompatActivity {
-
-
-    public static final int REQUEST_IMAGE_CAPTURE = 0;
-    public static final int REQUEST_GALLERY_IMAGE = 1;
 
     private boolean lockAspectRatio = false, setBitmapMaxWidthHeight = false;
     private int ASPECT_RATIO_X, ASPECT_RATIO_Y, bitmapMaxWidth, bitmapMaxHeight, IMAGE_COMPRESSION;
@@ -54,7 +52,7 @@ public class ImagePickerActivity extends AppCompatActivity {
         bitmapMaxHeight = intent.getIntExtra(ImageCropConstants.INTENT_BITMAP_MAX_HEIGHT, ImageCropConstants.bitmapMaxHeight);
 
         int requestCode = intent.getIntExtra(ImageCropConstants.INTENT_IMAGE_PICKER_OPTION, -1);
-        if (requestCode == REQUEST_IMAGE_CAPTURE) {
+        if (requestCode == ActivityRequestCode.REQUEST_IMAGE_CAPTURE) {
             takeCameraImage();
         } else {
             chooseImageFromGallery();
@@ -89,28 +87,7 @@ public class ImagePickerActivity extends AppCompatActivity {
     }
 
     private void takeCameraImage() {
-        /*
-        Dexter.withActivity(this)
-                .withPermissions(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                .withListener(new MultiplePermissionsListener() {
-                    @Override
-                    public void onPermissionsChecked(MultiplePermissionsReport report) {
-                        if (report.areAllPermissionsGranted()) {
-                            fileName = System.currentTimeMillis() + ".jpg";
-                            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, getCacheImagePath(fileName));
-                            if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-                                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
-                        token.continuePermissionRequest();
-                    }
-                }).check();
-        */
+        Image.openCamera(this, ActivityRequestCode.REQUEST_IMAGE_CAPTURE);
     }
 
     private void chooseImageFromGallery() {
@@ -140,17 +117,17 @@ public class ImagePickerActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         switch (requestCode) {
-            case REQUEST_IMAGE_CAPTURE:
+            case ActivityRequestCode.REQUEST_IMAGE_CAPTURE:
                 if (resultCode == RESULT_OK) {
-                    cropImage(getCacheImagePath(fileName));
+                    //cropImage(getCacheImagePath(fileName));
                 } else {
                     setResultCancelled();
                 }
                 break;
-            case REQUEST_GALLERY_IMAGE:
+            case ActivityRequestCode.REQUEST_GALLERY_IMAGE:
                 if (resultCode == RESULT_OK) {
                     Uri imageUri = data.getData();
-                    cropImage(imageUri);
+                    //cropImage(imageUri);
                 } else {
                     setResultCancelled();
                 }
