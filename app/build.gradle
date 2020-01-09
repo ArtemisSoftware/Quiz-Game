@@ -65,6 +65,4 @@ dependencies {
     def rxandroid_version = '2.1.1'
     implementation "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
 
-    // Dexter runtime permissions
-    implementation 'com.karumi:dexter:4.2.0'
 }

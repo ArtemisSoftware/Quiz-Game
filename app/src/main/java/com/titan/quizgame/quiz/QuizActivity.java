@@ -1,5 +1,6 @@
 package com.titan.quizgame.quiz;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -7,6 +8,7 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.PersistableBundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
@@ -17,9 +19,10 @@ import android.widget.Toast;
 import com.titan.quizgame.R;
 import com.titan.quizgame.quiz.models.Question;
 import com.titan.quizgame.quiz.persistence.QuestionDao;
-import com.titan.quizgame.quiz.persistence.QuizDatabase;
+import com.titan.quizgame.quiz.persistence.QuestionDatabase;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -44,12 +47,6 @@ public class QuizActivity extends AppCompatActivity {
 
     @BindView(R.id.text_view_countdown)
     TextView textViewCountDown;
-
-    @BindView(R.id.text_view_difficulty)
-    TextView textViewDifficulty;
-
-    @BindView(R.id.text_view_category)
-    TextView textViewCategory;
 
     @BindView(R.id.radio_group)
     RadioGroup rbGroup;
@@ -106,24 +103,13 @@ public class QuizActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        questionDao = QuizDatabase.getInstance(this).questionDao();
+        questionDao = QuestionDatabase.getInstance(this).questionDao();
 
         textColorDefaultRb = rb1.getTextColors();
         textColorDefaultCd = textViewCountDown.getTextColors();
 
-
-        Intent intent = getIntent();
-        String difficulty = intent.getStringExtra(ActivityCode.EXTRA_DIFFICULTY);
-        int categoryID = intent.getIntExtra(ActivityCode.EXTRA_CATEGORY_ID, 0);
-        String categoryName = intent.getStringExtra(ActivityCode.EXTRA_CATEGORY_NAME);
-
-
-        textViewDifficulty.setText("Difficulty: " + difficulty);
-        textViewCategory.setText("Category: " + categoryName);
-
-
         if(savedInstanceState == null) {
-            getQuestions(categoryID, difficulty);
+            getQuestions();
         }
         else{
             questionList = savedInstanceState.getParcelableArrayList(KEY_QUESTION_LIST);
@@ -258,10 +244,10 @@ public class QuizActivity extends AppCompatActivity {
 
 
 
-    private void getQuestions(int categoryID, String difficulty){
+    private void getQuestions(){
 
         //getting flowable to subscribe consumer that will access the data from Room database.
-        questionDao.getQuestions(difficulty, categoryID)
+        questionDao.getQuestions(GameConstants.DIFFICULTY_HARD)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(

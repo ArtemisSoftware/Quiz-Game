@@ -6,18 +6,10 @@ import android.os.Parcelable;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
-import androidx.room.ForeignKey;
 import androidx.room.Ignore;
-import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-
-@Entity(tableName = "questions",
-        foreignKeys = @ForeignKey(entity = Category.class,
-        parentColumns = "id",
-        childColumns = "categoryId",
-        onDelete = ForeignKey.CASCADE),
-        indices = {@Index("categoryId")})
+@Entity(tableName = "questions")
 public class Question implements Parcelable {
 
     @PrimaryKey(autoGenerate = true)
@@ -49,18 +41,13 @@ public class Question implements Parcelable {
     private String difficulty;
 
 
-    @ColumnInfo(name = "categoryId")
-    private int categoryId;
-
-
-    public Question(String question, String option1, String option2, String option3, int answerNr, String difficulty, int categoryId) {
+    public Question(String question, String option1, String option2, String option3, int answerNr, String difficulty) {
         this.question = question;
         this.option1 = option1;
         this.option2 = option2;
         this.option3 = option3;
         this.answerNr = answerNr;
         this.difficulty = difficulty;
-        this.categoryId = categoryId;
     }
 
     @Ignore
@@ -72,7 +59,6 @@ public class Question implements Parcelable {
         option3 = in.readString();
         answerNr = in.readInt();
         difficulty = in.readString();
-        categoryId = in.readInt();
     }
 
     public static final Creator<Question> CREATOR = new Creator<Question>() {
@@ -111,10 +97,6 @@ public class Question implements Parcelable {
         return difficulty;
     }
 
-    public int getCategoryId() {
-        return categoryId;
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -129,6 +111,5 @@ public class Question implements Parcelable {
         dest.writeString(option3);
         dest.writeInt(answerNr);
         dest.writeString(difficulty);
-        dest.writeInt(categoryId);
     }
 }

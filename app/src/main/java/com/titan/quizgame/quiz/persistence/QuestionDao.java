@@ -24,9 +24,6 @@ public interface QuestionDao {
     @Query("SELECT * from questions WHERE difficulty  = :difficulty")
     Flowable<List<Question>> getQuestions(String difficulty);
 
-    @Query("SELECT * from questions WHERE difficulty  = :difficulty AND categoryId = :categoryId")
-    Flowable<List<Question>> getQuestions(String difficulty, int categoryId);
-
     // Emits the number of users added to the database.
     @Insert
     public Maybe<long[]> insertQuestions(List<Question> questions);
