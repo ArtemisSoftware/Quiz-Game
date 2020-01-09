@@ -20,4 +20,25 @@ public class Board {
         this.category = category;
         this.day = day;
     }
+
+
+    public String getName() {
+        return name;
+    }
+
+    public int getPlace() {
+        return place;
+    }
+
+    public int getHighScore() {
+        return highScore;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public Date getDay() {
+        return day;
+    }
 }
