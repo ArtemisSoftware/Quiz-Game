@@ -16,4 +16,8 @@ public class GameConstants {
         };
     }
 
+    public static final int PROGRAMMING = 1;
+    public static final int GEOGRAPHY = 2;
+    public static final int MATH = 3;
+
 }
