@@ -83,4 +83,7 @@ dependencies {
         // Excludes the support library because it's already included by Glide.
         transitive = false
     }
+
+
+    implementation 'com.facebook.stetho:stetho:1.5.1'
 }
