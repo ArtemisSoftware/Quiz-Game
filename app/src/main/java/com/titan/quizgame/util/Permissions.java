@@ -6,7 +6,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
-import android.provider.MediaStore;
 import android.provider.Settings;
 import android.widget.Toast;
 
@@ -20,6 +19,7 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.PermissionRequestErrorListener;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.karumi.dexter.listener.single.PermissionListener;
+import com.titan.quizgame.player.ImageListener;
 
 import java.util.List;
 
@@ -67,6 +67,32 @@ public class Permissions {
     }
 
 
+
+    public static void requestImagePermission(final Activity context, final ImageListener imageListener) {
+
+        Dexter.withActivity(context)
+                .withPermissions(Constants.IMAGE_PERMISSIONS)
+                .withListener(new MultiplePermissionsListener() {
+                    @Override
+                    public void onPermissionsChecked(MultiplePermissionsReport report) {
+                        if (report.areAllPermissionsGranted()) {
+                            imageListener.imageAction();
+                        }
+
+                        if (report.isAnyPermissionPermanentlyDenied()) {
+                            showSettingsDialog(context);
+                        }
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+                        token.continuePermissionRequest();
+                    }
+                }).check();
+    }
+
+
+
     /**
      * Requesting camera permission
      * This uses single permission model from dexter
@@ -81,7 +107,7 @@ public class Permissions {
                     @Override
                     public void onPermissionGranted(PermissionGrantedResponse response) {
                         // permission is granted
-                        openCamera(context);
+                        //openCamera(context);
                     }
 
                     @Override
@@ -139,8 +165,5 @@ public class Permissions {
         context.startActivityForResult(intent, 101);
     }
 
-    private static void openCamera(Activity context) {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        context.startActivityForResult(intent, 100);
-    }
+
 }

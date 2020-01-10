@@ -14,12 +14,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".player.BoardActivity"></activity>
+        <activity android:name=".player.ImagePickerActivity" />
+        <activity android:name=".player.PlayerProfileActivity" />
+        <activity android:name=".sliders.IntroActivity" />
         <activity android:name=".quiz.QuizActivity"></activity>
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".sliders.IntroActivity"></activity>
         <activity android:name=".settings.SettingsActivity" />
+        <activity android:name=".settings.SettingsActivity" /> <!-- uCrop cropping activity -->
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".SplashActivity"
             android:theme="@style/AppTheme.NoActionBar">
