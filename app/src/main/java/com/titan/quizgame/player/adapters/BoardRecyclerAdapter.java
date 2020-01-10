@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.util.ViewPreloadSizeProvider;
 import com.titan.quizgame.R;
 import com.titan.quizgame.player.models.Board;
 
@@ -20,15 +21,14 @@ public class BoardRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     //private RequestManager requestManager;
 
-    //private ViewPreloadSizeProvider<String> preloadSizeProvider;
+    private ViewPreloadSizeProvider<String> preloadSizeProvider;
 
 
 
-    public BoardRecyclerAdapter(/*RequestManager requestManager, ViewPreloadSizeProvider<String> preloadSizeProvider*/) {
+    public BoardRecyclerAdapter(/*RequestManager requestManager,*/ ViewPreloadSizeProvider<String> preloadSizeProvider) {
         //this.requestManager = requestManager;
         this.results = new ArrayList<>();
-
-        //this.preloadSizeProvider = preloadSizeProvider;
+        this.preloadSizeProvider = preloadSizeProvider;
     }
 
     @NonNull
@@ -38,7 +38,7 @@ public class BoardRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
         View view = null;
 
         view = LayoutInflater.from(parent.getContext()).inflate(R.layout.board_list_item, parent, false);
-        return new BoardViewHolder(view/*, this.requestManager, preloadSizeProvider*/);
+        return new BoardViewHolder(view/*, this.requestManager*/, preloadSizeProvider);
 
 
     }

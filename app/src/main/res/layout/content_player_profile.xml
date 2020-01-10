@@ -72,7 +72,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1320"
+                android:text="@string/unavailable"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/meta_count"
                 android:textStyle="bold" />
@@ -81,7 +81,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@string/font_family_condensed"
-                android:text="@string/posts"
+                android:text="@string/difficuty"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/meta_label" />
         </LinearLayout>
@@ -96,7 +96,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="4.3m"
+                android:text="@string/unavailable"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/meta_count"
                 android:textStyle="bold" />
@@ -105,7 +105,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@string/font_family_condensed"
-                android:text="@string/followers"
+                android:text="@string/score"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/meta_label" />
         </LinearLayout>
@@ -120,7 +120,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="123"
+                android:text="@string/unavailable"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/meta_count"
                 android:textStyle="bold" />
@@ -129,7 +129,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@string/font_family_condensed"
-                android:text="@string/following"
+                android:text="@string/category"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/meta_label" />
         </LinearLayout>

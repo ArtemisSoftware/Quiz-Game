@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
 
 import com.mikhaellopez.circularimageview.CircularImageView;
@@ -17,18 +16,19 @@ import com.titan.quizgame.util.Image;
 import com.titan.quizgame.util.ImageCropConstants;
 import com.titan.quizgame.util.Permissions;
 
-import java.io.IOException;
 
 public class PlayerActivity extends AppCompatActivity implements ImageListener{
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player);
 
-
         ((CircularImageView) findViewById(R.id.img_plus)).setOnClickListener(btn_notificacao_OnClickListener);
     }
+
+
 
 
     @Override

@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".player.ImagePickerActivity"></activity>
+        <activity android:name=".player.BoardActivity"></activity>
+        <activity android:name=".player.ImagePickerActivity" />
         <activity android:name=".player.PlayerActivity" />
         <activity android:name=".sliders.IntroActivity" />
         <activity

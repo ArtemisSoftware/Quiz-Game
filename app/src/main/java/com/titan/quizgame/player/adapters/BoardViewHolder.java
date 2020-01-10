@@ -6,6 +6,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.util.ViewPreloadSizeProvider;
 import com.titan.quizgame.player.models.Board;
 
 public class BoardViewHolder extends RecyclerView.ViewHolder {
@@ -22,16 +23,16 @@ public class BoardViewHolder extends RecyclerView.ViewHolder {
     //ImageView picture_image;
 
 
-    //ViewPreloadSizeProvider viewPreloadSizeProvider;
+    ViewPreloadSizeProvider viewPreloadSizeProvider;
 
     //RequestManager requestManager;
 
-    public BoardViewHolder(@NonNull View itemView/*, RequestManager requestManager, ViewPreloadSizeProvider viewPreloadSizeProvider*/) {
+    public BoardViewHolder(@NonNull View itemView/*, RequestManager requestManager*/, ViewPreloadSizeProvider viewPreloadSizeProvider) {
         super(itemView);
 
         //ButterKnife.bind(this, itemView);
         //this.requestManager = requestManager;
-        //this.viewPreloadSizeProvider = viewPreloadSizeProvider;
+        this.viewPreloadSizeProvider = viewPreloadSizeProvider;
 
     }
 
