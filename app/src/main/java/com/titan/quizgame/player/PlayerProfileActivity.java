@@ -11,25 +11,38 @@ import android.view.View;
 
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.titan.quizgame.R;
+import com.titan.quizgame.player.models.Board;
 import com.titan.quizgame.util.ActivityRequestCode;
 import com.titan.quizgame.util.Image;
 import com.titan.quizgame.util.ImageCropConstants;
 import com.titan.quizgame.util.Permissions;
 
 
-public class PlayerActivity extends AppCompatActivity implements ImageListener{
+public class PlayerProfileActivity extends AppCompatActivity implements ImageListener{
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_player);
+        setContentView(R.layout.activity_player_profile);
 
         ((CircularImageView) findViewById(R.id.img_plus)).setOnClickListener(btn_notificacao_OnClickListener);
     }
 
 
 
+    private void fillProfile(Board board){
+
+        /*
+        img_profile
+                txt_name
+        profile_desc
+                txt_difficulty
+        txt_score
+                txt_category
+                */
+
+    }
 
     @Override
     public void imageAction() {

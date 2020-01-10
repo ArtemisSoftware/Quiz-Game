@@ -34,6 +34,7 @@
     </RelativeLayout>
 
     <TextView
+        android:id="@+id/txt_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@string/font_family_medium"
@@ -70,6 +71,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/txt_difficulty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/unavailable"
@@ -94,6 +96,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/txt_score"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/unavailable"
@@ -118,6 +121,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/txt_category"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/unavailable"

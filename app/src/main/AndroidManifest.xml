@@ -16,7 +16,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".player.BoardActivity"></activity>
         <activity android:name=".player.ImagePickerActivity" />
-        <activity android:name=".player.PlayerActivity" />
+        <activity android:name=".player.PlayerProfileActivity" />
         <activity android:name=".sliders.IntroActivity" />
         <activity
             android:name=".MainActivity"
