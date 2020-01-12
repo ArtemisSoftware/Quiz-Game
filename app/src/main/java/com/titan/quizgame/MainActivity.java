@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Permissions.requestAppPermission(this);
 
-        initIntro();
+        //initIntro();
     }
 
 
@@ -130,9 +130,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadDifficultyLevels() {
-        String[] difficultyLevels = GameConstants.getAllDifficultyLevels();
 
-        ArrayAdapter<String> adapterDifficulty = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, difficultyLevels);
+        ArrayAdapter<String> adapterDifficulty = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, GameConstants.getAllDifficultyLevels());
         adapterDifficulty.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerDifficulty.setAdapter(adapterDifficulty);
     }
@@ -145,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateHighscore(int highscoreNew) {
         highscore = highscoreNew;
-        textViewHighscore.setText("Highscore: " + highscore);
+        textViewHighscore.setText(highscore + "");
 
         SharedPreferences prefs = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
