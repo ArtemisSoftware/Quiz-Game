@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.titan.quizgame.R;
@@ -17,9 +18,14 @@ import com.titan.quizgame.util.Image;
 import com.titan.quizgame.util.ImageCropConstants;
 import com.titan.quizgame.util.Permissions;
 
+import butterknife.BindView;
+
 
 public class PlayerProfileActivity extends AppCompatActivity implements ImageListener{
 
+
+    @BindView(R.id.txt_name)
+    TextView txt_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

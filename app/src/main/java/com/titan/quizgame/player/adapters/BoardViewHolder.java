@@ -7,15 +7,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.util.ViewPreloadSizeProvider;
+import com.titan.quizgame.R;
 import com.titan.quizgame.player.models.Board;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class BoardViewHolder extends RecyclerView.ViewHolder {
 
 
-    //@BindView(R.id.txt_name)
+    @BindView(R.id.txt_name)
     TextView txt_name;
 
-    //@BindView(R.id.txt_score)
+    @BindView(R.id.txt_score)
     TextView txt_score;
 
 
@@ -30,7 +34,7 @@ public class BoardViewHolder extends RecyclerView.ViewHolder {
     public BoardViewHolder(@NonNull View itemView/*, RequestManager requestManager*/, ViewPreloadSizeProvider viewPreloadSizeProvider) {
         super(itemView);
 
-        //ButterKnife.bind(this, itemView);
+        ButterKnife.bind(this, itemView);
         //this.requestManager = requestManager;
         this.viewPreloadSizeProvider = viewPreloadSizeProvider;
 

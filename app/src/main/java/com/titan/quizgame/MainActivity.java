@@ -78,15 +78,9 @@ public class MainActivity extends AppCompatActivity {
 
         categoryDao = QuizDatabase.getInstance(this).categoryDao();
 
-
         loadCategories();
         loadDifficultyLevels();
         loadHighscore();
-
-
-        //Permissions.requestAppPermission(this);
-
-        //initIntro();
     }
 
 

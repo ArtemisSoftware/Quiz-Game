@@ -12,10 +12,12 @@ import com.mikhaellopez.circularimageview.CircularImageView;
 import com.titan.quizgame.R;
 import com.titan.quizgame.player.adapters.BoardRecyclerAdapter;
 
+import butterknife.BindView;
+
 public class BoardActivity extends AppCompatActivity {
 
 
-    //@BindView(R.id.picture_list)
+    @BindView(R.id.board_list)
     RecyclerView recyclerView;
 
     private BoardRecyclerAdapter boardRecyclerAdapter;
