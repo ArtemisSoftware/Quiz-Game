@@ -13,6 +13,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import com.titan.quizgame.quiz.GameConstants;
 import com.titan.quizgame.quiz.models.Category;
 import com.titan.quizgame.quiz.models.Question;
+import com.titan.quizgame.util.DataBase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,13 +21,15 @@ import java.util.List;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-@Database(entities = {Question.class, Category.class}, version = 1)
+@Database(entities = {Question.class, Category.class}, version = DataBase.DATABASE_VERSION)
 public abstract class QuizDatabase extends RoomDatabase {
-
-    private static QuizDatabase instance;
 
     public abstract QuestionDao questionDao();
     public abstract CategoryDao categoryDao();
+
+    /*
+
+    private static QuizDatabase instance;
 
     public static synchronized QuizDatabase getInstance(Context context) {
         if (instance == null) {
@@ -40,6 +43,7 @@ public abstract class QuizDatabase extends RoomDatabase {
 
         return instance;
     }
+    */
 /*
 
     static final Migration MIGRATION_1_2 = new Migration(1, 2) {
@@ -83,7 +87,7 @@ public abstract class QuizDatabase extends RoomDatabase {
     };
 */
 
-
+/*
     private static RoomDatabase.Callback roomCallback = new RoomDatabase.Callback() {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
@@ -151,5 +155,5 @@ public abstract class QuizDatabase extends RoomDatabase {
 
         }
     };
-
+*/
 }

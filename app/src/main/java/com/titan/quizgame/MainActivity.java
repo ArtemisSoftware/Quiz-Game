@@ -76,7 +76,7 @@ public class MainActivity extends BaseActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        categoryDao = QuizDatabase.getInstance(this).categoryDao();
+        //categoryDao = QuizDatabase.getInstance(this).categoryDao();
 
         loadCategories();
         loadDifficultyLevels();
@@ -99,7 +99,7 @@ public class MainActivity extends BaseActivity {
 
 
     private void loadCategories() {
-
+/*
         categoryDao.getCategories()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -120,7 +120,7 @@ public class MainActivity extends BaseActivity {
                             }
                         }
                 );
-
+*/
     }
 
     private void loadDifficultyLevels() {

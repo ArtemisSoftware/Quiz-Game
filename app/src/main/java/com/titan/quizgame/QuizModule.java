@@ -1,26 +1,42 @@
 package com.titan.quizgame;
 
+import android.app.Application;
+
+import androidx.room.Room;
+
+import com.titan.quizgame.quiz.persistence.CategoryDao;
+import com.titan.quizgame.quiz.persistence.QuestionDao;
+import com.titan.quizgame.quiz.persistence.QuizDatabase;
+import com.titan.quizgame.quiz.repository.QuizRepository;
+import com.titan.quizgame.util.DataBase;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import timber.log.Timber;
 
 @Module
 public class QuizModule {
 
-    /*
+
     @Singleton
     @Provides
-    static NoteDataBase provideNoteDatabase(Application application){
-        return Room.databaseBuilder(application, NoteDataBase.class, NoteDataBase.DATABASE_NAME).build();
+    static QuizDatabase provideNoteDatabase(Application application){
+
+        QuizDatabase quizDatabase = Room.databaseBuilder(application, QuizDatabase.class, DataBase.DATABASE_NAME).build();
+
+        Timber.d("Providing quiz database: " + quizDatabase);
+
+        return quizDatabase;
     }
 
 
     @Singleton
     @Provides
-    static QuestionDao provideQuestionDao(NoteDataBase noteDataBase){
+    static QuestionDao provideQuestionDao(QuizDatabase quizDataBase){
 
-        QuestionDao dao = noteDataBase.getNoteDao();
+        QuestionDao dao = quizDataBase.questionDao();
 
         Timber.d("Providing Question Dao: " + dao);
 
@@ -30,9 +46,9 @@ public class QuizModule {
 
     @Singleton
     @Provides
-    static CategoryDao provideCategoryDao(NoteDataBase noteDataBase){
+    static CategoryDao provideCategoryDao(QuizDatabase quizDataBase){
 
-        CategoryDao dao = noteDataBase.getNoteDao();
+        CategoryDao dao = quizDataBase.categoryDao();
 
         Timber.d("Providing Category Dao: " + dao);
 
@@ -50,6 +66,6 @@ public class QuizModule {
 
         return repository;
     }
-    */
+
 
 }

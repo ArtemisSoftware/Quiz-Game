@@ -2,6 +2,8 @@ package com.titan.quizgame;
 
 import androidx.lifecycle.ViewModel;
 
+import com.titan.quizgame.quiz.repository.QuizRepository;
+
 import javax.inject.Inject;
 
 import timber.log.Timber;
