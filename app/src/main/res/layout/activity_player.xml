@@ -21,21 +21,11 @@
 
         <include layout="@layout/content_player_profile" />
 
-
     </com.google.android.material.appbar.AppBarLayout>
-<!--
-    <FrameLayout
-        android:id="@+id/activity_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </FrameLayout>
--->
 
 
     <include
-        android:id="@+id/include"
-        layout="@layout/content_message" />
+        android:id="@+id/include_container" />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
