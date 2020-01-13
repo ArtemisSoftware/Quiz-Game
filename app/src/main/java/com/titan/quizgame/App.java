@@ -1,5 +1,7 @@
 package com.titan.quizgame;
 
+import com.titan.quizgame.di.DaggerAppComponent;
+
 import dagger.android.AndroidInjector;
 import dagger.android.support.DaggerApplication;
 import timber.log.Timber;
@@ -18,6 +20,6 @@ public class App extends DaggerApplication {
 
         Timber.d("AndroidInjector... ");
 
-        return null;
+        return DaggerAppComponent.builder().application(this).build();
     }
 }
