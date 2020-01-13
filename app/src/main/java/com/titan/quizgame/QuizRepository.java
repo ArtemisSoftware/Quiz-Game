@@ -26,14 +26,19 @@ public class QuizRepository {
         this.categoryDao = categoryDao;
     }
 */
+
+
 /*
-    public Flowable<List<Question>> getQuestions(String difficulty, int categoryId) {
+    public LiveData<List<Question>> getQuestions(String difficulty, int categoryId) {
         return questionDao.getQuestions(difficulty, categoryId);
     }
 */
+
 /*
-    public Flowable<List<Category>> getCategories() {
+    public LiveData<List<Category>> getCategories() {
         return questionDao.getCategories();
     }
     */
+
+
 }
