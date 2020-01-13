@@ -1,4 +1,4 @@
-package com.titan.quizgame.quiz;
+package com.titan.quizgame.util;
 
 public class ActivityCode {
 

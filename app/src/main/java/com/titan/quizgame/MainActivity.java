@@ -1,52 +1,29 @@
 package com.titan.quizgame;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.Manifest;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.karumi.dexter.Dexter;
-import com.karumi.dexter.MultiplePermissionsReport;
-import com.karumi.dexter.PermissionToken;
-import com.karumi.dexter.listener.DexterError;
-import com.karumi.dexter.listener.PermissionRequest;
-import com.karumi.dexter.listener.PermissionRequestErrorListener;
-import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.titan.quizgame.player.PlayerProfileActivity;
-import com.titan.quizgame.quiz.ActivityCode;
+import com.titan.quizgame.util.ActivityCode;
 import com.titan.quizgame.quiz.GameConstants;
 import com.titan.quizgame.quiz.QuizActivity;
 import com.titan.quizgame.quiz.models.Category;
 import com.titan.quizgame.quiz.persistence.CategoryDao;
-import com.titan.quizgame.quiz.persistence.QuizDatabase;
 import com.titan.quizgame.settings.SettingsActivity;
-import com.titan.quizgame.sliders.IntroActivity;
-import com.titan.quizgame.util.Constants;
-import com.titan.quizgame.util.Permissions;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity extends BaseActivity {
 
@@ -54,8 +31,6 @@ public class MainActivity extends BaseActivity {
     public static final String KEY_HIGHSCORE = "keyHighscore";
     private int highscore;
 
-
-    private CategoryDao categoryDao;
 
     @BindView(R.id.text_view_highscore)
     TextView textViewHighscore;
@@ -75,8 +50,6 @@ public class MainActivity extends BaseActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        //categoryDao = QuizDatabase.getInstance(this).categoryDao();
 
         loadCategories();
         loadDifficultyLevels();

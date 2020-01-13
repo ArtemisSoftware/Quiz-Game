@@ -1,8 +1,8 @@
 package com.titan.quizgame.di;
 
 import com.titan.quizgame.MainActivity;
-import com.titan.quizgame.QuizModule;
-import com.titan.quizgame.QuizViewModelsModule;
+import com.titan.quizgame.di.quiz.QuizModule;
+import com.titan.quizgame.di.quiz.QuizViewModelsModule;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;

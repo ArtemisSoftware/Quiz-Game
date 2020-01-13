@@ -1,4 +1,4 @@
-package com.titan.quizgame;
+package com.titan.quizgame.di.quiz;
 
 import android.app.Application;
 
