@@ -1,13 +1,25 @@
 package com.titan.quizgame;
 
-import android.app.Application;
+import com.titan.quizgame.di.DaggerAppComponent;
 
-import com.facebook.stetho.Stetho;
+import dagger.android.AndroidInjector;
+import dagger.android.support.DaggerApplication;
+import timber.log.Timber;
 
-public class App extends Application {
+public class App extends DaggerApplication {
 
+    @Override
     public void onCreate() {
         super.onCreate();
         Stetho.initializeWithDefaults(this);
+        Timber.plant(new Timber.DebugTree());
+    }
+
+    @Override
+    protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
+
+        Timber.d("AndroidInjector... ");
+
+        return DaggerAppComponent.builder().application(this).build();
     }
 }
