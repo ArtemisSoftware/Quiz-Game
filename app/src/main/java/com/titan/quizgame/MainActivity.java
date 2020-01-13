@@ -2,6 +2,7 @@ package com.titan.quizgame;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,6 +21,9 @@ import com.titan.quizgame.quiz.QuizActivity;
 import com.titan.quizgame.quiz.models.Category;
 import com.titan.quizgame.quiz.persistence.CategoryDao;
 import com.titan.quizgame.settings.SettingsActivity;
+import com.titan.quizgame.util.viewmodel.ViewModelProviderFactory;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,6 +45,13 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.spinner_category)
     Spinner spinnerCategory;
 
+
+    private QuizViewModel viewModel;
+
+    @Inject
+    ViewModelProviderFactory providerFactory;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +61,9 @@ public class MainActivity extends BaseActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        viewModel = ViewModelProviders.of(this, providerFactory).get(QuizViewModel.class);
+
 
         loadCategories();
         loadDifficultyLevels();

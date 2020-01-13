@@ -7,7 +7,9 @@ import android.widget.ProgressBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-public abstract class BaseActivity extends AppCompatActivity {
+import dagger.android.support.DaggerAppCompatActivity;
+
+public abstract class BaseActivity extends DaggerAppCompatActivity {
 
     public ProgressBar mProgressBar;
 
