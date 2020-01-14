@@ -8,6 +8,8 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Provider;
 
+import timber.log.Timber;
+
 public class ViewModelProviderFactory implements ViewModelProvider.Factory {
 
 
@@ -20,6 +22,7 @@ public class ViewModelProviderFactory implements ViewModelProvider.Factory {
 
     @Override
     public <T extends ViewModel> T create(Class<T> modelClass) {
+
         Provider<? extends ViewModel> creator = creators.get(modelClass);
         if (creator == null) { // if the viewmodel has not been created
 
@@ -41,6 +44,9 @@ public class ViewModelProviderFactory implements ViewModelProvider.Factory {
 
         // return the Provider
         try {
+
+            Timber.d("ViewModel was found: " + modelClass.getCanonicalName());
+
             return (T) creator.get();
         } catch (Exception e) {
             throw new RuntimeException(e);

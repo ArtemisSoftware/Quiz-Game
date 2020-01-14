@@ -14,13 +14,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.bumptech.glide.RequestManager;
 import com.titan.quizgame.player.PlayerProfileActivity;
 import com.titan.quizgame.util.ActivityCode;
 import com.titan.quizgame.quiz.GameConstants;
 import com.titan.quizgame.quiz.QuizActivity;
 import com.titan.quizgame.quiz.models.Category;
-import com.titan.quizgame.quiz.persistence.CategoryDao;
 import com.titan.quizgame.settings.SettingsActivity;
 import com.titan.quizgame.util.viewmodel.ViewModelProviderFactory;
 
@@ -29,7 +27,6 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import dagger.android.support.DaggerAppCompatActivity;
 
 public class MainActivity extends BaseActivity {
 
@@ -37,9 +34,6 @@ public class MainActivity extends BaseActivity {
     public static final String KEY_HIGHSCORE = "keyHighscore";
     private int highscore;
 
-
-    @Inject
-    ViewModelProviderFactory providerFactory;
 
 
     @BindView(R.id.text_view_highscore)
@@ -52,8 +46,11 @@ public class MainActivity extends BaseActivity {
     Spinner spinnerCategory;
 
 
+
     private QuizViewModel viewModel;
 
+    @Inject
+    ViewModelProviderFactory providerFactory;
 
 
 
@@ -70,12 +67,33 @@ public class MainActivity extends BaseActivity {
 
         viewModel = ViewModelProviders.of(this, providerFactory).get(QuizViewModel.class);
 
+
+        subscribeObservers();
 /*
         loadCategories();
         loadDifficultyLevels();
         loadHighscore();
         */
+
+
+        viewModel.loadCategories();
     }
+
+
+
+    private void subscribeObservers(){
+  /*
+        viewModel.observeNotes().observe(this, new Observer<List<Note>>() {
+            @Override
+            public void onChanged(List<Note> notes) {
+                if(notes != null){
+                    adapter.setNotes(notes);
+                }
+            }
+        });
+*/
+    }
+
 
 
 

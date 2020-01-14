@@ -19,14 +19,12 @@ public class QuizViewModel extends ViewModel {
     private final QuizRepository quizRepository;
 
     @Inject
-    public QuizViewModel(/*QuizRepository quizRepository*/) {
+    public QuizViewModel(QuizRepository quizRepository) {
 
-        this.quizRepository = null;//quizRepository;
-
+        this.quizRepository = quizRepository;
 
         Timber.d("Quiz repository: " + this.quizRepository);
         Timber.d("QuizViewModel is ready");
-
     }
 
 
