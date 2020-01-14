@@ -1,6 +1,8 @@
 package com.titan.quizgame.quiz;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -14,16 +16,23 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.titan.quizgame.BaseActivity;
+import com.titan.quizgame.QuizViewModel;
 import com.titan.quizgame.R;
+import com.titan.quizgame.quiz.models.Category;
 import com.titan.quizgame.quiz.models.Question;
 import com.titan.quizgame.quiz.persistence.QuestionDao;
 import com.titan.quizgame.quiz.persistence.QuizDatabase;
+import com.titan.quizgame.ui.Resource;
 import com.titan.quizgame.util.ActivityCode;
+import com.titan.quizgame.util.viewmodel.ViewModelProviderFactory;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,8 +40,9 @@ import butterknife.OnClick;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
+import timber.log.Timber;
 
-public class QuizActivity extends AppCompatActivity {
+public class QuizActivity extends BaseActivity {
 
     @BindView(R.id.text_view_question)
     TextView textViewQuestion;
@@ -67,7 +77,7 @@ public class QuizActivity extends AppCompatActivity {
     @BindView(R.id.button_confirm_next)
     Button buttonConfirmNext;
 
-    private QuestionDao questionDao;
+
 
     private ColorStateList textColorDefaultRb;
     private ColorStateList textColorDefaultCd;
@@ -76,7 +86,6 @@ public class QuizActivity extends AppCompatActivity {
 
     private int questionCountTotal;
     private Question currentQuestion;
-
     private long backPressedTime;
     private CountDownTimer countDownTimer;
 
@@ -100,6 +109,14 @@ public class QuizActivity extends AppCompatActivity {
 
 
 
+    private QuizViewModel viewModel;
+
+    @Inject
+    ViewModelProviderFactory providerFactory;
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,7 +124,8 @@ public class QuizActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        //questionDao = QuizDatabase.getInstance(this).questionDao();
+
+        viewModel = ViewModelProviders.of(this, providerFactory).get(QuizViewModel.class);
 
         textColorDefaultRb = rb1.getTextColors();
         textColorDefaultCd = textViewCountDown.getTextColors();
@@ -115,16 +133,17 @@ public class QuizActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String difficulty = intent.getStringExtra(ActivityCode.EXTRA_DIFFICULTY);
-        int categoryID = intent.getIntExtra(ActivityCode.EXTRA_CATEGORY_ID, 0);
-        String categoryName = intent.getStringExtra(ActivityCode.EXTRA_CATEGORY_NAME);
+        Category category = intent.getExtras().getParcelable(ActivityCode.EXTRA_CATEGORY);
 
 
         textViewDifficulty.setText("Difficulty: " + difficulty);
-        textViewCategory.setText("Category: " + categoryName);
+        textViewCategory.setText("Category: " + category.getName());
+
+        subscribeObservers(difficulty, category.getId());
 
 
         if(savedInstanceState == null) {
-            getQuestions(categoryID, difficulty);
+            viewModel.loadQuestions(difficulty, category.getId());
         }
         else{
             questionList = savedInstanceState.getParcelableArrayList(KEY_QUESTION_LIST);
@@ -144,6 +163,33 @@ public class QuizActivity extends AppCompatActivity {
             }
         }
     }
+
+    private void subscribeObservers(String difficulty, int id) {
+
+        viewModel.observeQuestions().observe(this, new Observer<Resource>() {
+            @Override
+            public void onChanged(Resource resource) {
+
+
+                Timber.d("onChanged: " + resource.toString());
+
+                switch (resource.status){
+
+                    case SUCCESS:
+
+                        loadQuestions((List<Question>) resource.data);
+                        break;
+
+                    case ERROR:
+
+                        break;
+
+                }
+            }
+        });
+    }
+
+
 
     private void showNextQuestion() {
         rb1.setTextColor(textColorDefaultRb);
@@ -259,32 +305,14 @@ public class QuizActivity extends AppCompatActivity {
 
 
 
-    private void getQuestions(int categoryID, String difficulty){
+    private void loadQuestions(List<Question> questions){
 
-        //getting flowable to subscribe consumer that will access the data from Room database.
-        questionDao.getQuestions(difficulty, categoryID)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                new Consumer<List<Question>>() {
-                    @Override
-                    public void accept(List<Question> questions) throws Exception {
-
-                        questionList = (ArrayList<Question>)questions;
-                        questionCountTotal = questionList.size();
-                        Collections.shuffle(questionList);
-                        showNextQuestion();
-                    }
-                },
-                new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-
-                    }
-                }
-        );
-
+        questionList = (ArrayList<Question>)questions;
+        questionCountTotal = questionList.size();
+        Collections.shuffle(questionList);
+        showNextQuestion();
     }
+
 
     @OnClick(R.id.button_confirm_next)
     public void onButtonClick(View view) {

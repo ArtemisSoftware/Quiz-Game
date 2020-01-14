@@ -20,7 +20,6 @@ import io.reactivex.Flowable;
 public class QuizRepository {
 
 
-    //inject
     @NonNull
     private QuestionDao questionDao;
 

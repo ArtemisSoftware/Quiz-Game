@@ -18,7 +18,6 @@ import android.widget.TextView;
 import com.titan.quizgame.player.PlayerProfileActivity;
 import com.titan.quizgame.ui.Resource;
 import com.titan.quizgame.util.ActivityCode;
-import com.titan.quizgame.quiz.GameConstants;
 import com.titan.quizgame.quiz.QuizActivity;
 import com.titan.quizgame.quiz.models.Category;
 import com.titan.quizgame.settings.SettingsActivity;
@@ -77,7 +76,7 @@ public class MainActivity extends BaseActivity {
 
         loadHighscore();
 
-        viewModel.loadCategories();
+        viewModel.loadConfigurations();
 
     }
 
@@ -104,7 +103,6 @@ public class MainActivity extends BaseActivity {
                         break;
 
                 }
-
             }
         });
 
@@ -139,12 +137,9 @@ public class MainActivity extends BaseActivity {
 
     private void startQuiz() {
 
-        Category selectedCategory = (Category) spinnerCategory.getSelectedItem();
-
         Intent intent = new Intent(this, QuizActivity.class);
         intent.putExtra(ActivityCode.EXTRA_DIFFICULTY, spinnerDifficulty.getSelectedItem().toString());
-        intent.putExtra(ActivityCode.EXTRA_CATEGORY_ID, selectedCategory.getId());
-        intent.putExtra(ActivityCode.EXTRA_CATEGORY_NAME, selectedCategory.getName());
+        intent.putExtra(ActivityCode.EXTRA_CATEGORY, (Category) spinnerCategory.getSelectedItem());
         startActivityForResult(intent, ActivityCode.REQUEST_CODE_QUIZ);
     }
 

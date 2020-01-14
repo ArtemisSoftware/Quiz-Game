@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.titan.quizgame.quiz.GameConstants;
 import com.titan.quizgame.quiz.models.Category;
+import com.titan.quizgame.quiz.models.Question;
 import com.titan.quizgame.quiz.repository.QuizRepository;
 import com.titan.quizgame.ui.Resource;
 
@@ -14,9 +15,7 @@ import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
 public class QuizViewModel extends ViewModel {
@@ -28,6 +27,7 @@ public class QuizViewModel extends ViewModel {
 
     private MutableLiveData<Resource> categoriesLiveData;
     private MutableLiveData<Resource> difficultyLiveData;
+    private MutableLiveData<Resource> questionsLiveData;
 
 
 
@@ -36,8 +36,10 @@ public class QuizViewModel extends ViewModel {
 
         this.quizRepository = quizRepository;
         this.disposables = new CompositeDisposable();
+
         categoriesLiveData = new MutableLiveData<>();
         difficultyLiveData = new MutableLiveData<>();
+        questionsLiveData = new MutableLiveData<>();
 
         Timber.d("Quiz repository: " + this.quizRepository);
         Timber.d("QuizViewModel is ready");
@@ -52,8 +54,12 @@ public class QuizViewModel extends ViewModel {
         return difficultyLiveData;
     }
 
+    public MutableLiveData<Resource> observeQuestions(){
+        return questionsLiveData;
+    }
 
-    public void loadCategories() {
+
+    public void loadConfigurations() {
 
         disposables.add(
                 this.quizRepository.getCategories()
@@ -79,6 +85,34 @@ public class QuizViewModel extends ViewModel {
 
 
         difficultyLiveData.setValue(Resource.success(GameConstants.getAllDifficultyLevels(), ""));
+
+    }
+
+
+    public void loadQuestions(String difficulty, int categoryID) {
+
+        disposables.add(
+        //getting flowable to subscribe consumer that will access the data from Room database.
+                quizRepository.getQuestions(difficulty, categoryID)
+                //.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        new Consumer<List<Question>>() {
+                            @Override
+                            public void accept(List<Question> questions) throws Exception {
+
+                                questionsLiveData.setValue(Resource.success(questions, ""));
+
+                            }
+                        },
+                        new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) throws Exception {
+
+                            }
+                        }
+                )
+        );
 
 
     }
