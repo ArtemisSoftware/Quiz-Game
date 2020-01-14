@@ -16,6 +16,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.titan.quizgame.player.PlayerProfileActivity;
+import com.titan.quizgame.quiz.QuestionActivity;
 import com.titan.quizgame.ui.Resource;
 import com.titan.quizgame.util.ActivityCode;
 import com.titan.quizgame.quiz.QuizActivity;
@@ -199,15 +200,32 @@ public class MainActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == ActivityCode.REQUEST_CODE_QUIZ) {
-            if (resultCode == RESULT_OK) {
-                int score = data.getIntExtra(ActivityCode.EXTRA_SCORE, 0);
-                if (score > highscore) {
-                    updateHighscore(score);
+        switch (requestCode){
+
+            case ActivityCode.REQUEST_CODE_QUIZ:
+
+                if (resultCode == RESULT_OK) {
+                    int score = data.getIntExtra(ActivityCode.EXTRA_SCORE, 0);
+                    if (score > highscore) {
+                        updateHighscore(score);
+                    }
                 }
-            }
+                break;
+
+
+            case ActivityCode.REQUEST_CODE_CONTRIBUTE:
+
+                if (resultCode == RESULT_OK) {
+                    //toast success
+                }
+                break;
+
+
+            default:
+                break;
         }
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -217,13 +235,24 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
 
-        if (id == R.id.action_settings) {
-            // launch settings activity
-            startActivity(new Intent(MainActivity.this, SettingsActivity.class));
-            return true;
+        switch (item.getItemId()){
+
+            case R.id.action_settings:
+
+                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+                break;
+
+            case R.id.action_contribute:
+
+                startActivityForResult(new Intent(MainActivity.this, QuestionActivity.class), ActivityCode.REQUEST_CODE_CONTRIBUTE);
+                break;
+
+
+            default:
+                break;
         }
+
 
         return super.onOptionsItemSelected(item);
     }

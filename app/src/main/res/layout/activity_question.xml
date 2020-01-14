@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".quiz.QuestionActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="5dp"
+        android:text="New question"
+        android:textSize="25sp"
+        android:textStyle="bold" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="@string/category"
+            android:textSize="20sp" />
+
+
+        <Spinner
+            android:id="@+id/spinner_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/button_start_quiz"
+            android:layout_marginLeft="5dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="@string/difficuty"
+            android:textSize="20sp"
+            android:layout_marginLeft="15dp" />
+
+        <Spinner
+            android:id="@+id/spinner_difficulty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/button_start_quiz"
+            android:layout_marginLeft="5dp" />
+    </LinearLayout>
+
+
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/txt_question"
+        style="@style/parent.TextLayout"
+        android:layout_marginTop="@dimen/signup_text_margin_top">
+        <EditText
+            style="@style/modifiedEditText"
+            android:inputType="textEmailAddress"
+            android:maxLines="1"
+            android:hint="Question"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="5dp"
+        android:text="Options"
+        android:textSize="25sp"
+        android:textStyle="bold" />
+
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/txt_option_one"
+        style="@style/parent.TextLayout"
+        android:layout_marginTop="@dimen/signup_text_margin_top">
+        <EditText
+            style="@style/modifiedEditText"
+            android:inputType="textEmailAddress"
+            android:maxLines="1"
+            android:hint="Option 1"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/txt_option_two"
+        style="@style/parent.TextLayout"
+        android:layout_marginTop="@dimen/signup_text_margin_top">
+        <EditText
+            style="@style/modifiedEditText"
+            android:inputType="textEmailAddress"
+            android:maxLines="1"
+            android:hint="Option 2"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/txt_option_three"
+        style="@style/parent.TextLayout"
+        android:layout_marginTop="@dimen/signup_text_margin_top">
+        <EditText
+            android:id="@+id/editTextEmail"
+            style="@style/modifiedEditText"
+            android:inputType="textEmailAddress"
+            android:maxLines="1"
+            android:hint="Option 3"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="5dp"
+        android:text="Solution"
+        android:textSize="25sp"
+        android:textStyle="bold" />
+
+    <NumberPicker
+        android:id="@+id/number_picker_solution"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+
+
+
+</LinearLayout>

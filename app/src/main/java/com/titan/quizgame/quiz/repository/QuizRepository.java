@@ -45,16 +45,13 @@ public class QuizRepository {
     }
 
 
-/*
-    public LiveData<List<Question>> getQuestions(String difficulty, int categoryId) {
-        return questionDao.getQuestions(difficulty, categoryId);
-    }
-*/
+    /*
+    @Insert
+    Single<Long> insertPlayer(Player player) throws Exception;
 
-/*
-    public LiveData<List<Category>> getCategories() {
-        return questionDao.getCategories();
-    }
+
+    @Update
+    Single<Integer> updatePlayer(Player player) throws Exception;
     */
 
 
