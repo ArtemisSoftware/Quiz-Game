@@ -1,5 +1,6 @@
 package com.titan.quizgame;
 
+import com.facebook.stetho.Stetho;
 import com.titan.quizgame.di.DaggerAppComponent;
 
 import dagger.android.AndroidInjector;

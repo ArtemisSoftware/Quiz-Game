@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.bumptech.glide.RequestManager;
 import com.titan.quizgame.player.PlayerProfileActivity;
 import com.titan.quizgame.util.ActivityCode;
 import com.titan.quizgame.quiz.GameConstants;
@@ -28,12 +29,17 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import dagger.android.support.DaggerAppCompatActivity;
 
 public class MainActivity extends BaseActivity {
 
     public static final String SHARED_PREFS = "sharedPrefs";
     public static final String KEY_HIGHSCORE = "keyHighscore";
     private int highscore;
+
+
+    @Inject
+    ViewModelProviderFactory providerFactory;
 
 
     @BindView(R.id.text_view_highscore)
@@ -48,8 +54,7 @@ public class MainActivity extends BaseActivity {
 
     private QuizViewModel viewModel;
 
-    @Inject
-    ViewModelProviderFactory providerFactory;
+
 
 
     @Override
@@ -62,12 +67,14 @@ public class MainActivity extends BaseActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
         viewModel = ViewModelProviders.of(this, providerFactory).get(QuizViewModel.class);
 
-
+/*
         loadCategories();
         loadDifficultyLevels();
         loadHighscore();
+        */
     }
 
 

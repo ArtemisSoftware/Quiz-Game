@@ -107,7 +107,7 @@ public class QuizActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        questionDao = QuizDatabase.getInstance(this).questionDao();
+        //questionDao = QuizDatabase.getInstance(this).questionDao();
 
         textColorDefaultRb = rb1.getTextColors();
         textColorDefaultCd = textViewCountDown.getTextColors();

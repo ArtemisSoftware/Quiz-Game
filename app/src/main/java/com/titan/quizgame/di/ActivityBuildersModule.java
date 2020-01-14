@@ -13,7 +13,7 @@ public abstract class ActivityBuildersModule {
 
     //@MainScope
     @ContributesAndroidInjector(
-            modules = {QuizViewModelsModule.class, QuizModule.class}
+            modules = {/*QuizViewModelsModule.class, QuizModule.class*/}
     )
     abstract MainActivity contributeMainActivity();
 }

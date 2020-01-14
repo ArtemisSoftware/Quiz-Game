@@ -10,6 +10,7 @@ import javax.inject.Provider;
 
 public class ViewModelProviderFactory implements ViewModelProvider.Factory {
 
+
     private final Map<Class<? extends ViewModel>, Provider<ViewModel>> creators;
 
     @Inject
