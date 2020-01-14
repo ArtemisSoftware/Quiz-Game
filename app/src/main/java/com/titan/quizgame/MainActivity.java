@@ -2,6 +2,7 @@ package com.titan.quizgame;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
@@ -15,6 +16,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.titan.quizgame.player.PlayerProfileActivity;
+import com.titan.quizgame.ui.Resource;
 import com.titan.quizgame.util.ActivityCode;
 import com.titan.quizgame.quiz.GameConstants;
 import com.titan.quizgame.quiz.QuizActivity;
@@ -22,11 +24,14 @@ import com.titan.quizgame.quiz.models.Category;
 import com.titan.quizgame.settings.SettingsActivity;
 import com.titan.quizgame.util.viewmodel.ViewModelProviderFactory;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import timber.log.Timber;
 
 public class MainActivity extends BaseActivity {
 
@@ -69,29 +74,63 @@ public class MainActivity extends BaseActivity {
 
 
         subscribeObservers();
-/*
-        loadCategories();
-        loadDifficultyLevels();
-        loadHighscore();
-        */
 
+        loadHighscore();
 
         viewModel.loadCategories();
+
     }
 
 
 
     private void subscribeObservers(){
-  /*
-        viewModel.observeNotes().observe(this, new Observer<List<Note>>() {
+
+        viewModel.observeCategories().observe(this, new Observer<Resource>() {
             @Override
-            public void onChanged(List<Note> notes) {
-                if(notes != null){
-                    adapter.setNotes(notes);
+            public void onChanged(Resource resource) {
+
+
+                Timber.d("onChanged: " + resource.toString());
+
+                switch (resource.status){
+
+                    case SUCCESS:
+
+                        loadCategories((List<Category>) resource.data);
+                        break;
+
+                    case ERROR:
+
+                        break;
+
                 }
+
             }
         });
-*/
+
+        viewModel.observeDifficulty().observe(this, new Observer<Resource>() {
+            @Override
+            public void onChanged(Resource resource) {
+
+
+                Timber.d("onChanged: " + resource.toString());
+
+                switch (resource.status){
+
+                    case SUCCESS:
+
+                        loadDifficultyLevels((String[]) resource.data);
+                        break;
+
+                    case ERROR:
+
+                        break;
+
+                }
+
+            }
+        });
+
     }
 
 
@@ -110,43 +149,29 @@ public class MainActivity extends BaseActivity {
     }
 
 
-    private void loadCategories() {
-/*
-        categoryDao.getCategories()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        new Consumer<List<Category>>() {
-                            @Override
-                            public void accept(List<Category> categories) throws Exception {
-
-                                ArrayAdapter<Category> adapterCategories = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, categories);
-                                adapterCategories.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                                spinnerCategory.setAdapter(adapterCategories);
-                            }
-                        },
-                        new Consumer<Throwable>() {
-                            @Override
-                            public void accept(Throwable throwable) throws Exception {
-
-                            }
-                        }
-                );
-*/
-    }
-
-    private void loadDifficultyLevels() {
-
-        ArrayAdapter<String> adapterDifficulty = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, GameConstants.getAllDifficultyLevels());
-        adapterDifficulty.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerDifficulty.setAdapter(adapterDifficulty);
-    }
 
     private void loadHighscore() {
         SharedPreferences prefs = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         highscore = prefs.getInt(KEY_HIGHSCORE, 0);
-        textViewHighscore.setText("Highscore: " + highscore);
+        textViewHighscore.setText(highscore + "");
+
     }
+
+    private void loadCategories(List<Category> categories) {
+
+        ArrayAdapter<Category> adapterCategories = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, categories);
+        adapterCategories.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerCategory.setAdapter(adapterCategories);
+    }
+
+    private void loadDifficultyLevels(String[] difficulties) {
+
+        ArrayAdapter<String> adapterDifficulty = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, difficulties);
+        adapterDifficulty.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerDifficulty.setAdapter(adapterDifficulty);
+    }
+
+
 
     private void updateHighscore(int highscoreNew) {
         highscore = highscoreNew;
