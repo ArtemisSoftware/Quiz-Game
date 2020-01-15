@@ -11,8 +11,8 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         app:civ_border_width="2dp"
-        app:civ_border_color="@color/imageBorderColor"
-        android:src="@drawable/topic_hero"/>
+        app:civ_border_color="@color/gradient_start"
+        android:src="@drawable/gallery"/>
 
 
     <TextView

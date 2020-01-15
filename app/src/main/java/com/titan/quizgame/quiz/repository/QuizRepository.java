@@ -1,5 +1,7 @@
 package com.titan.quizgame.quiz.repository;
 
+import android.os.AsyncTask;
+
 import androidx.annotation.NonNull;
 
 import com.titan.quizgame.quiz.models.Category;
@@ -43,10 +45,35 @@ public class QuizRepository {
         return categoryDao.getCategories();
     }
 
+
     public Completable saveQuestion(Question question) {
         return questionDao.insertQuestions(question);
     }
 
+
+
+
+
+
+    /*
+    public void insert(Category note) {
+        new InsertNoteAsyncTask(categoryDao).execute(note);
+    }
+
+    private static class InsertNoteAsyncTask extends AsyncTask<Category, Void, Void> {
+        private CategoryDao noteDao;
+
+        private InsertNoteAsyncTask(CategoryDao noteDao) {
+            this.noteDao = noteDao;
+        }
+
+        @Override
+        protected Void doInBackground(Category... notes) {
+            noteDao.insert(notes[0]);
+            return null;
+        }
+    }
+*/
 
     /*
     @Insert

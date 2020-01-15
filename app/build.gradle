@@ -92,6 +92,7 @@ dependencies {
 
     // circular imageview
     implementation 'com.mikhaellopez:circularimageview:3.2.0'
+    implementation 'de.hdodenhof:circleimageview:3.0.1'
 
     implementation 'com.github.yalantis:ucrop:2.2.4'
 

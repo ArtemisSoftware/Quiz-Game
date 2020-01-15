@@ -29,13 +29,15 @@ public interface QuestionDao {
 
 
 
+    // Makes sure that the operation finishes successfully.
+    @Insert
+    Completable insertQuestions(Question... questions);
+
+
     // Emits the number of users added to the database.
     @Insert
     public Maybe<long[]> insertQuestions(List<Question> questions);
 
-    // Makes sure that the operation finishes successfully.
-    @Insert
-    public Completable insertQuestions(Question... questions);
 
     /* Emits the number of users removed from the database. Always emits at
        least one user. */

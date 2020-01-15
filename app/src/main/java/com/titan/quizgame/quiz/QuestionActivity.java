@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
 
@@ -25,6 +26,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import timber.log.Timber;
 
 public class QuestionActivity extends BaseActivity {
@@ -142,7 +144,6 @@ public class QuestionActivity extends BaseActivity {
             @Override
             public void onChanged(Resource resource) {
 
-
                 Timber.d("onChanged: " + resource.toString());
 
                 switch (resource.status){
@@ -189,6 +190,8 @@ public class QuestionActivity extends BaseActivity {
                                          spinnerDifficulty.getSelectedItem().toString(), ((Category) spinnerCategory.getSelectedItem()).getId());
 
 
+        viewModel.saveQuestions(question);
+
         /*
 
         int id = getIntent().getIntExtra(EXTRA_ID, -1);
@@ -200,6 +203,14 @@ public class QuestionActivity extends BaseActivity {
         finish();
         */
     }
+
+
+    @OnClick(R.id.btn_save)
+    public void onButtonClick(View view) {
+        saveQuestion();
+    }
+
+
 
 
     public boolean onOptionsItemSelected(MenuItem item){

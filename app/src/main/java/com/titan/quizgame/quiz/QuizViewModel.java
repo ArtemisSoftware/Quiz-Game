@@ -13,9 +13,12 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.CompletableObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
 public class QuizViewModel extends ViewModel {
@@ -117,6 +120,29 @@ public class QuizViewModel extends ViewModel {
 
 
     public void saveQuestions(Question question) {
+
+        quizRepository.saveQuestion(question)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new CompletableObserver() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        disposables.add(d);
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        questionsLiveData.setValue(Resource.success(null, "Data saved"));
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+                })
+        ;
+
+
 /*
         disposables.add(
                 //getting flowable to subscribe consumer that will access the data from Room database.
