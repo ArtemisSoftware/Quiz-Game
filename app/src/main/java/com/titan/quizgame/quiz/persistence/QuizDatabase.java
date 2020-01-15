@@ -1,25 +1,11 @@
 package com.titan.quizgame.quiz.persistence;
 
-import android.content.Context;
-import android.database.SQLException;
-
-import androidx.annotation.NonNull;
 import androidx.room.Database;
-import androidx.room.Room;
 import androidx.room.RoomDatabase;
-import androidx.room.migration.Migration;
-import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import com.titan.quizgame.quiz.GameConstants;
 import com.titan.quizgame.quiz.models.Category;
 import com.titan.quizgame.quiz.models.Question;
-import com.titan.quizgame.util.DataBase;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
+import com.titan.quizgame.util.constants.DataBase;
 
 @Database(entities = {Question.class, Category.class}, version = DataBase.DATABASE_VERSION)
 public abstract class QuizDatabase extends RoomDatabase {

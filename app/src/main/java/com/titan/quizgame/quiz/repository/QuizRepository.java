@@ -1,7 +1,5 @@
 package com.titan.quizgame.quiz.repository;
 
-import android.app.Application;
-
 import androidx.annotation.NonNull;
 
 import com.titan.quizgame.quiz.models.Category;
@@ -14,6 +12,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import io.reactivex.Completable;
 import io.reactivex.Flowable;
 
 @Singleton
@@ -42,6 +41,10 @@ public class QuizRepository {
 
     public Flowable<List<Category>> getCategories() {
         return categoryDao.getCategories();
+    }
+
+    public Completable saveQuestion(Question question) {
+        return questionDao.insertQuestions(question);
     }
 
 

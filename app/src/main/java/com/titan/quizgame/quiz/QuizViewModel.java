@@ -1,9 +1,9 @@
-package com.titan.quizgame;
+package com.titan.quizgame.quiz;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.titan.quizgame.quiz.GameConstants;
+import com.titan.quizgame.util.constants.GameConstants;
 import com.titan.quizgame.quiz.models.Category;
 import com.titan.quizgame.quiz.models.Question;
 import com.titan.quizgame.quiz.repository.QuizRepository;
@@ -113,9 +113,36 @@ public class QuizViewModel extends ViewModel {
                         }
                 )
         );
-
-
     }
+
+
+    public void saveQuestions(Question question) {
+/*
+        disposables.add(
+                //getting flowable to subscribe consumer that will access the data from Room database.
+                quizRepository.
+                        //.subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                new Consumer<List<Question>>() {
+                                    @Override
+                                    public void accept(List<Question> questions) throws Exception {
+
+                                        questionsLiveData.setValue(Resource.success(questions, ""));
+
+                                    }
+                                },
+                                new Consumer<Throwable>() {
+                                    @Override
+                                    public void accept(Throwable throwable) throws Exception {
+
+                                    }
+                                }
+                        )
+        );
+        */
+    }
+
 
 
     @Override

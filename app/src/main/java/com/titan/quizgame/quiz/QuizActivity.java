@@ -1,6 +1,5 @@
 package com.titan.quizgame.quiz;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -17,14 +16,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.titan.quizgame.BaseActivity;
-import com.titan.quizgame.QuizViewModel;
 import com.titan.quizgame.R;
 import com.titan.quizgame.quiz.models.Category;
 import com.titan.quizgame.quiz.models.Question;
-import com.titan.quizgame.quiz.persistence.QuestionDao;
-import com.titan.quizgame.quiz.persistence.QuizDatabase;
 import com.titan.quizgame.ui.Resource;
-import com.titan.quizgame.util.ActivityCode;
+import com.titan.quizgame.util.constants.ActivityCode;
+import com.titan.quizgame.util.constants.GameConstants;
 import com.titan.quizgame.util.viewmodel.ViewModelProviderFactory;
 
 import java.util.ArrayList;
@@ -37,9 +34,6 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
 public class QuizActivity extends BaseActivity {

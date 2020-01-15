@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.titan.quizgame.R;
 import com.titan.quizgame.player.models.Board;
-import com.titan.quizgame.util.ActivityRequestCode;
+import com.titan.quizgame.util.constants.ActivityRequestCode;
 import com.titan.quizgame.util.Image;
 import com.titan.quizgame.util.ImageCropConstants;
 import com.titan.quizgame.util.Permissions;

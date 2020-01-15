@@ -10,7 +10,7 @@ import android.provider.MediaStore;
 
 import androidx.core.content.FileProvider;
 
-import com.titan.quizgame.player.ImagePickerActivity;
+import com.titan.quizgame.util.constants.ActivityRequestCode;
 
 import java.io.File;
 

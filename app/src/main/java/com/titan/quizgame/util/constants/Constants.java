@@ -1,4 +1,4 @@
-package com.titan.quizgame.util;
+package com.titan.quizgame.util.constants;
 
 import android.Manifest;
 

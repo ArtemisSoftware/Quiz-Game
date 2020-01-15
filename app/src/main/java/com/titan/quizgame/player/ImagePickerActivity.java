@@ -17,7 +17,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.titan.quizgame.R;
-import com.titan.quizgame.util.ActivityRequestCode;
+import com.titan.quizgame.util.constants.ActivityRequestCode;
 import com.titan.quizgame.util.Image;
 import com.titan.quizgame.util.ImageCropConstants;
 import com.yalantis.ucrop.UCrop;

@@ -3,7 +3,7 @@ package com.titan.quizgame.di;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.titan.quizgame.QuizViewModel;
+import com.titan.quizgame.quiz.QuizViewModel;
 import com.titan.quizgame.util.viewmodel.ViewModelProviderFactory;
 
 import dagger.Binds;

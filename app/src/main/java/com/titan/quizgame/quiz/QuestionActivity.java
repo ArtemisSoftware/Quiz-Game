@@ -1,7 +1,7 @@
 package com.titan.quizgame.quiz;
 
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
@@ -12,16 +12,20 @@ import android.widget.Spinner;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.titan.quizgame.BaseActivity;
-import com.titan.quizgame.QuizViewModel;
 import com.titan.quizgame.R;
 import com.titan.quizgame.quiz.models.Category;
 import com.titan.quizgame.quiz.models.Question;
+import com.titan.quizgame.ui.Resource;
+import com.titan.quizgame.util.Loader;
 import com.titan.quizgame.util.viewmodel.ViewModelProviderFactory;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import timber.log.Timber;
 
 public class QuestionActivity extends BaseActivity {
 
@@ -77,7 +81,92 @@ public class QuestionActivity extends BaseActivity {
         number_picker_solution.setMinValue(1);
         number_picker_solution.setMaxValue(3);
 
+
+        subscribeObservers();
+        viewModel.loadConfigurations();
+
     }
+
+
+
+    private void subscribeObservers(){
+
+        viewModel.observeCategories().observe(this, new Observer<Resource>() {
+            @Override
+            public void onChanged(Resource resource) {
+
+
+                Timber.d("onChanged: " + resource.toString());
+
+                switch (resource.status){
+
+                    case SUCCESS:
+
+                        spinnerCategory.setAdapter(Loader.loadCategories(getApplicationContext(), (List<Category>) resource.data));
+                        break;
+
+                    case ERROR:
+
+                        break;
+
+                }
+            }
+        });
+
+        viewModel.observeDifficulty().observe(this, new Observer<Resource>() {
+            @Override
+            public void onChanged(Resource resource) {
+
+
+                Timber.d("onChanged: " + resource.toString());
+
+                switch (resource.status){
+
+                    case SUCCESS:
+
+                        spinnerDifficulty.setAdapter(Loader.loadStringArray(getApplicationContext(), (String[]) resource.data));
+                        break;
+
+                    case ERROR:
+
+                        break;
+
+                }
+
+            }
+        });
+
+
+
+        viewModel.observeQuestions().observe(this, new Observer<Resource>() {
+            @Override
+            public void onChanged(Resource resource) {
+
+
+                Timber.d("onChanged: " + resource.toString());
+
+                switch (resource.status){
+
+                    case SUCCESS:
+
+                        //toast success
+                        setResult(RESULT_OK);
+                        finish();
+                        break;
+
+                    case ERROR:
+
+                        break;
+
+                }
+
+            }
+        });
+    }
+
+
+
+
 
 
     private void saveQuestion() {

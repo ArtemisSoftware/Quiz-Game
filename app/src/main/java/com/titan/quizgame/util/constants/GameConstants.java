@@ -1,4 +1,4 @@
-package com.titan.quizgame.quiz;
+package com.titan.quizgame.util.constants;
 
 public class GameConstants {
 

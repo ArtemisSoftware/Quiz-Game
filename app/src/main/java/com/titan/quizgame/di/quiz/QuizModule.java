@@ -8,7 +8,7 @@ import com.titan.quizgame.quiz.persistence.CategoryDao;
 import com.titan.quizgame.quiz.persistence.QuestionDao;
 import com.titan.quizgame.quiz.persistence.QuizDatabase;
 import com.titan.quizgame.quiz.repository.QuizRepository;
-import com.titan.quizgame.util.DataBase;
+import com.titan.quizgame.util.constants.DataBase;
 
 import javax.inject.Singleton;
 
