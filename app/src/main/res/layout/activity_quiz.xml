@@ -56,39 +56,77 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/radio_group"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="36dp"
         android:text="Here will be the question text\nHere will be the question text\nHere will be the question text"
         android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="20sp"
         android:freezesText="true"/>
 
+
+
+
     <RadioGroup
         android:id="@+id/radio_group"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true">
+        android:layout_centerVertical="true"
+        android:layout_below="@id/radio_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-        <RadioButton
+        <me.omidh.liquidradiobutton.LiquidRadioButton
             android:id="@+id/radio_button1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:gravity="center"
+            app:lrb_strokeWidth="3dp"
+            app:lrb_explodeCount="6"
+            app:lrb_outterPadding="18dp"
+            app:lrb_innerCircleRadius="10dp"
+            app:lrb_strokeRadius="15dp"
+            app:lrb_inAnimDuration="500"
+            app:lrb_outAnimDuration="500"
+            app:lrb_checkedColor="@color/checked"
+            app:lrb_unCheckedColor="@color/unChecked"
             android:text="Option 1"
             android:freezesText="true"/>
 
-        <RadioButton
+        <me.omidh.liquidradiobutton.LiquidRadioButton
             android:id="@+id/radio_button2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:gravity="center"
+            app:lrb_strokeWidth="3dp"
+            app:lrb_explodeCount="6"
+            app:lrb_outterPadding="18dp"
+            app:lrb_innerCircleRadius="10dp"
+            app:lrb_strokeRadius="15dp"
+            app:lrb_inAnimDuration="500"
+            app:lrb_outAnimDuration="500"
+            app:lrb_checkedColor="@color/checked"
+            app:lrb_unCheckedColor="@color/unChecked"
             android:text="Option 2"
             android:freezesText="true"/>
 
-        <RadioButton
+        <me.omidh.liquidradiobutton.LiquidRadioButton
             android:id="@+id/radio_button3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:gravity="center"
+            app:lrb_strokeWidth="3dp"
+            app:lrb_explodeCount="6"
+            app:lrb_outterPadding="18dp"
+            app:lrb_innerCircleRadius="10dp"
+            app:lrb_strokeRadius="15dp"
+            app:lrb_inAnimDuration="500"
+            app:lrb_outAnimDuration="500"
+            app:lrb_checkedColor="@color/checked"
+            app:lrb_unCheckedColor="@color/unChecked"
             android:text="Option 3"
             android:freezesText="true"/>
+
 
     </RadioGroup>
 

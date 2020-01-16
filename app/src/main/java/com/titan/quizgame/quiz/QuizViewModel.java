@@ -97,7 +97,7 @@ public class QuizViewModel extends ViewModel {
         disposables.add(
         //getting flowable to subscribe consumer that will access the data from Room database.
                 quizRepository.getQuestions(difficulty, categoryID)
-                //.subscribeOn(Schedulers.io())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         new Consumer<List<Question>>() {

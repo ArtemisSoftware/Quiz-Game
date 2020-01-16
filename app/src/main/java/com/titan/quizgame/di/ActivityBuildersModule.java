@@ -4,6 +4,7 @@ import com.titan.quizgame.MainActivity;
 import com.titan.quizgame.di.quiz.QuizModule;
 import com.titan.quizgame.di.quiz.QuizViewModelsModule;
 import com.titan.quizgame.quiz.QuestionActivity;
+import com.titan.quizgame.quiz.QuizActivity;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -24,4 +25,12 @@ public abstract class ActivityBuildersModule {
             modules = {/*QuizViewModelsModule.class, QuizModule.class*/}
     )
     abstract QuestionActivity contributeQuestionActivity();
+
+
+
+    //@MainScope
+    @ContributesAndroidInjector(
+            modules = {/*QuizViewModelsModule.class, QuizModule.class*/}
+    )
+    abstract QuizActivity contributeQuizActivityActivity();
 }
