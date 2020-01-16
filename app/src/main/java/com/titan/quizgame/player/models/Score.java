@@ -11,5 +11,11 @@ public class Score {
     private int playerId;
     private Date day;
 
-
+    public Score(int points, int categoryId, String difficulty, int playerId) {
+        this.points = points;
+        this.categoryId = categoryId;
+        this.difficulty = difficulty;
+        this.playerId = playerId;
+        this.day = new Date();
+    }
 }

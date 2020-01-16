@@ -3,6 +3,7 @@ package com.titan.quizgame.quiz;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.titan.quizgame.player.models.Score;
 import com.titan.quizgame.util.constants.GameConstants;
 import com.titan.quizgame.quiz.models.Category;
 import com.titan.quizgame.quiz.models.Question;
@@ -127,12 +128,67 @@ public class QuizViewModel extends ViewModel {
                 .subscribe(new CompletableObserver() {
                     @Override
                     public void onSubscribe(Disposable d) {
-                        disposables.add(d);
+                        if(d != null) {
+                            disposables.add(d);
+                        }
                     }
 
                     @Override
                     public void onComplete() {
                         questionsLiveData.setValue(Resource.success(null, "Data saved"));
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+                })
+        ;
+
+
+/*
+        disposables.add(
+                //getting flowable to subscribe consumer that will access the data from Room database.
+                quizRepository.
+                        //.subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                new Consumer<List<Question>>() {
+                                    @Override
+                                    public void accept(List<Question> questions) throws Exception {
+
+                                        questionsLiveData.setValue(Resource.success(questions, ""));
+
+                                    }
+                                },
+                                new Consumer<Throwable>() {
+                                    @Override
+                                    public void accept(Throwable throwable) throws Exception {
+
+                                    }
+                                }
+                        )
+        );
+        */
+    }
+
+
+    public void saveScore(Score score) {
+
+        quizRepository.saveScore(score)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new CompletableObserver() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        if(d != null) {
+                            disposables.add(d);
+                        }
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        questionsLiveData.setValue(Resource.success(null, "Score saved"));
                     }
 
                     @Override

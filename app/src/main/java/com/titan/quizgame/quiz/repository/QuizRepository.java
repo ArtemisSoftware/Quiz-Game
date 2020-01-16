@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 
 import androidx.annotation.NonNull;
 
+import com.titan.quizgame.player.models.Score;
 import com.titan.quizgame.quiz.models.Category;
 import com.titan.quizgame.quiz.models.Question;
 import com.titan.quizgame.quiz.persistence.CategoryDao;
@@ -48,6 +49,11 @@ public class QuizRepository {
 
     public Completable saveQuestion(Question question) {
         return questionDao.insertQuestions(question);
+    }
+
+
+    public Completable saveScore(Score score) {
+        return null;//scoreDao.insert(score);
     }
 
 
