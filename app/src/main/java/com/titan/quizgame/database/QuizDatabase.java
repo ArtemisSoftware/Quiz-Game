@@ -2,6 +2,7 @@ package com.titan.quizgame.database;
 
 import androidx.room.Database;
 import androidx.room.RoomDatabase;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.titan.quizgame.quiz.models.Category;
 import com.titan.quizgame.quiz.models.Question;
@@ -9,7 +10,9 @@ import com.titan.quizgame.quiz.persistence.CategoryDao;
 import com.titan.quizgame.quiz.persistence.QuestionDao;
 import com.titan.quizgame.util.constants.DataBase;
 
-@Database(entities = {Question.class, Category.class}, version = DataBase.DATABASE_VERSION)
+import java.sql.SQLException;
+
+@Database(entities = {Question.class, Category.class/*, PlayerDao.class*/}, version = DataBase.DATABASE_VERSION)
 public abstract class QuizDatabase extends RoomDatabase {
 
     public abstract QuestionDao questionDao();
@@ -32,48 +35,8 @@ public abstract class QuizDatabase extends RoomDatabase {
         return instance;
     }
     */
-/*
 
-    static final Migration MIGRATION_1_2 = new Migration(1, 2) {
-        @Override
-        public void migrate(SupportSQLiteDatabase database) {
 
-            try {
-                database.execSQL("CREATE TABLE IF NOT EXISTS 'category' ('id' INTEGER PRIMARY KEY AUTOINCREMENT, 'name' TEXT NOT NULL)");
-                database.execSQL("ALTER TABLE 'question' ADD COLUMN 'categoryId' INTEGER NOT NULL");
-            }
-            catch (SQLException e){
-
-            }
-            //database.setForeignKeyConstraintsEnabled(true);
-
-            List<Category> categories = new ArrayList<>();
-            categories.add(new Category("Programming"));
-            categories.add(new Category("Geography"));
-            categories.add(new Category("Math"));
-
-            CategoryDao categoryDao = instance.categoryDao();
-
-            categoryDao.insertCategories(categories)
-                    .subscribeOn(Schedulers.io())
-                    //.observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(
-                            new Consumer<long[]>() {
-
-                                @Override
-                                public void accept(long[] longs) throws Exception {
-
-                                }
-                            },
-                            new Consumer<Throwable>() {
-                                @Override
-                                public void accept(Throwable throwable) throws Exception {
-
-                                }
-                            });
-        }
-    };
-*/
 
 /*
     private static RoomDatabase.Callback roomCallback = new RoomDatabase.Callback() {

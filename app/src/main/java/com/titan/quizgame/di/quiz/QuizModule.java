@@ -22,7 +22,7 @@ public class QuizModule {
 
     @Singleton
     @Provides
-    static QuizDatabase provideNoteDatabase(Application application){
+    static QuizDatabase provideQuizDatabase(Application application){
 
         QuizDatabase quizDatabase = Room.databaseBuilder(application, QuizDatabase.class, DataBase.DATABASE_NAME).build();
 
