@@ -4,6 +4,8 @@ import androidx.room.Database;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import com.titan.quizgame.player.models.Player;
+import com.titan.quizgame.player.persistence.PlayerDao;
 import com.titan.quizgame.quiz.models.Category;
 import com.titan.quizgame.quiz.models.Question;
 import com.titan.quizgame.quiz.persistence.CategoryDao;
@@ -12,11 +14,12 @@ import com.titan.quizgame.util.constants.DataBase;
 
 import java.sql.SQLException;
 
-@Database(entities = {Question.class, Category.class/*, PlayerDao.class*/}, version = DataBase.DATABASE_VERSION)
+@Database(entities = {Question.class, Category.class, Player.class}, version = DataBase.DATABASE_VERSION)
 public abstract class QuizDatabase extends RoomDatabase {
 
     public abstract QuestionDao questionDao();
     public abstract CategoryDao categoryDao();
+    public abstract PlayerDao playerDao();
 
     /*
 

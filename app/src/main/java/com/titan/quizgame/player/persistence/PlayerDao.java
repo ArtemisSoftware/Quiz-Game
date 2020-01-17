@@ -6,10 +6,13 @@ import androidx.room.Insert;
 
 import com.titan.quizgame.player.models.Player;
 
+import io.reactivex.Completable;
+
 
 @Dao
 public interface PlayerDao {
 
+    // Makes sure that the operation finishes successfully.
     @Insert
-    void insert(Player player);
+    Completable insert(Player player);
 }

@@ -4,7 +4,9 @@ import android.os.AsyncTask;
 
 import androidx.annotation.NonNull;
 
+import com.titan.quizgame.player.models.Player;
 import com.titan.quizgame.player.models.Score;
+import com.titan.quizgame.player.persistence.PlayerDao;
 import com.titan.quizgame.quiz.models.Category;
 import com.titan.quizgame.quiz.models.Question;
 import com.titan.quizgame.quiz.persistence.CategoryDao;
@@ -29,11 +31,15 @@ public class QuizRepository {
     @NonNull
     private CategoryDao categoryDao;
 
+    @NonNull
+    private PlayerDao playerDao;
+
 
     @Inject
-    public QuizRepository(@NonNull QuestionDao questionDao, @NonNull CategoryDao categoryDao){
+    public QuizRepository(@NonNull QuestionDao questionDao, @NonNull CategoryDao categoryDao, @NonNull PlayerDao playerDao){
         this.questionDao = questionDao;
         this.categoryDao = categoryDao;
+        this.playerDao = playerDao;
     }
 
 
@@ -51,10 +57,15 @@ public class QuizRepository {
         return questionDao.insertQuestions(question);
     }
 
+    public Completable savePlayer(Player player) {
+        return playerDao.insert(player);
+    }
 
+    /*
     public Completable saveScore(Score score) {
         return null;//scoreDao.insert(score);
     }
+    */
 
 
 

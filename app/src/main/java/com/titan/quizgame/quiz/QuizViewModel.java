@@ -174,7 +174,7 @@ public class QuizViewModel extends ViewModel {
 
 
     public void saveScore(Score score) {
-
+/*
         quizRepository.saveScore(score)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -197,7 +197,7 @@ public class QuizViewModel extends ViewModel {
                     }
                 })
         ;
-
+*/
 
 /*
         disposables.add(

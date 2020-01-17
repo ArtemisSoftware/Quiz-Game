@@ -1,5 +1,6 @@
 package com.titan.quizgame.player.models;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -9,6 +10,7 @@ public class Player {
 
 
     @PrimaryKey
+    @NonNull
     @ColumnInfo(name = "name")
     private String name;
 
@@ -16,5 +18,7 @@ public class Player {
         this.name = name;
     }
 
-
+    public String getName() {
+        return name;
+    }
 }
