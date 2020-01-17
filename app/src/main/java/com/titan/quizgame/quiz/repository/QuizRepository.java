@@ -19,6 +19,7 @@ import javax.inject.Singleton;
 
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
+import io.reactivex.Single;
 
 @Singleton
 public class QuizRepository {
@@ -56,6 +57,12 @@ public class QuizRepository {
     public Completable saveQuestion(Question question) {
         return questionDao.insertQuestions(question);
     }
+
+
+    public Single<Integer> playerExists(String name) {
+        return playerDao.playerCount(name);
+    }
+
 
     public Completable savePlayer(Player player) {
         return playerDao.insert(player);

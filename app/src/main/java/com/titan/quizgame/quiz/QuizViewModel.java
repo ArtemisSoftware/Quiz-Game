@@ -15,10 +15,14 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.reactivex.CompletableObserver;
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
@@ -173,7 +177,91 @@ public class QuizViewModel extends ViewModel {
     }
 
 
-    public void saveScore(Score score) {
+    public void saveScore(String name, Score score) {
+
+        quizRepository.playerExists(name)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .map(new Function<Integer, Integer>() {
+                    @Override
+                    public Integer apply(Integer response) throws Exception {
+
+                        return 9; // B.
+                    }
+                })
+
+                .subscribe(new SingleObserver<Integer>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(Integer integer) {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+                });
+        /*
+        repository.searchPhotoList(nsid, String.valueOf(pageNumber))
+                .map(new Function<PhotoListResponse, List<String>>() {
+                    @Override
+                    public List<String> apply(PhotoListResponse response) throws Exception {
+                        List<String> photoIds = new ArrayList<>();
+                        pages = response.photos.pages;
+                        for (PhotoListResponse.Photo photo : response.photos.pictures) {
+                            photoIds.add(photo.id);
+                        }
+                        return photoIds; // B.
+                    }
+                })
+                .flatMap(new Function<List<String>, Observable<List<Picture>>>() {
+                    @Override
+                    public Observable<List<Picture>> apply(List<String> photoIds) throws Exception {
+                        return getPicturesObservable(photoIds);
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new Observer<List<Picture>>() {
+                    @Override
+                    public void onSubscribe(Disposable disposable) {
+                        disposables.add(disposable);
+                        galleryLiveData.setValue(ApiResponse.loading());
+                    }
+                    @Override
+                    public void onNext(List<Picture> pictures) {
+                        Timber.d("onNext: " + pictures.toString());
+                        galleryLiveData.setValue(ApiResponse.success(pictures));
+                    }
+                    @Override
+                    public void onError(Throwable throwable) {
+                        Timber.e("Error on serch user: " + throwable.getMessage());
+                        galleryLiveData.setValue(ApiResponse.error(throwable.getMessage()));
+                    }
+                    @Override
+                    public void onComplete() {
+                        disposables.clear();
+                        isPerformingQuery = false;
+                    }
+                });
+        */
+
+
+
+
+
+
+
+
+
+
+
+
 /*
         quizRepository.saveScore(score)
                 .subscribeOn(Schedulers.io())
