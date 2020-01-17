@@ -133,7 +133,7 @@ public class QuizActivity extends BaseActivity {
         textViewDifficulty.setText("Difficulty: " + difficulty);
         textViewCategory.setText("Category: " + category.getName());
 
-        subscribeObservers(difficulty, category.getId());
+        subscribeObservers();
 
 
         if(savedInstanceState == null) {
@@ -158,7 +158,7 @@ public class QuizActivity extends BaseActivity {
         }
     }
 
-    private void subscribeObservers(String difficulty, int id) {
+    private void subscribeObservers() {
 
         viewModel.observeQuestions().observe(this, new Observer<Resource>() {
             @Override

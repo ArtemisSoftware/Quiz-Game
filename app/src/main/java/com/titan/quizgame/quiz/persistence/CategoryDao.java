@@ -24,5 +24,5 @@ public interface CategoryDao {
 
 
     @Insert
-    void insert(Category note);
+    void insert(Category category);
 }
