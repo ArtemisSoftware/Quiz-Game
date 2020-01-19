@@ -233,12 +233,7 @@ public class QuizActivity extends BaseActivity {
         }
         else {
 
-            Intent intent = getIntent();
-            String difficulty = intent.getStringExtra(ActivityCode.EXTRA_DIFFICULTY);
-            Category category = intent.getExtras().getParcelable(ActivityCode.EXTRA_CATEGORY);
-
-            viewModel.saveScore(new Player("TEST PLAYER"), new Score(score, category.getId(), difficulty, 1));
-            //viewModel.saveScore(new Score(score, category.getId(), difficulty, idPlayer));
+            saveScore();
         }
     }
 
@@ -319,6 +314,15 @@ public class QuizActivity extends BaseActivity {
         }
     }
 
+    private void saveScore() {
+
+        Intent intent = getIntent();
+        String difficulty = intent.getStringExtra(ActivityCode.EXTRA_DIFFICULTY);
+        Category category = intent.getExtras().getParcelable(ActivityCode.EXTRA_CATEGORY);
+
+        viewModel.saveScore(new Player("TEST PLAYER"), new Score(score, category.getId(), difficulty, 1));
+    }
+
     private void finishQuiz() {
 
         Intent resultIntent = new Intent();
@@ -355,7 +359,7 @@ public class QuizActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         if (backPressedTime + 2000 > System.currentTimeMillis()) {
-            finishQuiz();
+            saveScore();
         } else {
             Toast.makeText(this, "Press back again to finish", Toast.LENGTH_SHORT).show();
         }
