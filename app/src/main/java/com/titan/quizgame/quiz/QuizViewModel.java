@@ -3,6 +3,7 @@ package com.titan.quizgame.quiz;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.titan.quizgame.player.models.Player;
 import com.titan.quizgame.player.models.Score;
 import com.titan.quizgame.util.constants.GameConstants;
 import com.titan.quizgame.quiz.models.Category;
@@ -14,13 +15,12 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.Completable;
 import io.reactivex.CompletableObserver;
-import io.reactivex.Observable;
-import io.reactivex.Observer;
-import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
@@ -36,6 +36,7 @@ public class QuizViewModel extends ViewModel {
     private MutableLiveData<Resource> categoriesLiveData;
     private MutableLiveData<Resource> difficultyLiveData;
     private MutableLiveData<Resource> questionsLiveData;
+    private MutableLiveData<Resource> quizLiveData;
 
 
 
@@ -48,6 +49,7 @@ public class QuizViewModel extends ViewModel {
         categoriesLiveData = new MutableLiveData<>();
         difficultyLiveData = new MutableLiveData<>();
         questionsLiveData = new MutableLiveData<>();
+        quizLiveData = new MutableLiveData<>();
 
         Timber.d("Quiz repository: " + this.quizRepository);
         Timber.d("QuizViewModel is ready");
@@ -66,8 +68,14 @@ public class QuizViewModel extends ViewModel {
         return questionsLiveData;
     }
 
+    public MutableLiveData<Resource> observeQuiz(){
+        return quizLiveData;
+    }
+
 
     public void loadConfigurations() {
+
+        //quizRepository.insert(new Category("Math"));
 
         disposables.add(
                 this.quizRepository.getCategories()
@@ -146,39 +154,123 @@ public class QuizViewModel extends ViewModel {
                     public void onError(Throwable e) {
 
                     }
-                })
-        ;
+                });
 
-
-/*
-        disposables.add(
-                //getting flowable to subscribe consumer that will access the data from Room database.
-                quizRepository.
-                        //.subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(
-                                new Consumer<List<Question>>() {
-                                    @Override
-                                    public void accept(List<Question> questions) throws Exception {
-
-                                        questionsLiveData.setValue(Resource.success(questions, ""));
-
-                                    }
-                                },
-                                new Consumer<Throwable>() {
-                                    @Override
-                                    public void accept(Throwable throwable) throws Exception {
-
-                                    }
-                                }
-                        )
-        );
-        */
     }
 
 
-    public void saveScore(String name, Score score) {
+    public void saveScore(Player player, Score score) {
 
+        quizRepository.playerExists(player.getName())
+                .map(new Function<Integer, Integer>() {
+                    @Override
+                    public Integer apply(Integer response) throws Exception {
+
+                        return response; // B.
+                    }
+                })
+                .flatMapCompletable (new Function<Integer, Completable>() {
+                    @Override
+                    public Completable apply(Integer response) throws Exception {
+
+                        Completable action;
+
+                        if(response == 0){ //nao existe
+                            action = Completable.concatArray(quizRepository.savePlayer(player)/*, quizRepository.saveScore(score)*/);
+                        }
+                        else{
+                            action = Completable.concatArray(/*quizRepository.saveScore(score)*/);
+                        }
+
+                        return action;
+                    }
+                })
+                .doOnSubscribe(__ -> {
+                    //Log.w(LOG_TAG, "Begin transaction. " + Thread.currentThread().toString());
+                    //mRoomDatabase.beginTransaction();
+                })
+                .doOnComplete(() -> {
+                    //Log.w(LOG_TAG, "Set transaction successful."  + Thread.currentThread().toString());
+                    //mRoomDatabase.setTransactionSuccessful();
+                })
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        Timber.d("End transaction."  + Thread.currentThread().toString());
+                        //mRoomDatabase.endTransaction();
+                    }
+                })
+                .subscribeOn(Schedulers.single())
+                .observeOn(AndroidSchedulers.mainThread()) // ON UI THREAD
+                .subscribeWith(new CompletableObserver() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                        if(d != null){
+                            disposables.add(d);
+                        }
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        Timber.d("onComplete."  + Thread.currentThread().toString());
+                        quizLiveData.setValue(Resource.success(null, "Score saved"));
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        //Log.e(LOG_TAG, "onError." + Thread.currentThread().toString());
+                    }
+                });
+
+
+
+
+/*
+        Completable.concatArray(quizRepository.savePlayer(new Player("PLAYER 1")), quizRepository.savePlayer(new Player("PLAYER 2")))
+                .observeOn(Schedulers.single()) // OFF UI THREAD
+                .doOnSubscribe(__ -> {
+                    //Log.w(LOG_TAG, "Begin transaction. " + Thread.currentThread().toString());
+                    //mRoomDatabase.beginTransaction();
+                })
+                .doOnComplete(() -> {
+                    //Log.w(LOG_TAG, "Set transaction successful."  + Thread.currentThread().toString());
+                    //mRoomDatabase.setTransactionSuccessful();
+                })
+                .doFinally(
+                        new Action() {
+                            @Override
+                            public void run() throws Exception {
+
+                            }
+                        }
+
+                        //() -> {
+                        //Log.w(LOG_TAG, "End transaction."  + Thread.currentThread().toString());
+                        //mRoomDatabase.endTransaction();
+                        //}
+                )
+                .subscribeOn(Schedulers.single())
+                .observeOn(AndroidSchedulers.mainThread()) // ON UI THREAD
+                .subscribeWith(new CompletableObserver() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        //Log.w(LOG_TAG, "onSubscribe."  + Thread.currentThread().toString());
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        //Log.w(LOG_TAG, "onComplete."  + Thread.currentThread().toString());
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        //Log.e(LOG_TAG, "onError." + Thread.currentThread().toString());
+                    }
+                });
+*/
+
+        /*
         quizRepository.playerExists(name)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -206,6 +298,7 @@ public class QuizViewModel extends ViewModel {
 
                     }
                 });
+        */
         /*
         repository.searchPhotoList(nsid, String.valueOf(pageNumber))
                 .map(new Function<PhotoListResponse, List<String>>() {

@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.titan.quizgame.BaseActivity;
 import com.titan.quizgame.R;
+import com.titan.quizgame.player.models.Player;
 import com.titan.quizgame.player.models.Score;
 import com.titan.quizgame.quiz.models.Category;
 import com.titan.quizgame.quiz.models.Question;
@@ -181,6 +182,28 @@ public class QuizActivity extends BaseActivity {
                 }
             }
         });
+
+        viewModel.observeQuiz().observe(this, new Observer<Resource>() {
+            @Override
+            public void onChanged(Resource resource) {
+
+
+                Timber.d("onChanged: " + resource.toString());
+
+                switch (resource.status){
+
+                    case SUCCESS:
+
+                        finishQuiz();
+                        break;
+
+                    case ERROR:
+
+                        break;
+
+                }
+            }
+        });
     }
 
 
@@ -214,6 +237,7 @@ public class QuizActivity extends BaseActivity {
             String difficulty = intent.getStringExtra(ActivityCode.EXTRA_DIFFICULTY);
             Category category = intent.getExtras().getParcelable(ActivityCode.EXTRA_CATEGORY);
 
+            viewModel.saveScore(new Player("TEST PLAYER"), new Score(score, category.getId(), difficulty, 1));
             //viewModel.saveScore(new Score(score, category.getId(), difficulty, idPlayer));
         }
     }

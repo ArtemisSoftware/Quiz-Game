@@ -70,16 +70,21 @@ public class QuizRepository {
 
     /*
     public Completable saveScore(Score score) {
-        return null;//scoreDao.insert(score);
+        return scoreDao.insert(score);
     }
     */
 
+/*
+    @Transaction
+    public void insertAndDeleteInTransaction(Product newProduct, Product oldProduct) {
+        // Anything inside this method runs in a single transaction.
+        insert(newProduct);
+        delete(oldProduct);
+    }
+*/
 
 
 
-
-
-    /*
     public void insert(Category note) {
         new InsertNoteAsyncTask(categoryDao).execute(note);
     }
@@ -97,7 +102,7 @@ public class QuizRepository {
             return null;
         }
     }
-*/
+
 
     /*
     @Insert
