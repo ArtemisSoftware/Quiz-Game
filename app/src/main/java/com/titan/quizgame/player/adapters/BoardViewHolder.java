@@ -46,7 +46,7 @@ public class BoardViewHolder extends RecyclerView.ViewHolder {
         //viewPreloadSizeProvider.setView(picture_image);
 
         txt_name.setText(board.getName());
-        txt_score.setText(board.getHighScore() + "");
+        txt_score.setText(board.getPoints() + "");
     }
 
 }

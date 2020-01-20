@@ -5,6 +5,7 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 
+import com.titan.quizgame.player.models.Board;
 import com.titan.quizgame.player.models.Player;
 
 import java.util.List;
@@ -27,6 +28,14 @@ public interface PlayerDao {
 
 
     //@Query("SELECT * from players")
-    //Observable<List<Player>> getLeaderBoard();
+
+
+
+    @Query("SELECT name, points, category, difficulty " +
+            "FROM players as ply " +
+            "LEFT JOIN (SELECT points, difficulty, categoryId, playerName FROM score) as scr ON ply.name = scr.playerName " +
+            "LEFT JOIN (SELECT id, name as category FROM categories) as ctg ON scr.categoryId = ctg.id " +
+            "ORDER BY points DESC")
+    Observable<List<Board>> getLeaderBoard();
 
 }

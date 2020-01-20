@@ -43,8 +43,22 @@ public class MigrationDb {
     };
 
 
+    public static final Migration MIGRATION_3_4 = new Migration(3, 4) {
+        @Override
+        public void migrate(SupportSQLiteDatabase database) {
+            try {
+                database.execSQL("CREATE INDEX IF NOT EXISTS 'index_score_playerName' ON score ('playerName')");
+                Timber.d("MIGRATION_3_4: success");
+            }
+            catch(SQLException e){
+                Timber.e("erro MIGRATION_3_4: " + e.getMessage());
+            }
+        }
+    };
+
+
     public static final Migration MIGRATIONS [] =  new Migration []{
-            MIGRATION_1_2, MIGRATION_2_3
+            MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4
     };
 
 }

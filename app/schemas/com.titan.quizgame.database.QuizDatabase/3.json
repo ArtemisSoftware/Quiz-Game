@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "ab3c3330a2c1d066675ab1441be12b25",
+    "identityHash": "e76feef795d7924313efcd8519aacb1d",
     "entities": [
       {
         "tableName": "questions",
@@ -174,7 +174,16 @@
           ],
           "autoGenerate": true
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_score_playerName",
+            "unique": true,
+            "columnNames": [
+              "playerName"
+            ],
+            "createSql": "CREATE UNIQUE INDEX `index_score_playerName` ON `${TABLE_NAME}` (`playerName`)"
+          }
+        ],
         "foreignKeys": [
           {
             "table": "players",
@@ -193,7 +202,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"ab3c3330a2c1d066675ab1441be12b25\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"e76feef795d7924313efcd8519aacb1d\")"
     ]
   }
 }

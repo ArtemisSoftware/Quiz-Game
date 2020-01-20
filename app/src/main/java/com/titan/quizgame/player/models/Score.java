@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import java.util.Date;
@@ -12,7 +13,8 @@ import java.util.Date;
         foreignKeys = @ForeignKey(entity = Player.class,
                                             parentColumns = "name",
                                             childColumns = "playerName",
-                                            onDelete = ForeignKey.CASCADE)
+                                            onDelete = ForeignKey.CASCADE),
+        indices = {@Index(value = {"playerName"}, unique = true)}
 )
 public class Score {
 
