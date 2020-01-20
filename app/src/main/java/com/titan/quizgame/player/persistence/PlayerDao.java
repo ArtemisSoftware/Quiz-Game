@@ -26,7 +26,7 @@ public interface PlayerDao {
     Single<Integer> playerCount(String name);
 
 
-    @Query("SELECT * from players")
-    Observable<List<Player>> getLeaderBoard();
+    //@Query("SELECT * from players")
+    //Observable<List<Player>> getLeaderBoard();
 
 }

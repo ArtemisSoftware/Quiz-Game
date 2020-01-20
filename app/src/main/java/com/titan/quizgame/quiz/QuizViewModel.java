@@ -75,7 +75,7 @@ public class QuizViewModel extends ViewModel {
 
     public void loadConfigurations() {
 
-        //quizRepository.insert(new Category("Math"));
+        quizRepository.insert(new Category("Math"));
 
         disposables.add(
                 this.quizRepository.getCategories()

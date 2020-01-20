@@ -320,7 +320,7 @@ public class QuizActivity extends BaseActivity {
         String difficulty = intent.getStringExtra(ActivityCode.EXTRA_DIFFICULTY);
         Category category = intent.getExtras().getParcelable(ActivityCode.EXTRA_CATEGORY);
 
-        viewModel.saveScore(new Player("TEST PLAYER"), new Score(score, category.getId(), difficulty, 1));
+        viewModel.saveScore(new Player("TEST PLAYER"), new Score(score, category.getId(), difficulty, "TEST PLAYER"));
     }
 
     private void finishQuiz() {
