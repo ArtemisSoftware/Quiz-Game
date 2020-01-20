@@ -14,7 +14,7 @@ import com.titan.quizgame.player.adapters.BoardRecyclerAdapter;
 
 import butterknife.BindView;
 
-public class BoardActivity extends AppCompatActivity {
+public class LeaderBoardActivity extends AppCompatActivity {
 
 
     @BindView(R.id.board_list)
