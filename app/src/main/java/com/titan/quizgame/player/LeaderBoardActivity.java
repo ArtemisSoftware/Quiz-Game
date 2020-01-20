@@ -13,6 +13,7 @@ import com.titan.quizgame.R;
 import com.titan.quizgame.player.adapters.BoardRecyclerAdapter;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class LeaderBoardActivity extends AppCompatActivity {
 
@@ -27,6 +28,8 @@ public class LeaderBoardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_board);
+
+        ButterKnife.bind(this);
 
         ((CircularImageView) findViewById(R.id.img_plus)).setVisibility(View.GONE);
 

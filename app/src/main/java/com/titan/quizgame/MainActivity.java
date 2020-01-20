@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.titan.quizgame.player.LeaderBoardActivity;
 import com.titan.quizgame.player.PlayerProfileActivity;
 import com.titan.quizgame.quiz.QuestionActivity;
 import com.titan.quizgame.quiz.QuizViewModel;
@@ -36,11 +37,6 @@ import butterknife.OnClick;
 import timber.log.Timber;
 
 public class MainActivity extends BaseActivity {
-
-    public static final String SHARED_PREFS = "sharedPrefs";
-    public static final String KEY_HIGHSCORE = "keyHighscore";
-    private int highscore;
-
 
 
     @BindView(R.id.text_view_highscore)
@@ -221,6 +217,11 @@ public class MainActivity extends BaseActivity {
             case R.id.action_settings:
 
                 startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+                break;
+
+            case R.id.action_leader_board:
+
+                startActivity(new Intent(MainActivity.this, LeaderBoardActivity.class));
                 break;
 
             case R.id.action_contribute:
