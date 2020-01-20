@@ -37,6 +37,7 @@ public class QuizViewModel extends ViewModel {
     private MutableLiveData<Resource> difficultyLiveData;
     private MutableLiveData<Resource> questionsLiveData;
     private MutableLiveData<Resource> quizLiveData;
+    private MutableLiveData<Resource> scoreLiveData;
 
 
 
@@ -50,6 +51,7 @@ public class QuizViewModel extends ViewModel {
         difficultyLiveData = new MutableLiveData<>();
         questionsLiveData = new MutableLiveData<>();
         quizLiveData = new MutableLiveData<>();
+        scoreLiveData = new MutableLiveData<>();
 
         Timber.d("Quiz repository: " + this.quizRepository);
         Timber.d("QuizViewModel is ready");
@@ -70,6 +72,10 @@ public class QuizViewModel extends ViewModel {
 
     public MutableLiveData<Resource> observeQuiz(){
         return quizLiveData;
+    }
+
+    public MutableLiveData<Resource> observeScore(){
+        return scoreLiveData;
     }
 
 
@@ -101,6 +107,29 @@ public class QuizViewModel extends ViewModel {
 
 
         difficultyLiveData.setValue(Resource.success(GameConstants.getAllDifficultyLevels(), ""));
+
+
+        disposables.add(
+                this.quizRepository.getHighScore()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                new Consumer<Integer>() {
+                                    @Override
+                                    public void accept(Integer score) throws Exception {
+
+                                        scoreLiveData.setValue(Resource.success(score, ""));
+
+                                    }
+                                },
+                                new Consumer<Throwable>() {
+                                    @Override
+                                    public void accept(Throwable throwable) throws Exception {
+
+                                    }
+                                }
+                        )
+        );
 
     }
 

@@ -77,8 +77,6 @@ public class MainActivity extends BaseActivity {
 
         subscribeObservers();
 
-        loadHighscore();
-
         viewModel.loadConfigurations();
 
     }
@@ -104,7 +102,6 @@ public class MainActivity extends BaseActivity {
                     case ERROR:
 
                         break;
-
                 }
             }
         });
@@ -126,7 +123,27 @@ public class MainActivity extends BaseActivity {
                     case ERROR:
 
                         break;
+                }
+            }
+        });
 
+
+        viewModel.observeScore().observe(this, new Observer<Resource>() {
+            @Override
+            public void onChanged(Resource resource) {
+
+                Timber.d("onChanged: " + resource.toString());
+
+                switch (resource.status){
+
+                    case SUCCESS:
+
+                        textViewHighscore.setText(((Integer) resource.data) + "");
+                        break;
+
+                    case ERROR:
+
+                        break;
                 }
 
             }
@@ -192,10 +209,13 @@ public class MainActivity extends BaseActivity {
             case ActivityCode.REQUEST_CODE_QUIZ:
 
                 if (resultCode == RESULT_OK) {
+                    /*
                     int score = data.getIntExtra(ActivityCode.EXTRA_SCORE, 0);
                     if (score > highscore) {
                         updateHighscore(score);
                     }
+                    */
+                    viewModel.loadConfigurations();
                 }
                 break;
 

@@ -77,6 +77,11 @@ public class QuizRepository {
         return scoreDao.insert(score);
     }
 
+    public Single<Integer> getHighScore() {
+        return scoreDao.getHighScore();
+    }
+
+
 
 /*
     @Transaction
