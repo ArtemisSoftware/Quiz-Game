@@ -19,7 +19,7 @@ public class MigrationDb {
                 Timber.d("MIGRATION_1_2: success");
             }
             catch(SQLException e){
-                Timber.d("erro MIGRATION_1_2: " + e.getMessage());
+                Timber.e("erro MIGRATION_1_2: " + e.getMessage());
             }
         }
     };
@@ -30,13 +30,13 @@ public class MigrationDb {
         public void migrate(SupportSQLiteDatabase database) {
             try {
                 database.execSQL("CREATE TABLE IF NOT EXISTS 'score' ('categoryId' INTEGER PRIMARY KEY,"
-                        + "'difficulty' TEXT, "
+                        + "'difficulty' TEXT PRIMARY KEY, "
                         + "'points' INTEGER NOT NULL, "
                         + "FOREIGN KEY ('playerName') REFERENCES players ('name'))");
                 Timber.d("MIGRATION_2_3: success");
             }
             catch(SQLException e){
-                Timber.d("erro MIGRATION_2_3: " + e.getMessage());
+                Timber.e("erro MIGRATION_2_3: " + e.getMessage());
             }
         }
     };
