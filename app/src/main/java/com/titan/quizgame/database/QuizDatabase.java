@@ -7,6 +7,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import com.titan.quizgame.player.models.Player;
 import com.titan.quizgame.player.models.Score;
 import com.titan.quizgame.player.persistence.PlayerDao;
+import com.titan.quizgame.player.persistence.ScoreDao;
 import com.titan.quizgame.quiz.models.Category;
 import com.titan.quizgame.quiz.models.Question;
 import com.titan.quizgame.quiz.persistence.CategoryDao;
@@ -21,7 +22,7 @@ public abstract class QuizDatabase extends RoomDatabase {
     public abstract QuestionDao questionDao();
     public abstract CategoryDao categoryDao();
     public abstract PlayerDao playerDao();
-    //public abstract ScoreDao scoreDao();
+    public abstract ScoreDao scoreDao();
 
     /*
 

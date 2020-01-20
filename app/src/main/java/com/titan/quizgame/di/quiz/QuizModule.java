@@ -6,6 +6,7 @@ import androidx.room.Room;
 
 import com.titan.quizgame.database.MigrationDb;
 import com.titan.quizgame.player.persistence.PlayerDao;
+import com.titan.quizgame.player.persistence.ScoreDao;
 import com.titan.quizgame.quiz.persistence.CategoryDao;
 import com.titan.quizgame.quiz.persistence.QuestionDao;
 import com.titan.quizgame.database.QuizDatabase;
@@ -75,9 +76,21 @@ public class QuizModule {
 
     @Singleton
     @Provides
-    static QuizRepository provideQuizRepository(QuestionDao questionDao, CategoryDao categoryDao, PlayerDao playerDao){
+    static ScoreDao provideScoreDao(QuizDatabase quizDataBase){
 
-        QuizRepository repository = new QuizRepository(questionDao, categoryDao, playerDao);
+        ScoreDao dao = quizDataBase.scoreDao();
+
+        Timber.d("Providing Score Dao: " + dao);
+
+        return dao;
+    }
+
+
+    @Singleton
+    @Provides
+    static QuizRepository provideQuizRepository(QuestionDao questionDao, CategoryDao categoryDao, PlayerDao playerDao, ScoreDao scoreDao){
+
+        QuizRepository repository = new QuizRepository(questionDao, categoryDao, playerDao, scoreDao);
 
         Timber.d("Providing Quiz Repository: " + repository);
 
