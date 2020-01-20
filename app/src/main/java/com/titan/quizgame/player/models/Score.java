@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey;
 
 import java.util.Date;
 
-@Entity(tableName = "players",
+@Entity(tableName = "score",
         foreignKeys = @ForeignKey(entity = Player.class,
                                             parentColumns = "name",
                                             childColumns = "playerName",
