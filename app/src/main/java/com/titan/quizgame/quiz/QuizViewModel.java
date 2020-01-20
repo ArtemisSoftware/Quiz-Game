@@ -169,17 +169,16 @@ public class QuizViewModel extends ViewModel {
                         return response; // B.
                     }
                 })
-                .flatMapCompletable (new Function<Integer, Completable>() {
+                .flatMapCompletable(new Function<Integer, Completable>() {
                     @Override
                     public Completable apply(Integer response) throws Exception {
 
                         Completable action;
 
-                        if(response == 0){ //nao existe
-                            action = Completable.concatArray(quizRepository.savePlayer(player)/*, quizRepository.saveScore(score)*/);
-                        }
-                        else{
-                            action = Completable.concatArray(/*quizRepository.saveScore(score)*/);
+                        if (response == 0) { //nao existe
+                            action = Completable.concatArray(quizRepository.savePlayer(player), quizRepository.saveScore(score));
+                        } else {
+                            action = Completable.concatArray(quizRepository.saveScore(score));
                         }
 
                         return action;
@@ -196,7 +195,7 @@ public class QuizViewModel extends ViewModel {
                 .doFinally(new Action() {
                     @Override
                     public void run() throws Exception {
-                        Timber.d("End transaction."  + Thread.currentThread().toString());
+                        Timber.d("End transaction." + Thread.currentThread().toString());
                         //mRoomDatabase.endTransaction();
                     }
                 })
@@ -206,14 +205,14 @@ public class QuizViewModel extends ViewModel {
                     @Override
                     public void onSubscribe(Disposable d) {
 
-                        if(d != null){
+                        if (d != null) {
                             disposables.add(d);
                         }
                     }
 
                     @Override
                     public void onComplete() {
-                        Timber.d("onComplete."  + Thread.currentThread().toString());
+                        Timber.d("onComplete." + Thread.currentThread().toString());
                         quizLiveData.setValue(Resource.success(null, "Score saved"));
                     }
 
@@ -222,7 +221,6 @@ public class QuizViewModel extends ViewModel {
                         //Log.e(LOG_TAG, "onError." + Thread.currentThread().toString());
                     }
                 });
-
 
 
 
