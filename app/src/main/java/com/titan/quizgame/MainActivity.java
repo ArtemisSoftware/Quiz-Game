@@ -127,7 +127,6 @@ public class MainActivity extends BaseActivity {
             }
         });
 
-
         viewModel.observeScore().observe(this, new Observer<Resource>() {
             @Override
             public void onChanged(Resource resource) {
@@ -165,26 +164,6 @@ public class MainActivity extends BaseActivity {
 
 
 
-    private void loadHighscore() {
-        SharedPreferences prefs = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        highscore = prefs.getInt(KEY_HIGHSCORE, 0);
-        textViewHighscore.setText(highscore + "");
-
-    }
-
-
-    private void updateHighscore(int highscoreNew) {
-        highscore = highscoreNew;
-        textViewHighscore.setText(highscore + "");
-
-        SharedPreferences prefs = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putInt(KEY_HIGHSCORE, highscore);
-        editor.apply();
-    }
-
-
-
     @OnClick(R.id.button_start_quiz)
     public void onButtonClick(View view) {
         startQuiz();
@@ -209,12 +188,6 @@ public class MainActivity extends BaseActivity {
             case ActivityCode.REQUEST_CODE_QUIZ:
 
                 if (resultCode == RESULT_OK) {
-                    /*
-                    int score = data.getIntExtra(ActivityCode.EXTRA_SCORE, 0);
-                    if (score > highscore) {
-                        updateHighscore(score);
-                    }
-                    */
                     viewModel.loadConfigurations();
                 }
                 break;

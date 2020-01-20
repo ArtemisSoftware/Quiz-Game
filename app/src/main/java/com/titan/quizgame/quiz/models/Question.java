@@ -14,9 +14,9 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "questions",
         foreignKeys = @ForeignKey(entity = Category.class,
-        parentColumns = "id",
-        childColumns = "categoryId",
-        onDelete = ForeignKey.CASCADE),
+                                            parentColumns = "id",
+                                            childColumns = "categoryId",
+                                            onDelete = ForeignKey.CASCADE),
         indices = {@Index("categoryId")})
 public class Question implements Parcelable {
 

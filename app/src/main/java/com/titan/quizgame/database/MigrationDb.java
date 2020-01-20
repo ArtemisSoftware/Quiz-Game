@@ -29,8 +29,9 @@ public class MigrationDb {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
             try {
-                database.execSQL("CREATE TABLE IF NOT EXISTS 'score' ('categoryId' INTEGER PRIMARY KEY,"
-                        + "'difficulty' TEXT PRIMARY KEY, "
+                database.execSQL("CREATE TABLE IF NOT EXISTS 'score' ('categoryId' NOT NULL,"
+                        + "'id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "
+                        + "'difficulty' TEXT NOT NULL, "
                         + "'points' INTEGER NOT NULL, "
                         + "FOREIGN KEY ('playerName') REFERENCES players ('name'))");
                 Timber.d("MIGRATION_2_3: success");

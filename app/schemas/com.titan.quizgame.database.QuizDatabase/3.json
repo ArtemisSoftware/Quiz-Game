@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "ff280223113c7d891e566e01f2b462e4",
+    "identityHash": "ab3c3330a2c1d066675ab1441be12b25",
     "entities": [
       {
         "tableName": "questions",
@@ -135,8 +135,14 @@
       },
       {
         "tableName": "score",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`categoryId` INTEGER NOT NULL, `difficulty` TEXT NOT NULL, `playerName` TEXT NOT NULL, `points` INTEGER NOT NULL, PRIMARY KEY(`categoryId`, `difficulty`), FOREIGN KEY(`playerName`) REFERENCES `players`(`name`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `categoryId` INTEGER NOT NULL, `difficulty` TEXT NOT NULL, `playerName` TEXT NOT NULL, `points` INTEGER NOT NULL, FOREIGN KEY(`playerName`) REFERENCES `players`(`name`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
           {
             "fieldPath": "categoryId",
             "columnName": "categoryId",
@@ -164,10 +170,9 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "categoryId",
-            "difficulty"
+            "id"
           ],
-          "autoGenerate": false
+          "autoGenerate": true
         },
         "indices": [],
         "foreignKeys": [
@@ -188,7 +193,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"ff280223113c7d891e566e01f2b462e4\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"ab3c3330a2c1d066675ab1441be12b25\")"
     ]
   }
 }

@@ -9,13 +9,16 @@ import androidx.room.PrimaryKey;
 import java.util.Date;
 
 @Entity(tableName = "score",
-        primaryKeys = {"categoryId", "difficulty"},
         foreignKeys = @ForeignKey(entity = Player.class,
                                             parentColumns = "name",
                                             childColumns = "playerName",
                                             onDelete = ForeignKey.CASCADE)
 )
 public class Score {
+
+    @PrimaryKey(autoGenerate = true)
+    public int id;
+
 
     @NonNull
     @ColumnInfo(name = "categoryId")
@@ -43,6 +46,10 @@ public class Score {
         this.difficulty = difficulty;
         this.playerName = playerName;
         //this.day = new Date();
+    }
+
+    public int getId() {
+        return id;
     }
 
     public int getCategoryId() {

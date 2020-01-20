@@ -326,7 +326,6 @@ public class QuizActivity extends BaseActivity {
     private void finishQuiz() {
 
         Intent resultIntent = new Intent();
-        resultIntent.putExtra(ActivityCode.EXTRA_SCORE, score);
         setResult(RESULT_OK, resultIntent);
         finish();
     }
