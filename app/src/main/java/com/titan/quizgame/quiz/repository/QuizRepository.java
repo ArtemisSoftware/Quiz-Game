@@ -83,14 +83,6 @@ public class QuizRepository {
 
 
 
-/*
-    @Transaction
-    public void insertAndDeleteInTransaction(Product newProduct, Product oldProduct) {
-        // Anything inside this method runs in a single transaction.
-        insert(newProduct);
-        delete(oldProduct);
-    }
-*/
 
 
 
@@ -111,16 +103,6 @@ public class QuizRepository {
             return null;
         }
     }
-
-
-    /*
-    @Insert
-    Single<Long> insertPlayer(Player player) throws Exception;
-
-
-    @Update
-    Single<Integer> updatePlayer(Player player) throws Exception;
-    */
 
 
 }
