@@ -19,7 +19,7 @@
         <activity android:name=".player.PlayerActivity" />
         <activity android:name=".player.LeaderBoardActivity" />
         <activity android:name=".player.ImagePickerActivity" />
-        <activity android:name=".player.PlayerProfileActivity" />
+        <activity android:name=".player.RegisterPlayerActivity" />
         <activity android:name=".sliders.IntroActivity" />
         <activity android:name=".quiz.QuizActivity" />
         <activity android:name=".settings.SettingsActivity" />

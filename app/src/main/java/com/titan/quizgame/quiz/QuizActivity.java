@@ -1,5 +1,6 @@
 package com.titan.quizgame.quiz;
 
+import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -17,8 +18,7 @@ import android.widget.Toast;
 
 import com.titan.quizgame.BaseActivity;
 import com.titan.quizgame.R;
-import com.titan.quizgame.player.models.Player;
-import com.titan.quizgame.player.models.Score;
+import com.titan.quizgame.player.RegisterPlayerActivity;
 import com.titan.quizgame.quiz.models.Category;
 import com.titan.quizgame.quiz.models.Question;
 import com.titan.quizgame.ui.Resource;
@@ -182,28 +182,6 @@ public class QuizActivity extends BaseActivity {
                 }
             }
         });
-
-        viewModel.observeQuiz().observe(this, new Observer<Resource>() {
-            @Override
-            public void onChanged(Resource resource) {
-
-
-                Timber.d("onChanged: " + resource.toString());
-
-                switch (resource.status){
-
-                    case SUCCESS:
-
-                        finishQuiz();
-                        break;
-
-                    case ERROR:
-
-                        break;
-
-                }
-            }
-        });
     }
 
 
@@ -320,11 +298,14 @@ public class QuizActivity extends BaseActivity {
 
     private void saveScore() {
 
-        Intent intent = getIntent();
-        String difficulty = intent.getStringExtra(ActivityCode.EXTRA_DIFFICULTY);
-        Category category = intent.getExtras().getParcelable(ActivityCode.EXTRA_CATEGORY);
+        Intent mainIntent = getIntent();
+        Intent intent = new Intent(getApplicationContext(), RegisterPlayerActivity.class);
 
-        viewModel.saveScore(new Player("TEST PLAYER"), new Score(score, category.getId(), difficulty, "TEST PLAYER"));
+        intent.putExtra(ActivityCode.EXTRA_DIFFICULTY, mainIntent.getStringExtra(ActivityCode.EXTRA_DIFFICULTY));
+        intent.putExtra(ActivityCode.EXTRA_CATEGORY, (Category) mainIntent.getExtras().getParcelable(ActivityCode.EXTRA_CATEGORY));
+        intent.putExtra(ActivityCode.EXTRA_SCORE, score);
+
+        startActivityForResult(intent, ActivityCode.REGISTER_PLAYER);
     }
 
     private void finishQuiz() {
@@ -357,6 +338,29 @@ public class QuizActivity extends BaseActivity {
             showNextQuestion();
         }
     }
+
+
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode){
+
+            case ActivityCode.REGISTER_PLAYER:
+
+                finishQuiz();
+                break;
+
+            default:
+                break;
+        }
+    }
+
+
+
+
 
 
     @Override

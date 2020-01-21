@@ -14,6 +14,8 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.titan.quizgame.R;
 import com.titan.quizgame.player.models.Board;
+import com.titan.quizgame.quiz.models.Category;
+import com.titan.quizgame.util.constants.ActivityCode;
 import com.titan.quizgame.util.constants.ActivityRequestCode;
 import com.titan.quizgame.util.Image;
 import com.titan.quizgame.util.ImageCropConstants;
@@ -23,7 +25,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 
-public class PlayerProfileActivity extends AppCompatActivity implements ImageListener{
+public class RegisterPlayerActivity extends AppCompatActivity implements ImageListener{
 
 
     @BindView(R.id.txt_inp_lyt_name)
@@ -41,6 +43,14 @@ public class PlayerProfileActivity extends AppCompatActivity implements ImageLis
     }
 
 
+    private void getIncomingIntent(){
+
+        Intent intent = getIntent();
+        String difficulty = intent.getStringExtra(ActivityCode.EXTRA_DIFFICULTY);
+        Category category = intent.getExtras().getParcelable(ActivityCode.EXTRA_CATEGORY);
+
+        //viewModel.saveScore(new Player("TEST PLAYER"), new Score(score, category.getId(), difficulty, "TEST PLAYER"));
+    }
 
     private void fillProfile(Board board){
 

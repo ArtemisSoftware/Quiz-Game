@@ -6,17 +6,15 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.titan.quizgame.player.LeaderBoardActivity;
-import com.titan.quizgame.player.PlayerProfileActivity;
+import com.titan.quizgame.player.RegisterPlayerActivity;
 import com.titan.quizgame.quiz.QuestionActivity;
 import com.titan.quizgame.quiz.QuizViewModel;
 import com.titan.quizgame.ui.Resource;
@@ -170,7 +168,7 @@ public class MainActivity extends BaseActivity {
 
 
     public void initIntro(){
-        Intent intent = new Intent(getApplicationContext(), /*IntroActivity*/PlayerProfileActivity.class);
+        Intent intent = new Intent(getApplicationContext(), /*IntroActivity*/RegisterPlayerActivity.class);
         startActivityForResult(intent, 201);
     }
 
