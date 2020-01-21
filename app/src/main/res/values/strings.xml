@@ -78,8 +78,10 @@
     <string name="score">Score</string>
     <string name="category">Category</string>
     <string name="contribute_with_a_question">Contribute with a question</string>
-    <string name="save">Save</string>
     <string name="leader_board">Leader Board</string>
+    <string name="name">Name</string>
+    <string name="message">Message</string>
+    <string name="save">Save</string>
 
 
 </resources>

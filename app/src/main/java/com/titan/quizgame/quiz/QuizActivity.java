@@ -309,7 +309,11 @@ public class QuizActivity extends BaseActivity {
 
         if (questionCounter < questionCountTotal) {
             buttonConfirmNext.setText("Next");
-        } else {
+        }
+        else {
+
+
+            countDownTimer.cancel();
             buttonConfirmNext.setText("Finish");
         }
     }

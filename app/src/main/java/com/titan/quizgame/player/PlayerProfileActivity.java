@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.titan.quizgame.R;
 import com.titan.quizgame.player.models.Board;
@@ -19,20 +20,24 @@ import com.titan.quizgame.util.ImageCropConstants;
 import com.titan.quizgame.util.Permissions;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 
 public class PlayerProfileActivity extends AppCompatActivity implements ImageListener{
 
 
-    @BindView(R.id.txt_name)
-    TextView txt_name;
+    @BindView(R.id.txt_inp_lyt_name)
+    TextInputLayout txt_inp_lyt_name;
+
+    @BindView(R.id.txt_inp_lyt_message)
+    TextInputLayout txt_inp_lyt_message;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player_profile);
 
-        ((CircularImageView) findViewById(R.id.img_plus)).setOnClickListener(btn_notificacao_OnClickListener);
     }
 
 
@@ -97,14 +102,17 @@ public class PlayerProfileActivity extends AppCompatActivity implements ImageLis
     }
 
 
-    CircularImageView.OnClickListener btn_notificacao_OnClickListener = new View.OnClickListener() {
+    @OnClick(R.id.btn_save)
+    public void onSaveButtonClick(View view) {
 
-        @Override
-        public void onClick(View arg0) {
-            onProfileImageClick();
+    }
 
-        }
-    };
+    @OnClick(R.id.img_plus)
+    public void onImagePlusButtonClick(View view) {
+        onProfileImageClick();
+    }
+
+
 
     void onProfileImageClick() {
         Permissions.requestImagePermission(this, this);

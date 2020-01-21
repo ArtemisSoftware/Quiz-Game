@@ -32,4 +32,7 @@ public class PlayerViewModel extends ViewModel {
     public MutableLiveData<Resource> observePlayers(){
         return playersLiveData;
     }
+
+
+
 }

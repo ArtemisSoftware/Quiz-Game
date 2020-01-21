@@ -35,7 +35,7 @@
 
     <include
         android:id="@+id/include"
-        layout="@layout/content_message" />
+        layout="@layout/content_player_register" />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
