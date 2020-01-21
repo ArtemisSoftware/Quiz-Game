@@ -22,6 +22,7 @@ import com.titan.quizgame.util.ImageCropConstants;
 import com.titan.quizgame.util.Permissions;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
@@ -35,35 +36,37 @@ public class RegisterPlayerActivity extends AppCompatActivity implements ImageLi
     TextInputLayout txt_inp_lyt_message;
 
 
+    @BindView(R.id.txt_difficulty)
+    TextView txt_difficulty;
+
+    @BindView(R.id.txt_score)
+    TextView txt_score;
+
+    @BindView(R.id.txt_category)
+    TextView txt_category;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player_profile);
 
+        ButterKnife.bind(this);
+
+        getIncomingIntent();
     }
 
 
     private void getIncomingIntent(){
 
         Intent intent = getIntent();
-        String difficulty = intent.getStringExtra(ActivityCode.EXTRA_DIFFICULTY);
         Category category = intent.getExtras().getParcelable(ActivityCode.EXTRA_CATEGORY);
 
-        //viewModel.saveScore(new Player("TEST PLAYER"), new Score(score, category.getId(), difficulty, "TEST PLAYER"));
+        txt_difficulty.setText(intent.getStringExtra(ActivityCode.EXTRA_DIFFICULTY));
+        txt_score.setText(intent.getIntExtra(ActivityCode.EXTRA_SCORE, 0) + "");
+        txt_category.setText(category.getName());
     }
 
-    private void fillProfile(Board board){
 
-        /*
-        img_profile
-                txt_name
-        profile_desc
-                txt_difficulty
-        txt_score
-                txt_category
-                */
-
-    }
 
     @Override
     public void imageAction() {
@@ -115,6 +118,21 @@ public class RegisterPlayerActivity extends AppCompatActivity implements ImageLi
     @OnClick(R.id.btn_save)
     public void onSaveButtonClick(View view) {
 
+        if (txt_inp_lyt_name.getEditText().getText().toString().trim().isEmpty()) {
+
+            Intent resultIntent = new Intent();
+            setResult(RESULT_CANCELED, resultIntent);
+            finish();
+        }
+        else{
+
+            Intent intent = getIntent();
+            String difficulty = intent.getStringExtra(ActivityCode.EXTRA_DIFFICULTY);
+            Category category = intent.getExtras().getParcelable(ActivityCode.EXTRA_CATEGORY);
+            int score = intent.getIntExtra(ActivityCode.EXTRA_SCORE, 0);
+
+            //viewModel.saveScore(new Player(txt_inp_lyt_name.getEditText().getText().toString()), new Score(score, category.getId(), difficulty, txt_inp_lyt_name.getEditText().getText().toString()));
+        }
     }
 
     @OnClick(R.id.img_plus)
