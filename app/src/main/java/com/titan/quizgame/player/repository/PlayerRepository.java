@@ -7,9 +7,12 @@ import com.titan.quizgame.player.models.Score;
 import com.titan.quizgame.player.persistence.PlayerDao;
 import com.titan.quizgame.player.persistence.ScoreDao;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import io.reactivex.Completable;
 
-//@Singleton
+@Singleton
 public class PlayerRepository {
 
 
@@ -19,17 +22,12 @@ public class PlayerRepository {
     @NonNull
     private ScoreDao scoreDao;
 
-    //@Inject
+    @Inject
     public PlayerRepository(@NonNull PlayerDao playerDao, @NonNull ScoreDao scoreDao){
         this.playerDao = playerDao;
         this.scoreDao = scoreDao;
     }
 
-/*
-    public Flowable<List<Question>> getQuestions(String difficulty, int categoryId) {
-        return questionDao.getQuestions(difficulty, categoryId);
-    }
-*/
 
     public Completable savePlayer(Player player) {
         return playerDao.insert(player);
@@ -39,4 +37,11 @@ public class PlayerRepository {
     public Completable saveScore(Score score) {
         return scoreDao.insert(score);
     }
+
+
+/*
+    public Flowable<List<Question>> getQuestions(String difficulty, int categoryId) {
+        return questionDao.getQuestions(difficulty, categoryId);
+    }
+*/
 }
