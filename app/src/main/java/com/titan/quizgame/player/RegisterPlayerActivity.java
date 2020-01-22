@@ -2,6 +2,7 @@ package com.titan.quizgame.player;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.mikhaellopez.circularimageview.CircularImageView;
+import com.titan.quizgame.BaseActivity;
 import com.titan.quizgame.R;
 import com.titan.quizgame.player.models.Board;
 import com.titan.quizgame.quiz.models.Category;
@@ -20,13 +22,16 @@ import com.titan.quizgame.util.constants.ActivityRequestCode;
 import com.titan.quizgame.util.Image;
 import com.titan.quizgame.util.ImageCropConstants;
 import com.titan.quizgame.util.Permissions;
+import com.titan.quizgame.util.viewmodel.ViewModelProviderFactory;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-public class RegisterPlayerActivity extends AppCompatActivity implements ImageListener{
+public class RegisterPlayerActivity extends BaseActivity implements ImageListener{
 
 
     @BindView(R.id.txt_inp_lyt_name)
@@ -45,12 +50,21 @@ public class RegisterPlayerActivity extends AppCompatActivity implements ImageLi
     @BindView(R.id.txt_category)
     TextView txt_category;
 
+
+    private PlayerViewModel viewModel;
+
+    @Inject
+    ViewModelProviderFactory providerFactory;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player_profile);
 
         ButterKnife.bind(this);
+
+        viewModel = ViewModelProviders.of(this, providerFactory).get(PlayerViewModel.class);
 
         getIncomingIntent();
     }

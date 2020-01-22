@@ -3,6 +3,7 @@ package com.titan.quizgame.di;
 import android.app.Application;
 
 import com.titan.quizgame.App;
+import com.titan.quizgame.di.player.PlayerModule;
 import com.titan.quizgame.di.quiz.QuizModule;
 
 import javax.inject.Singleton;
@@ -20,7 +21,8 @@ import dagger.android.AndroidInjector;
                 AppModule.class,
                 ViewModelFactoryModule.class,
 
-                QuizModule.class
+                QuizModule.class,
+                PlayerModule.class
         }
 )
 public interface AppComponent extends AndroidInjector<App> {
