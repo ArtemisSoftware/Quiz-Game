@@ -12,6 +12,8 @@ import com.titan.quizgame.ui.Resource;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.Completable;
 import io.reactivex.CompletableObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -31,7 +33,7 @@ public class PlayerViewModel extends ViewModel {
 
     private MutableLiveData<Resource> playersLiveData;
 
-    //@Inject
+    @Inject
     public PlayerViewModel(PlayerRepository playerRepository) {
 
         this.playerRepository = playerRepository;
@@ -142,6 +144,13 @@ public class PlayerViewModel extends ViewModel {
                                 }
                         )
         );
+    }
+
+
+
+    @Override
+    protected void onCleared() {
+        disposables.clear();
     }
 
 }

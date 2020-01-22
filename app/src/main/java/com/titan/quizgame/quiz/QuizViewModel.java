@@ -188,70 +188,7 @@ public class QuizViewModel extends ViewModel {
     }
 
 
-    public void saveScore(Player player, Score score) {
-
-        quizRepository.playerExists(player.getName())
-                .map(new Function<Integer, Integer>() {
-                    @Override
-                    public Integer apply(Integer response) throws Exception {
-
-                        return response; // B.
-                    }
-                })
-                .flatMapCompletable(new Function<Integer, Completable>() {
-                    @Override
-                    public Completable apply(Integer response) throws Exception {
-
-                        Completable action;
-
-                        if (response == 0) { //nao existe
-                            action = Completable.concatArray(quizRepository.savePlayer(player), quizRepository.saveScore(score));
-                        } else {
-                            action = Completable.concatArray(quizRepository.saveScore(score));
-                        }
-
-                        return action;
-                    }
-                })
-                .doOnSubscribe(__ -> {
-                    //Log.w(LOG_TAG, "Begin transaction. " + Thread.currentThread().toString());
-                    //mRoomDatabase.beginTransaction();
-                })
-                .doOnComplete(() -> {
-                    //Log.w(LOG_TAG, "Set transaction successful."  + Thread.currentThread().toString());
-                    //mRoomDatabase.setTransactionSuccessful();
-                })
-                .doFinally(new Action() {
-                    @Override
-                    public void run() throws Exception {
-                        Timber.d("End transaction." + Thread.currentThread().toString());
-                        //mRoomDatabase.endTransaction();
-                    }
-                })
-                .subscribeOn(Schedulers.single())
-                .observeOn(AndroidSchedulers.mainThread()) // ON UI THREAD
-                .subscribeWith(new CompletableObserver() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                        if (d != null) {
-                            disposables.add(d);
-                        }
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        Timber.d("onComplete." + Thread.currentThread().toString());
-                        quizLiveData.setValue(Resource.success(null, "Score saved"));
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        //Log.e(LOG_TAG, "onError." + Thread.currentThread().toString());
-                    }
-                });
-
-
+    //public void saveScore(Player player, Score score) {
 
 /*
         Completable.concatArray(quizRepository.savePlayer(new Player("PLAYER 1")), quizRepository.savePlayer(new Player("PLAYER 2")))
@@ -326,56 +263,6 @@ public class QuizViewModel extends ViewModel {
                     }
                 });
         */
-        /*
-        repository.searchPhotoList(nsid, String.valueOf(pageNumber))
-                .map(new Function<PhotoListResponse, List<String>>() {
-                    @Override
-                    public List<String> apply(PhotoListResponse response) throws Exception {
-                        List<String> photoIds = new ArrayList<>();
-                        pages = response.photos.pages;
-                        for (PhotoListResponse.Photo photo : response.photos.pictures) {
-                            photoIds.add(photo.id);
-                        }
-                        return photoIds; // B.
-                    }
-                })
-                .flatMap(new Function<List<String>, Observable<List<Picture>>>() {
-                    @Override
-                    public Observable<List<Picture>> apply(List<String> photoIds) throws Exception {
-                        return getPicturesObservable(photoIds);
-                    }
-                })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new Observer<List<Picture>>() {
-                    @Override
-                    public void onSubscribe(Disposable disposable) {
-                        disposables.add(disposable);
-                        galleryLiveData.setValue(ApiResponse.loading());
-                    }
-                    @Override
-                    public void onNext(List<Picture> pictures) {
-                        Timber.d("onNext: " + pictures.toString());
-                        galleryLiveData.setValue(ApiResponse.success(pictures));
-                    }
-                    @Override
-                    public void onError(Throwable throwable) {
-                        Timber.e("Error on serch user: " + throwable.getMessage());
-                        galleryLiveData.setValue(ApiResponse.error(throwable.getMessage()));
-                    }
-                    @Override
-                    public void onComplete() {
-                        disposables.clear();
-                        isPerformingQuery = false;
-                    }
-                });
-        */
-
-
-
-
-
-
 
 
 
@@ -407,31 +294,7 @@ public class QuizViewModel extends ViewModel {
         ;
 */
 
-/*
-        disposables.add(
-                //getting flowable to subscribe consumer that will access the data from Room database.
-                quizRepository.
-                        //.subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(
-                                new Consumer<List<Question>>() {
-                                    @Override
-                                    public void accept(List<Question> questions) throws Exception {
-
-                                        questionsLiveData.setValue(Resource.success(questions, ""));
-
-                                    }
-                                },
-                                new Consumer<Throwable>() {
-                                    @Override
-                                    public void accept(Throwable throwable) throws Exception {
-
-                                    }
-                                }
-                        )
-        );
-        */
-    }
+//    }
 
 
 

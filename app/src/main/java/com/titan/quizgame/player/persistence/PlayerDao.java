@@ -27,9 +27,6 @@ public interface PlayerDao {
     Single<Integer> playerCount(String name);
 
 
-    //@Query("SELECT * from players")
-
-
 
     @Query("SELECT name, points, category, difficulty " +
             "FROM players as ply " +
