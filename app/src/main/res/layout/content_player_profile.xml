@@ -43,7 +43,7 @@
         android:textSize="@dimen/profile_title" />
 
     <TextView
-        android:id="@+id/profile_desc"
+        android:id="@+id/txt_profile_desc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/dimen_40dp"
