@@ -30,6 +30,7 @@ public class Score {
     @ColumnInfo(name = "difficulty")
     private String difficulty;
 
+
     @NonNull
     @ColumnInfo(name = "playerName")
     private String playerName;

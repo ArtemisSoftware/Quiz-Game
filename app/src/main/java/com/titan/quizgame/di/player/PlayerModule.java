@@ -20,7 +20,7 @@ import timber.log.Timber;
 @Module
 public class PlayerModule {
 
-
+/*
     @Singleton
     @Provides
     static QuizDatabase provideQuizDatabase(Application application){
@@ -46,8 +46,8 @@ public class PlayerModule {
 
         return dao;
     }
-
-
+*/
+/*
     @Singleton
     @Provides
     static ScoreDao provideScoreDao(QuizDatabase quizDataBase){
@@ -58,7 +58,7 @@ public class PlayerModule {
 
         return dao;
     }
-
+*/
 
     @Singleton
     @Provides

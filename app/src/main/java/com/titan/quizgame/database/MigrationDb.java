@@ -29,11 +29,13 @@ public class MigrationDb {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
             try {
-                database.execSQL("CREATE TABLE IF NOT EXISTS 'score' ('categoryId' NOT NULL,"
+                database.execSQL("CREATE TABLE IF NOT EXISTS 'score' ("
                         + "'id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "
+                        + "'categoryId' INTEGER NOT NULL,"
                         + "'difficulty' TEXT NOT NULL, "
+                        + "'playerName' TEXT NOT NULL, "
                         + "'points' INTEGER NOT NULL, "
-                        + "FOREIGN KEY ('playerName') REFERENCES players ('name'))");
+                        + "FOREIGN KEY ('playerName') REFERENCES 'players' ('name') ON DELETE CASCADE)");
                 Timber.d("MIGRATION_2_3: success");
             }
             catch(SQLException e){
@@ -47,7 +49,19 @@ public class MigrationDb {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
             try {
-                database.execSQL("CREATE INDEX IF NOT EXISTS 'index_score_playerName' ON score ('playerName')");
+
+                database.execSQL("DROP TABLE IF EXISTS 'score'");
+
+                database.execSQL("CREATE TABLE IF NOT EXISTS 'score' ("
+                        + "'id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "
+                        + "'categoryId' INTEGER NOT NULL,"
+                        + "'difficulty' TEXT NOT NULL, "
+                        + "'playerName' TEXT NOT NULL, "
+                        + "'points' INTEGER NOT NULL, "
+                        + "FOREIGN KEY ('playerName') REFERENCES 'players' ('name') ON DELETE CASCADE)");
+
+
+                database.execSQL("CREATE UNIQUE INDEX IF NOT EXISTS 'index_score_playerName' ON score ('playerName')");
                 Timber.d("MIGRATION_3_4: success");
             }
             catch(SQLException e){
