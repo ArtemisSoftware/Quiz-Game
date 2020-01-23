@@ -2,6 +2,7 @@ package com.titan.quizgame.player;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
@@ -16,7 +17,11 @@ import com.mikhaellopez.circularimageview.CircularImageView;
 import com.titan.quizgame.BaseActivity;
 import com.titan.quizgame.R;
 import com.titan.quizgame.player.models.Board;
+import com.titan.quizgame.player.models.Player;
+import com.titan.quizgame.player.models.Score;
 import com.titan.quizgame.quiz.models.Category;
+import com.titan.quizgame.quiz.models.Question;
+import com.titan.quizgame.ui.Resource;
 import com.titan.quizgame.util.constants.ActivityCode;
 import com.titan.quizgame.util.constants.ActivityRequestCode;
 import com.titan.quizgame.util.Image;
@@ -24,11 +29,14 @@ import com.titan.quizgame.util.ImageCropConstants;
 import com.titan.quizgame.util.Permissions;
 import com.titan.quizgame.util.viewmodel.ViewModelProviderFactory;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import timber.log.Timber;
 
 
 public class RegisterPlayerActivity extends BaseActivity implements ImageListener{
@@ -67,6 +75,7 @@ public class RegisterPlayerActivity extends BaseActivity implements ImageListene
         viewModel = ViewModelProviders.of(this, providerFactory).get(PlayerViewModel.class);
 
         getIncomingIntent();
+        subscribeObservers();
     }
 
 
@@ -80,6 +89,41 @@ public class RegisterPlayerActivity extends BaseActivity implements ImageListene
         txt_category.setText(category.getName());
     }
 
+
+
+    private void subscribeObservers() {
+
+        viewModel.observePlayers().observe(this, new Observer<Resource>() {
+            @Override
+            public void onChanged(Resource resource) {
+
+
+                Timber.d("onChanged: " + resource.toString());
+
+                switch (resource.status){
+
+                    case SUCCESS:
+
+                        finishRegister(RESULT_OK);
+                        break;
+
+                    case ERROR:
+
+                        break;
+
+                }
+            }
+        });
+    }
+
+
+
+    private void finishRegister(int result) {
+
+        Intent resultIntent = new Intent();
+        setResult(result, resultIntent);
+        finish();
+    }
 
 
     @Override
@@ -145,7 +189,7 @@ public class RegisterPlayerActivity extends BaseActivity implements ImageListene
             Category category = intent.getExtras().getParcelable(ActivityCode.EXTRA_CATEGORY);
             int score = intent.getIntExtra(ActivityCode.EXTRA_SCORE, 0);
 
-            //viewModel.saveScore(new Player(txt_inp_lyt_name.getEditText().getText().toString()), new Score(score, category.getId(), difficulty, txt_inp_lyt_name.getEditText().getText().toString()));
+            viewModel.saveScore(new Player(txt_inp_lyt_name.getEditText().getText().toString()), new Score(score, category.getId(), difficulty, txt_inp_lyt_name.getEditText().getText().toString()));
         }
     }
 
