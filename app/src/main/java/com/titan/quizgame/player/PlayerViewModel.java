@@ -113,8 +113,10 @@ public class PlayerViewModel extends ViewModel {
                     }
 
                     @Override
-                    public void onError(Throwable e) {
-                        //Log.e(LOG_TAG, "onError." + Thread.currentThread().toString());
+                    public void onError(Throwable throwable) {
+
+                        Timber.d("onError." + Thread.currentThread().toString());
+                        playersLiveData.setValue(Resource.error(throwable.getMessage(), "Execution error"));
                     }
                 });
 
@@ -132,16 +134,21 @@ public class PlayerViewModel extends ViewModel {
                         .subscribe(
                                 new Consumer<List<Board>>() {
                                     @Override
-                                    public void accept(List<Board> questions) throws Exception {
+                                    public void accept(List<Board> board) throws Exception {
 
-                                        playersLiveData.setValue(Resource.success(questions, ""));
+                                        if(board.size() > 0) {
+                                            playersLiveData.setValue(Resource.success(board, ""));
+                                        }
+                                        else{
+                                            playersLiveData.setValue(Resource.error("No scores available", "Leader Board"));
+                                        }
 
                                     }
                                 },
                                 new Consumer<Throwable>() {
                                     @Override
                                     public void accept(Throwable throwable) throws Exception {
-
+                                        playersLiveData.setValue(Resource.error(throwable.getMessage(), "Execution error"));
                                     }
                                 }
                         )

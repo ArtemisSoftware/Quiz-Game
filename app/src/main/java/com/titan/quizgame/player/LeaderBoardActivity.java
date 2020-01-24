@@ -19,6 +19,7 @@ import com.titan.quizgame.player.adapters.BoardRecyclerAdapter;
 import com.titan.quizgame.player.models.Board;
 import com.titan.quizgame.quiz.models.Category;
 import com.titan.quizgame.ui.Resource;
+import com.titan.quizgame.util.UIMessages;
 import com.titan.quizgame.util.constants.ActivityCode;
 import com.titan.quizgame.util.viewmodel.ViewModelProviderFactory;
 
@@ -97,6 +98,7 @@ public class LeaderBoardActivity extends BaseActivity {
 
                     case SUCCESS:
 
+
                         fillTopPlayer(((List<Board>) resource.data).get(0));
 
                         ((List<Board>) resource.data).remove(0);
@@ -105,6 +107,7 @@ public class LeaderBoardActivity extends BaseActivity {
 
                     case ERROR:
 
+                        UIMessages.error(pDialog, resource.message, ((String) resource.data));
                         break;
 
                 }

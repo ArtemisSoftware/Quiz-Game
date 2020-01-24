@@ -96,6 +96,7 @@ public class MainActivity extends BaseActivity {
 
                     case ERROR:
 
+                        UIMessages.error(pDialog, resource.message, ((String) resource.data));
                         break;
                 }
             }
@@ -117,6 +118,7 @@ public class MainActivity extends BaseActivity {
 
                     case ERROR:
 
+                        UIMessages.error(pDialog, resource.message, ((String) resource.data));
                         break;
                 }
             }
@@ -137,6 +139,7 @@ public class MainActivity extends BaseActivity {
 
                     case ERROR:
 
+                        UIMessages.error(pDialog, resource.message, ((String) resource.data));
                         break;
                 }
 
@@ -184,8 +187,6 @@ public class MainActivity extends BaseActivity {
 
                 if (resultCode == RESULT_OK) {
                     viewModel.loadConfigurations();
-
-                    UIMessages.success(pDialog);
                 }
                 break;
 
@@ -193,7 +194,7 @@ public class MainActivity extends BaseActivity {
             case ActivityCode.REQUEST_CODE_CONTRIBUTE:
 
                 if (resultCode == RESULT_OK) {
-                    //toast success
+
                 }
                 break;
 

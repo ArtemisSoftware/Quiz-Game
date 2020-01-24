@@ -4,6 +4,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
 
+import com.awesomedialog.blennersilva.awesomedialoglibrary.interfaces.Closure;
 import com.google.android.material.textfield.TextInputLayout;
 import com.titan.quizgame.BaseActivity;
 import com.titan.quizgame.R;
@@ -18,6 +20,7 @@ import com.titan.quizgame.quiz.models.Category;
 import com.titan.quizgame.quiz.models.Question;
 import com.titan.quizgame.ui.Resource;
 import com.titan.quizgame.util.Loader;
+import com.titan.quizgame.util.UIMessages;
 import com.titan.quizgame.util.viewmodel.ViewModelProviderFactory;
 
 import java.util.List;
@@ -86,7 +89,6 @@ public class QuestionActivity extends BaseActivity {
 
         subscribeObservers();
         viewModel.loadConfigurations();
-
     }
 
 
@@ -109,6 +111,7 @@ public class QuestionActivity extends BaseActivity {
 
                     case ERROR:
 
+                        UIMessages.error(pDialog, resource.message, ((String) resource.data));
                         break;
 
                 }
@@ -131,14 +134,13 @@ public class QuestionActivity extends BaseActivity {
 
                     case ERROR:
 
+                        UIMessages.error(pDialog, resource.message, ((String) resource.data));
                         break;
 
                 }
 
             }
         });
-
-
 
         viewModel.observeQuestions().observe(this, new Observer<Resource>() {
             @Override
@@ -150,24 +152,31 @@ public class QuestionActivity extends BaseActivity {
 
                     case SUCCESS:
 
-                        //toast success
-                        setResult(RESULT_OK);
-                        finish();
+                        finishRegister();
                         break;
 
                     case ERROR:
 
+                        UIMessages.error(pDialog, resource.message, ((String) resource.data));
                         break;
-
                 }
-
             }
         });
     }
 
 
+    private void finishRegister() {
 
+        Closure method = new Closure() {
+            @Override
+            public void exec() {
+                setResult(RESULT_OK);
+                finish();
+            }
+        };
 
+        UIMessages.success(pDialog, "Contribution", "Question saved", method);
+    }
 
 
     private void saveQuestion() {
@@ -179,7 +188,8 @@ public class QuestionActivity extends BaseActivity {
                 txt_option_two.getEditText().getText().toString().trim().isEmpty()
                 ||
                 txt_option_three.getEditText().getText().toString().trim().isEmpty()) {
-            //Toast.makeText(this, "Please insert a title and description", Toast.LENGTH_SHORT).show();
+
+            UIMessages.error(pDialog, "Incomplete fields");
             return;
         }
 
@@ -192,16 +202,6 @@ public class QuestionActivity extends BaseActivity {
 
         viewModel.saveQuestions(question);
 
-        /*
-
-        int id = getIntent().getIntExtra(EXTRA_ID, -1);
-        if (id != -1) {
-            data.putExtra(EXTRA_ID, id);
-        }
-
-        setResult(RESULT_OK, data);
-        finish();
-        */
     }
 
 

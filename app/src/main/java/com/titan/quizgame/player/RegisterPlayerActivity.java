@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.awesomedialog.blennersilva.awesomedialoglibrary.interfaces.Closure;
 import com.google.android.material.textfield.TextInputLayout;
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.titan.quizgame.BaseActivity;
@@ -121,9 +122,16 @@ public class RegisterPlayerActivity extends BaseActivity implements ImageListene
 
     private void finishRegister(int result) {
 
-        Intent resultIntent = new Intent();
-        setResult(result, resultIntent);
-        finish();
+        Closure method = new Closure() {
+            @Override
+            public void exec() {
+                Intent resultIntent = new Intent();
+                setResult(result, resultIntent);
+                finish();
+            }
+        };
+
+        UIMessages.success(pDialog, "Quiz", "Score saved", method);
     }
 
 

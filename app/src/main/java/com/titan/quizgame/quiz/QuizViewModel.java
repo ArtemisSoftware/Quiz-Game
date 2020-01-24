@@ -93,13 +93,13 @@ public class QuizViewModel extends ViewModel {
                             public void accept(List<Category> categories) throws Exception {
 
                                 categoriesLiveData.setValue(Resource.success(categories, ""));
-
                             }
                         },
                         new Consumer<Throwable>() {
                             @Override
                             public void accept(Throwable throwable) throws Exception {
 
+                                categoriesLiveData.setValue(Resource.error(throwable.getMessage(), "Execution error"));
                             }
                         }
                 )
@@ -126,6 +126,7 @@ public class QuizViewModel extends ViewModel {
                                     @Override
                                     public void accept(Throwable throwable) throws Exception {
 
+                                        scoreLiveData.setValue(Resource.error(throwable.getMessage(), "Execution error"));
                                     }
                                 }
                         )
@@ -153,7 +154,7 @@ public class QuizViewModel extends ViewModel {
                         new Consumer<Throwable>() {
                             @Override
                             public void accept(Throwable throwable) throws Exception {
-
+                                questionsLiveData.setValue(Resource.error(throwable.getMessage(), "Execution error"));
                             }
                         }
                 )
@@ -180,8 +181,8 @@ public class QuizViewModel extends ViewModel {
                     }
 
                     @Override
-                    public void onError(Throwable e) {
-
+                    public void onError(Throwable throwable) {
+                        questionsLiveData.setValue(Resource.error(throwable.getMessage(), "Execution error"));
                     }
                 });
 
