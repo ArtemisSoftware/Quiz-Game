@@ -9,6 +9,7 @@ import com.titan.quizgame.player.models.Score;
 import com.titan.quizgame.player.repository.PlayerRepository;
 import com.titan.quizgame.quiz.models.Question;
 import com.titan.quizgame.ui.Resource;
+import com.titan.quizgame.util.UIMessages;
 
 import java.util.List;
 
@@ -106,6 +107,7 @@ public class PlayerViewModel extends ViewModel {
 
                     @Override
                     public void onComplete() {
+
                         Timber.d("onComplete." + Thread.currentThread().toString());
                         playersLiveData.setValue(Resource.success(null, "Score saved"));
                     }

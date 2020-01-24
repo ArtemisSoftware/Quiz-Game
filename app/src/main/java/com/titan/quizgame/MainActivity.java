@@ -19,6 +19,7 @@ import com.titan.quizgame.quiz.QuestionActivity;
 import com.titan.quizgame.quiz.QuizViewModel;
 import com.titan.quizgame.ui.Resource;
 import com.titan.quizgame.util.Loader;
+import com.titan.quizgame.util.UIMessages;
 import com.titan.quizgame.util.constants.ActivityCode;
 import com.titan.quizgame.quiz.QuizActivity;
 import com.titan.quizgame.quiz.models.Category;
@@ -55,6 +56,7 @@ public class MainActivity extends BaseActivity {
 
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +69,6 @@ public class MainActivity extends BaseActivity {
 
 
         viewModel = ViewModelProviders.of(this, providerFactory).get(QuizViewModel.class);
-
 
         subscribeObservers();
 
@@ -183,6 +184,8 @@ public class MainActivity extends BaseActivity {
 
                 if (resultCode == RESULT_OK) {
                     viewModel.loadConfigurations();
+
+                    UIMessages.success(pDialog);
                 }
                 break;
 
@@ -196,6 +199,7 @@ public class MainActivity extends BaseActivity {
 
 
             default:
+
                 break;
         }
     }

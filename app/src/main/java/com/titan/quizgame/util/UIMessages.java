@@ -1,23 +1,25 @@
 package com.titan.quizgame.util;
 
-import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 
-import com.labters.lottiealertdialoglibrary.DialogTypes;
-import com.labters.lottiealertdialoglibrary.LottieAlertDialog;
+import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeSuccessDialog;
+import com.titan.quizgame.R;
+
 
 public class UIMessages {
 
 
-    public static void success(Activity activity){
+    public static void success(AwesomeSuccessDialog pDialog){
 
-        LottieAlertDialog alertDialog = new LottieAlertDialog.Builder(activity, DialogTypes.TYPE_SUCCESS)
-                .setTitle("Register")
-                .setDescription("Player and score saved")
-                .build();
-        alertDialog.setCancelable(true);
-        alertDialog.show();
 
+
+        pDialog.setTitle(R.string.app_name)
+                .setMessage(R.string.app_name)
+                .setColoredCircle(R.color.dialogSuccessBackgroundColor)
+                .setDialogIconAndColor(R.drawable.ic_dialog_info, R.color.white)
+                .setCancelable(true)
+        .show();
 
     }
 

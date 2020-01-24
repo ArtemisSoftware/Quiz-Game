@@ -22,6 +22,7 @@ import com.titan.quizgame.player.models.Score;
 import com.titan.quizgame.quiz.models.Category;
 import com.titan.quizgame.quiz.models.Question;
 import com.titan.quizgame.ui.Resource;
+import com.titan.quizgame.util.UIMessages;
 import com.titan.quizgame.util.constants.ActivityCode;
 import com.titan.quizgame.util.constants.ActivityRequestCode;
 import com.titan.quizgame.util.Image;

@@ -7,11 +7,14 @@ import android.widget.ProgressBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeSuccessDialog;
+
 import dagger.android.support.DaggerAppCompatActivity;
 
 public abstract class BaseActivity extends DaggerAppCompatActivity {
 
     public ProgressBar mProgressBar;
+    public AwesomeSuccessDialog pDialog;
 
     @Override
     public void setContentView(int layoutResID) {
@@ -21,6 +24,10 @@ public abstract class BaseActivity extends DaggerAppCompatActivity {
         mProgressBar = constraintLayout.findViewById(R.id.progress_bar);
 
         getLayoutInflater().inflate(layoutResID, frameLayout, true);
+
+        pDialog = new AwesomeSuccessDialog(this);
+
+
         super.setContentView(constraintLayout);
     }
 
