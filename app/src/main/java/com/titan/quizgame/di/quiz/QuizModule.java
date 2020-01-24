@@ -2,9 +2,13 @@ package com.titan.quizgame.di.quiz;
 
 import android.app.Application;
 
+import androidx.annotation.NonNull;
 import androidx.room.Room;
+import androidx.room.RoomDatabase;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.titan.quizgame.database.MigrationDb;
+import com.titan.quizgame.database.PopulateDb;
 import com.titan.quizgame.player.persistence.PlayerDao;
 import com.titan.quizgame.player.persistence.ScoreDao;
 import com.titan.quizgame.quiz.persistence.CategoryDao;
@@ -29,6 +33,7 @@ public class QuizModule {
 
         QuizDatabase quizDatabase = Room.databaseBuilder(application, QuizDatabase.class, DataBase.DATABASE_NAME)
                 .addMigrations(MigrationDb.MIGRATIONS)
+                //.addCallback(dbCallback)
                 .build();
 
         Timber.d("Providing quiz database: " + quizDatabase);
@@ -36,6 +41,22 @@ public class QuizModule {
         return quizDatabase;
     }
 
+/*
+    static RoomDatabase.Callback provideRoomDatabaseCallBack(QuizDatabase quizDatabase){
+
+        RoomDatabase.Callback roomCallback = new RoomDatabase.Callback() {
+            @Override
+            public void onCreate(@NonNull SupportSQLiteDatabase db) {
+                super.onCreate(db);
+                new PopulateDb(quizDatabase).execute();
+            }
+        };
+
+        Timber.d("Providing quiz database: " + quizDatabase);
+
+        return roomCallback;
+    }
+*/
 
     @Singleton
     @Provides
