@@ -111,4 +111,7 @@ dependencies {
     implementation 'com.facebook.stetho:stetho:1.5.1'
 
     implementation 'me.omidh:liquidradiobutton:1.0.01'
+
+    implementation 'com.airbnb.android:lottie:2.7.0'
+    implementation 'com.github.mayuce:LottieAlertDialog:1.1'
 }
