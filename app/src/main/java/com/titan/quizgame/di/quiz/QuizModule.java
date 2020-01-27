@@ -29,11 +29,11 @@ public class QuizModule {
 
     @Singleton
     @Provides
-    static QuizDatabase provideQuizDatabase(Application application){
+    static QuizDatabase provideQuizDatabase(Application application, RoomDatabase.Callback dbCallback){
 
         QuizDatabase quizDatabase = Room.databaseBuilder(application, QuizDatabase.class, DataBase.DATABASE_NAME)
                 .addMigrations(MigrationDb.MIGRATIONS)
-                //.addCallback(dbCallback)
+                .addCallback(dbCallback)
                 .build();
 
         Timber.d("Providing quiz database: " + quizDatabase);
@@ -41,22 +41,24 @@ public class QuizModule {
         return quizDatabase;
     }
 
-/*
-    static RoomDatabase.Callback provideRoomDatabaseCallBack(QuizDatabase quizDatabase){
+    @Singleton
+    @Provides
+    static RoomDatabase.Callback provideRoomDatabaseCallBack(){
 
         RoomDatabase.Callback roomCallback = new RoomDatabase.Callback() {
             @Override
             public void onCreate(@NonNull SupportSQLiteDatabase db) {
                 super.onCreate(db);
-                new PopulateDb(quizDatabase).execute();
+
+                new PopulateDb(db).execute();
             }
         };
 
-        Timber.d("Providing quiz database: " + quizDatabase);
+        //Timber.d("Providing quiz database: " + quizDatabase);
 
         return roomCallback;
     }
-*/
+
 
     @Singleton
     @Provides
