@@ -81,8 +81,6 @@ public class QuizViewModel extends ViewModel {
 
     public void loadConfigurations() {
 
-        //quizRepository.insert(new Category("Math"));
-
         disposables.add(
                 this.quizRepository.getCategories()
                 //.subscribeOn(Schedulers.io())

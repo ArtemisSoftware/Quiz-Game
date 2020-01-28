@@ -26,6 +26,7 @@ import timber.log.Timber;
 @Module
 public class QuizModule {
 
+    static QuizDatabase quizDb;
 
     @Singleton
     @Provides
@@ -38,6 +39,8 @@ public class QuizModule {
 
         Timber.d("Providing quiz database: " + quizDatabase);
 
+        quizDb = quizDatabase;
+        quizDatabase.getOpenHelper().getWritableDatabase();//<< Forces an Open thus creation of the Database
         return quizDatabase;
     }
 
@@ -49,8 +52,7 @@ public class QuizModule {
             @Override
             public void onCreate(@NonNull SupportSQLiteDatabase db) {
                 super.onCreate(db);
-
-                new PopulateDb(db).execute();
+                new PopulateDb(quizDb).populate();
             }
         };
 

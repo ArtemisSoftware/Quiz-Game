@@ -14,33 +14,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-public  class PopulateDb extends AsyncTask<Void, Void, Void> {
-        private CategoryDao categoryDao;
-    SupportSQLiteDatabase db;
-/*
+public  class PopulateDb {
+
+        private QuizDatabase db;
+
         public PopulateDb(QuizDatabase db) {
-            categoryDao = db.categoryDao();
+            this.db = db;
         }
-*/
-
-    public PopulateDb(SupportSQLiteDatabase db) {
-        this.db = db;
-    }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            fillCategoriesTable();
-        /*
-            List<Category> categories = new ArrayList<>();
-            categories.add(new Category("Programming"));
-            categories.add(new Category("Geography"));
-            categories.add(new Category("Math"));
 
 
-            categoryDao.insertCategories(categories)
+        public void populate(){
+
+            db.categoryDao().insertCategories(getCategories())
                     .subscribeOn(Schedulers.io())
                     //.observeOn(AndroidSchedulers.mainThread())
                     .subscribe(
@@ -57,23 +47,16 @@ public  class PopulateDb extends AsyncTask<Void, Void, Void> {
 
                                 }
                             });
-            */
-            return null;
-        }
-
-
-    private void fillCategoriesTable() {
-        Category c1 = new Category("Programming");
-        insertCategory(c1);
-        Category c2 = new Category("Geography");
-        insertCategory(c2);
-        Category c3 = new Category("Math");
-        insertCategory(c3);
     }
 
-    private void insertCategory(Category category) {
-        ContentValues cv = new ContentValues();
-        cv.put("name", category.getName());
-        db.insert("categories", 0, cv);
+
+    private List<Category> getCategories() {
+        List<Category> categories = new ArrayList<>();
+        categories.add(new Category("Programming"));
+        categories.add(new Category("Geography"));
+        categories.add(new Category("Math"));
+
+        return categories;
     }
+
 }
