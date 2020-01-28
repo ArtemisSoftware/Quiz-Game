@@ -68,6 +68,7 @@ public class MainActivity extends BaseActivity {
         setSupportActionBar(toolbar);
 
 
+        textViewHighscore.setText("0");
         viewModel = ViewModelProviders.of(this, providerFactory).get(QuizViewModel.class);
 
         subscribeObservers();

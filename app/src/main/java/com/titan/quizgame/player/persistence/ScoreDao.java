@@ -7,6 +7,7 @@ import androidx.room.Query;
 import com.titan.quizgame.player.models.Score;
 
 import io.reactivex.Completable;
+import io.reactivex.Maybe;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 
@@ -17,5 +18,5 @@ public interface ScoreDao {
     Completable insert(Score score);
 
     @Query("SELECT points FROM score ORDER BY points DESC LIMIT 1")
-    Single<Integer> getHighScore();
+    Maybe<Integer> getHighScore();
 }

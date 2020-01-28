@@ -20,6 +20,7 @@ import javax.inject.Singleton;
 
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
+import io.reactivex.Maybe;
 import io.reactivex.Single;
 
 @Singleton
@@ -77,7 +78,7 @@ public class QuizRepository {
         return scoreDao.insert(score);
     }
 
-    public Single<Integer> getHighScore() {
+    public Maybe<Integer> getHighScore() {
         return scoreDao.getHighScore();
     }
 
