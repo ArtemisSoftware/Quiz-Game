@@ -239,5 +239,14 @@ public class RegisterPlayerActivity extends BaseActivity implements ImageListene
         }
     }
 
+/*
+    private void getFilePath() {
+        String filePath = DocumentHelper.getPath(this, this.returnUri);
+        //Safety check to prevent null pointer exception
+        if (filePath == null || filePath.isEmpty()) return;
+        chosenFile = new File(filePath);
+        Log.d("FilePath", filePath);
+    }
+*/
 
 }
