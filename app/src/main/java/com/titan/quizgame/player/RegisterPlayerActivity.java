@@ -60,6 +60,9 @@ public class RegisterPlayerActivity extends BaseActivity implements ImageListene
     @BindView(R.id.txt_category)
     TextView txt_category;
 
+    @BindView(R.id.img_profile)
+    CircularImageView img_profile;
+
 
     private PlayerViewModel viewModel;
 
@@ -226,6 +229,8 @@ public class RegisterPlayerActivity extends BaseActivity implements ImageListene
 
                 // You can update this bitmap to your server
                 Bitmap bitmap = Image.getBitmap(this, uri);
+
+                img_profile.setImageBitmap(bitmap);
 
                 // loading profile image from local cache
                 //loadProfile(uri.toString());
