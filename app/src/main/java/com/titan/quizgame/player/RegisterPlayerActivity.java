@@ -31,6 +31,7 @@ import com.titan.quizgame.util.ImageCropConstants;
 import com.titan.quizgame.util.Permissions;
 import com.titan.quizgame.util.viewmodel.ViewModelProviderFactory;
 
+import java.io.File;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -38,6 +39,9 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import timber.log.Timber;
 
 
@@ -65,6 +69,7 @@ public class RegisterPlayerActivity extends BaseActivity implements ImageListene
 
 
     private PlayerViewModel viewModel;
+    private File chosenFile;
 
     @Inject
     ViewModelProviderFactory providerFactory;
@@ -201,6 +206,12 @@ public class RegisterPlayerActivity extends BaseActivity implements ImageListene
             Category category = intent.getExtras().getParcelable(ActivityCode.EXTRA_CATEGORY);
             int score = intent.getIntExtra(ActivityCode.EXTRA_SCORE, 0);
 
+            MultipartBody.Part body = MultipartBody.Part.createFormData(
+                    "image",
+                    chosenFile.getName(),
+                    RequestBody.create(MediaType.parse("image/*"), chosenFile)
+            );
+
             viewModel.saveScore(new Player(txt_inp_lyt_name.getEditText().getText().toString()), new Score(score, category.getId(), difficulty, txt_inp_lyt_name.getEditText().getText().toString()));
         }
     }
@@ -232,21 +243,21 @@ public class RegisterPlayerActivity extends BaseActivity implements ImageListene
 
                 img_profile.setImageBitmap(bitmap);
 
-                // loading profile image from local cache
-                //loadProfile(uri.toString());
+                getFilePath(uri);
+
 
             }
         }
     }
 
-/*
-    private void getFilePath() {
-        String filePath = DocumentHelper.getPath(this, this.returnUri);
+
+    private void getFilePath(Uri uri) {
+        String filePath = Image.getPath(this, uri);
         //Safety check to prevent null pointer exception
         if (filePath == null || filePath.isEmpty()) return;
         chosenFile = new File(filePath);
-        Log.d("FilePath", filePath);
+        Timber.d("FilePath: " + filePath);
     }
-*/
+
 
 }
