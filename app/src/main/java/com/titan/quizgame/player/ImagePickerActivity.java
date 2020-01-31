@@ -17,7 +17,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.titan.quizgame.R;
-import com.titan.quizgame.util.constants.ActivityRequestCode;
+import com.titan.quizgame.util.constants.ActivityCode;
 import com.titan.quizgame.util.Image;
 import com.titan.quizgame.util.ImageCropConstants;
 import com.yalantis.ucrop.UCrop;
@@ -52,7 +52,7 @@ public class ImagePickerActivity extends AppCompatActivity {
         bitmapMaxHeight = intent.getIntExtra(ImageCropConstants.INTENT_BITMAP_MAX_HEIGHT, ImageCropConstants.bitmapMaxHeight);
 
         int requestCode = intent.getIntExtra(ImageCropConstants.INTENT_IMAGE_PICKER_OPTION, -1);
-        if (requestCode == ActivityRequestCode.REQUEST_IMAGE_CAPTURE) {
+        if (requestCode == ActivityCode.REQUEST_IMAGE_CAPTURE) {
             takeCameraImage();
         } else {
             chooseImageFromGallery();
@@ -87,7 +87,7 @@ public class ImagePickerActivity extends AppCompatActivity {
     }
 
     private void takeCameraImage() {
-        Image.openCamera(this, ActivityRequestCode.REQUEST_IMAGE_CAPTURE);
+        Image.openCamera(this, ActivityCode.REQUEST_IMAGE_CAPTURE);
     }
 
     private void chooseImageFromGallery() {
@@ -100,14 +100,14 @@ public class ImagePickerActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         switch (requestCode) {
-            case ActivityRequestCode.REQUEST_IMAGE_CAPTURE:
+            case ActivityCode.REQUEST_IMAGE_CAPTURE:
                 if (resultCode == RESULT_OK) {
                     //cropImage(getCacheImagePath(fileName));
                 } else {
                     setResultCancelled();
                 }
                 break;
-            case ActivityRequestCode.REQUEST_GALLERY_IMAGE:
+            case ActivityCode.REQUEST_GALLERY_IMAGE:
                 if (resultCode == RESULT_OK) {
                     Uri imageUri = data.getData();
                     cropImage(imageUri);

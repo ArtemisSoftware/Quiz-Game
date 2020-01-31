@@ -15,7 +15,7 @@ import android.provider.MediaStore;
 
 import androidx.core.content.FileProvider;
 
-import com.titan.quizgame.util.constants.ActivityRequestCode;
+import com.titan.quizgame.util.constants.ActivityCode;
 
 import java.io.File;
 
@@ -40,7 +40,7 @@ public class Image {
     public static void openGallery(Activity context){
 
         Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        context.startActivityForResult(pickPhoto, ActivityRequestCode.REQUEST_GALLERY_IMAGE);
+        context.startActivityForResult(pickPhoto, ActivityCode.REQUEST_GALLERY_IMAGE);
 
     }
 

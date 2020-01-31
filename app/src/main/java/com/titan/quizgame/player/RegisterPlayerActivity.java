@@ -1,7 +1,6 @@
 package com.titan.quizgame.player;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -17,22 +16,18 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.titan.quizgame.BaseActivity;
 import com.titan.quizgame.R;
-import com.titan.quizgame.player.models.Board;
 import com.titan.quizgame.player.models.Player;
 import com.titan.quizgame.player.models.Score;
 import com.titan.quizgame.quiz.models.Category;
-import com.titan.quizgame.quiz.models.Question;
 import com.titan.quizgame.ui.Resource;
 import com.titan.quizgame.util.UIMessages;
 import com.titan.quizgame.util.constants.ActivityCode;
-import com.titan.quizgame.util.constants.ActivityRequestCode;
 import com.titan.quizgame.util.Image;
 import com.titan.quizgame.util.ImageCropConstants;
 import com.titan.quizgame.util.Permissions;
 import com.titan.quizgame.util.viewmodel.ViewModelProviderFactory;
 
 import java.io.File;
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -162,7 +157,7 @@ public class RegisterPlayerActivity extends BaseActivity implements ImageListene
     private void launchCameraIntent() {
 
         Intent intent = new Intent(this, ImagePickerActivity.class);
-        intent.putExtra(ImageCropConstants.INTENT_IMAGE_PICKER_OPTION, ActivityRequestCode.REQUEST_IMAGE_CAPTURE);
+        intent.putExtra(ImageCropConstants.INTENT_IMAGE_PICKER_OPTION, ActivityCode.REQUEST_IMAGE_CAPTURE);
 
         // setting aspect ratio
         intent.putExtra(ImageCropConstants.INTENT_LOCK_ASPECT_RATIO, true);
@@ -174,19 +169,19 @@ public class RegisterPlayerActivity extends BaseActivity implements ImageListene
         intent.putExtra(ImageCropConstants.INTENT_BITMAP_MAX_WIDTH, 1000);
         intent.putExtra(ImageCropConstants.INTENT_BITMAP_MAX_HEIGHT, 1000);
 
-        startActivityForResult(intent, ActivityRequestCode.REQUEST_IMAGE);
+        startActivityForResult(intent, ActivityCode.REQUEST_IMAGE);
     }
 
 
     private void launchGalleryIntent() {
         Intent intent = new Intent(this, ImagePickerActivity.class);
-        intent.putExtra(ImageCropConstants.INTENT_IMAGE_PICKER_OPTION, ActivityRequestCode.REQUEST_GALLERY_IMAGE);
+        intent.putExtra(ImageCropConstants.INTENT_IMAGE_PICKER_OPTION, ActivityCode.REQUEST_GALLERY_IMAGE);
 
         // setting aspect ratio
         intent.putExtra(ImageCropConstants.INTENT_LOCK_ASPECT_RATIO, true);
         intent.putExtra(ImageCropConstants.INTENT_ASPECT_RATIO_X, 1); // 16x9, 1x1, 3:4, 3:2
         intent.putExtra(ImageCropConstants.INTENT_ASPECT_RATIO_Y, 1);
-        startActivityForResult(intent, ActivityRequestCode.REQUEST_IMAGE);
+        startActivityForResult(intent, ActivityCode.REQUEST_IMAGE);
     }
 
 
@@ -232,7 +227,7 @@ public class RegisterPlayerActivity extends BaseActivity implements ImageListene
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == ActivityRequestCode.REQUEST_IMAGE) {
+        if (requestCode == ActivityCode.REQUEST_IMAGE) {
 
             if (resultCode == RESULT_OK) {
 
