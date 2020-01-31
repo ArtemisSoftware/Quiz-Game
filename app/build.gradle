@@ -112,4 +112,22 @@ dependencies {
 
     implementation 'me.omidh:liquidradiobutton:1.0.01'
     implementation 'com.github.eminsr:awesomedialog:2.0.1'
+
+
+
+    // -------- Retrofit
+    def retrofit_version = "2.6.2";
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+
+    // -------- Rx-Retrofit Call Adapter
+    def rxcalladapter_version = '2.5.0'
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$rxcalladapter_version"
+
+
+    // -------- okhttp3
+    def okhttp_version = "3.0.0"
+    implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
+
+
 }
