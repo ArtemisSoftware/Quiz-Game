@@ -21,45 +21,6 @@ import timber.log.Timber;
 @Module
 public class PlayerModule {
 
-/*
-    @Singleton
-    @Provides
-    static QuizDatabase provideQuizDatabase(Application application){
-
-        QuizDatabase quizDatabase = Room.databaseBuilder(application, QuizDatabase.class, DataBase.DATABASE_NAME)
-                .addMigrations(MigrationDb.MIGRATIONS)
-                .build();
-
-        Timber.d("Providing quiz database: " + quizDatabase);
-
-        return quizDatabase;
-    }
-
-
-
-    @Singleton
-    @Provides
-    static PlayerDao providePlayerDao(QuizDatabase quizDataBase){
-
-        PlayerDao dao = quizDataBase.playerDao();
-
-        Timber.d("Providing Player Dao: " + dao);
-
-        return dao;
-    }
-*/
-/*
-    @Singleton
-    @Provides
-    static ScoreDao provideScoreDao(QuizDatabase quizDataBase){
-
-        ScoreDao dao = quizDataBase.scoreDao();
-
-        Timber.d("Providing Score Dao: " + dao);
-
-        return dao;
-    }
-*/
 
     @Singleton
     @Provides

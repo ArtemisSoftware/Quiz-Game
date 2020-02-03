@@ -3,6 +3,7 @@ package com.titan.quizgame.player;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.titan.quizgame.network.ImageResponse;
 import com.titan.quizgame.player.models.Board;
 import com.titan.quizgame.player.models.Player;
 import com.titan.quizgame.player.models.Score;
@@ -11,12 +12,15 @@ import com.titan.quizgame.quiz.models.Question;
 import com.titan.quizgame.ui.Resource;
 import com.titan.quizgame.util.UIMessages;
 
+import org.reactivestreams.Subscriber;
+
 import java.util.List;
 
 import javax.inject.Inject;
 
 import io.reactivex.Completable;
 import io.reactivex.CompletableObserver;
+import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -24,6 +28,7 @@ import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.MultipartBody;
 import timber.log.Timber;
 
 public class PlayerViewModel extends ViewModel {
@@ -121,6 +126,113 @@ public class PlayerViewModel extends ViewModel {
                 });
 
     }
+
+
+    public void postPlayerImage(String name, String description, String albumId, String username, MultipartBody.Part file) {
+
+        playerRepository.postPlayerImage(name, description, albumId, username, file)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
+                .subscribe(new Observer<ImageResponse>() {
+                    @Override
+                    public void onSubscribe(Disposable s) {
+
+                    }
+
+                    @Override
+                    public void onNext(ImageResponse initPost) {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
+    }
+
+
+
+
+
+    /* all together
+    public void searchGallery(String nsid) {
+        Timber.d("Searching user " + nsid + " page " + pageNumber + " list of pictures");
+        isPerformingQuery = true;
+        repository.searchPhotoList(nsid, String.valueOf(pageNumber))
+                .map(new Function<PhotoListResponse, List<String>>() {
+                    @Override
+                    public List<String> apply(PhotoListResponse response) throws Exception {
+                        List<String> photoIds = new ArrayList<>();
+                        pages = response.photos.pages;
+                        for (PhotoListResponse.Photo photo : response.photos.pictures) {
+                            photoIds.add(photo.id);
+                        }
+                        return photoIds; // B.
+                    }
+                })
+                .flatMap(new Function<List<String>, Observable<List<Picture>>>() {
+                    @Override
+                    public Observable<List<Picture>> apply(List<String> photoIds) throws Exception {
+                        return getPicturesObservable(photoIds);
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new Observer<List<Picture>>() {
+                    @Override
+                    public void onSubscribe(Disposable disposable) {
+                        disposables.add(disposable);
+                        galleryLiveData.setValue(ApiResponse.loading());
+                    }
+                    @Override
+                    public void onNext(List<Picture> pictures) {
+                        Timber.d("onNext: " + pictures.toString());
+                        galleryLiveData.setValue(ApiResponse.success(pictures));
+                    }
+                    @Override
+                    public void onError(Throwable throwable) {
+                        Timber.e("Error on serch user: " + throwable.getMessage());
+                        galleryLiveData.setValue(ApiResponse.error(throwable.getMessage()));
+                    }
+                    @Override
+                    public void onComplete() {
+                        disposables.clear();
+                        isPerformingQuery = false;
+                    }
+                });
+    }
+    private Observable<List<Picture>> getPicturesObservable(List<String> photoIds){
+        List<Observable<PhotoResponse>> requests = new ArrayList<>();
+        for(String id : photoIds) {
+            requests.add(repository.searchPhoto(id));
+        }
+        Observable<List<Picture>> observable = Observable.zip(
+                requests,
+                new Function<Object[], List<Picture>>() {
+                    @Override
+                    public List<Picture> apply(Object[] photos) throws Exception {
+                        Timber.d("apply photo response: " + photos);
+                        List<Picture> pictures = new ArrayList<>();
+                        //for (PhotoResponse photo : photos) {
+                        for (int i = 0; i < photos.length; ++i) {
+                            PhotoResponse photo = ((PhotoResponse) photos[i]);
+                            pictures.add(new Picture(photo));
+                        }
+                        return pictures;
+                    }
+                });
+        return observable;
+    }
+    */
+
 
 
 
