@@ -6,6 +6,7 @@ import androidx.room.Room;
 
 import com.titan.quizgame.database.MigrationDb;
 import com.titan.quizgame.database.QuizDatabase;
+import com.titan.quizgame.network.ImgurApi;
 import com.titan.quizgame.player.persistence.PlayerDao;
 import com.titan.quizgame.player.persistence.ScoreDao;
 import com.titan.quizgame.player.repository.PlayerRepository;
@@ -62,9 +63,9 @@ public class PlayerModule {
 
     @Singleton
     @Provides
-    static PlayerRepository providePlayerRepository(PlayerDao playerDao, ScoreDao scoreDao){
+    static PlayerRepository providePlayerRepository(PlayerDao playerDao, ScoreDao scoreDao, ImgurApi imgurApi){
 
-        PlayerRepository repository = new PlayerRepository(playerDao, scoreDao);
+        PlayerRepository repository = new PlayerRepository(playerDao, scoreDao, imgurApi);
 
         Timber.d("Providing Player Repository: " + repository);
 

@@ -2,6 +2,8 @@ package com.titan.quizgame.player.repository;
 
 import androidx.annotation.NonNull;
 
+import com.titan.quizgame.network.ImageResponse;
+import com.titan.quizgame.network.ImgurApi;
 import com.titan.quizgame.player.models.Board;
 import com.titan.quizgame.player.models.Player;
 import com.titan.quizgame.player.models.Score;
@@ -17,6 +19,7 @@ import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.Single;
+import okhttp3.MultipartBody;
 
 @Singleton
 public class PlayerRepository {
@@ -28,10 +31,14 @@ public class PlayerRepository {
     @NonNull
     private ScoreDao scoreDao;
 
+
+    private ImgurApi imgurApi;
+
     @Inject
-    public PlayerRepository(@NonNull PlayerDao playerDao, @NonNull ScoreDao scoreDao){
+    public PlayerRepository(@NonNull PlayerDao playerDao, @NonNull ScoreDao scoreDao, @NonNull ImgurApi imgurApi){
         this.playerDao = playerDao;
         this.scoreDao = scoreDao;
+        this.imgurApi = imgurApi;
     }
 
 
@@ -51,6 +58,11 @@ public class PlayerRepository {
 
     public Observable<List<Board>> getLeaderBoard() {
         return playerDao.getLeaderBoard();
+    }
+
+
+    public Observable<ImageResponse> postPlayerImage(String name, String description, String albumId, String username, MultipartBody.Part file) {
+        return imgurApi.postImage(name, description, albumId, username, file);
     }
 
 }

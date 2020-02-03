@@ -21,6 +21,8 @@ import dagger.android.AndroidInjector;
                 AppModule.class,
                 ViewModelFactoryModule.class,
 
+                NetworkModule.class,
+
                 QuizModule.class,
                 PlayerModule.class
         }
