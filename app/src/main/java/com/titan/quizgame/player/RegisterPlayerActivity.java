@@ -16,6 +16,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.titan.quizgame.BaseActivity;
 import com.titan.quizgame.R;
+import com.titan.quizgame.network.ImgurUpload;
 import com.titan.quizgame.player.models.Player;
 import com.titan.quizgame.player.models.Score;
 import com.titan.quizgame.quiz.models.Category;
@@ -64,7 +65,8 @@ public class RegisterPlayerActivity extends BaseActivity implements ImageListene
 
 
     private PlayerViewModel viewModel;
-    private File chosenFile;
+
+    private ImgurUpload upload;
 
     @Inject
     ViewModelProviderFactory providerFactory;
@@ -78,6 +80,7 @@ public class RegisterPlayerActivity extends BaseActivity implements ImageListene
         ButterKnife.bind(this);
 
         viewModel = ViewModelProviders.of(this, providerFactory).get(PlayerViewModel.class);
+        upload = new ImgurUpload();
 
         getIncomingIntent();
         subscribeObservers();
@@ -201,13 +204,12 @@ public class RegisterPlayerActivity extends BaseActivity implements ImageListene
             Category category = intent.getExtras().getParcelable(ActivityCode.EXTRA_CATEGORY);
             int score = intent.getIntExtra(ActivityCode.EXTRA_SCORE, 0);
 
-            MultipartBody.Part body = MultipartBody.Part.createFormData(
-                    "image",
-                    chosenFile.getName(),
-                    RequestBody.create(MediaType.parse("image/*"), chosenFile)
-            );
 
-            viewModel.saveScore(new Player(txt_inp_lyt_name.getEditText().getText().toString()), new Score(score, category.getId(), difficulty, txt_inp_lyt_name.getEditText().getText().toString()));
+            upload.title = txt_inp_lyt_name.getEditText().getText().toString();
+            upload.description = txt_inp_lyt_message.getEditText().getText().toString();
+
+
+            viewModel.saveScore(upload, new Player(txt_inp_lyt_name.getEditText().getText().toString()), new Score(score, category.getId(), difficulty, txt_inp_lyt_name.getEditText().getText().toString()));
         }
     }
 
@@ -250,7 +252,7 @@ public class RegisterPlayerActivity extends BaseActivity implements ImageListene
         String filePath = Image.getPath(this, uri);
         //Safety check to prevent null pointer exception
         if (filePath == null || filePath.isEmpty()) return;
-        chosenFile = new File(filePath);
+        upload.image = new File(filePath);
         Timber.d("FilePath: " + filePath);
     }
 

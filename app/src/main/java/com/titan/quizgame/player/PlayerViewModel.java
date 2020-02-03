@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.titan.quizgame.network.ImageResponse;
+import com.titan.quizgame.network.ImgurUpload;
 import com.titan.quizgame.player.models.Board;
 import com.titan.quizgame.player.models.Player;
 import com.titan.quizgame.player.models.Score;
@@ -58,7 +59,7 @@ public class PlayerViewModel extends ViewModel {
 
 
 
-    public void saveScore(Player player, Score score) {
+    public void saveScore(ImgurUpload upload, Player player, Score score) {
 
         playerRepository.playerExists(player.getName())
                 .map(new Function<Integer, Integer>() {
