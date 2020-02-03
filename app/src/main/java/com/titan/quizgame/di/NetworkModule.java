@@ -1,5 +1,6 @@
 package com.titan.quizgame.di;
 
+import com.titan.quizgame.network.ImgurApi;
 import com.titan.quizgame.util.constants.Api;
 
 import javax.inject.Singleton;
@@ -56,16 +57,16 @@ public class NetworkModule {
     }
 
 
-/*
+
     @Provides
     @Singleton
-    FlickrApi provideFlickrApiInterface(Retrofit retrofit) {
+    ImgurApi provideImgurApiInterface(Retrofit retrofit) {
 
-        FlickrApi api = retrofit.create(FlickrApi.class);
-        Timber.d("Providing FlickrApi: " + api);
+        ImgurApi api = retrofit.create(ImgurApi.class);
+        Timber.d("Providing ImgurApi: " + api);
 
         return api;
     }
-    */
+
 
 }
