@@ -61,6 +61,9 @@ public class PlayerViewModel extends ViewModel {
 
     public void saveScore(ImgurUpload upload, Player player, Score score) {
 
+        postPlayerImage(upload);
+
+        /*
         playerRepository.playerExists(player.getName())
                 .map(new Function<Integer, Integer>() {
                     @Override
@@ -125,13 +128,13 @@ public class PlayerViewModel extends ViewModel {
                         playersLiveData.setValue(Resource.error(throwable.getMessage(), "Execution error"));
                     }
                 });
-
+*/
     }
 
 
-    public void postPlayerImage(String name, String description, String albumId, String username, MultipartBody.Part file) {
+    public void postPlayerImage(ImgurUpload upload) {
 
-        playerRepository.postPlayerImage(name, description, albumId, username, file)
+        playerRepository.postPlayerImage(upload)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())

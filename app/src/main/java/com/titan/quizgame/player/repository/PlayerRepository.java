@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 
 import com.titan.quizgame.network.ImageResponse;
 import com.titan.quizgame.network.ImgurApi;
+import com.titan.quizgame.network.ImgurUpload;
 import com.titan.quizgame.player.models.Board;
 import com.titan.quizgame.player.models.Player;
 import com.titan.quizgame.player.models.Score;
@@ -61,8 +62,8 @@ public class PlayerRepository {
     }
 
 
-    public Observable<ImageResponse> postPlayerImage(String name, String description, String albumId, String username, MultipartBody.Part file) {
-        return imgurApi.postImage(name, description, albumId, username, file);
+    public Observable<ImageResponse> postPlayerImage(ImgurUpload upload) {
+        return imgurApi.postImage(upload.title, upload.description, "", "", upload.getMultipartBody());
     }
 
 }
